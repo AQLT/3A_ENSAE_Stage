@@ -1,0 +1,300 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+  10pt,
+  french,
+  a4paper, fleqn]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage[]{microtype}
+\usepackage[]{nccmath}
+
+\usepackage[landscape, margin=0in]{geometry}
+
+\usepackage{stmaryrd}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{animate, dsfont, here, xspace}
+%\usepackage{tikz}       
+\usepackage{tikz,pgfplots}
+ \pgfplotsset{compat=1.17}
+ \usepackage{lscape}%paysage
+%\includepdf[fitpaper=true, pages=-]{img/pdg.pdf}
+
+
+
+\DeclareMathOperator{\e}{e}
+\renewcommand{\P}{\mathds{P}} %Apparement \P existe déjà ?
+\newcommand\N{\mathds{N}}
+\newcommand\R{\mathds{R}}
+%\newcommand\C{\mathds{C}}
+%\newcommand\Z{\mathds{Z}}
+
+
+\newcommand\1{\mathds{1}}
+\newcommand{\E}[2][]{{\mathds{E}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand{\V}[2][]{{\mathds{V}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand\ud{\,\mathrm{d}}
+
+% blocks
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                    %
+%                           Styles tikz                              %
+%                                                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{global}=[very thick, shape = rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{generalbox} = [global, draw=red!50, fill=orange!10]
+\tikzstyle{generaltitle} = [above=-0.3cm,rounded corners, rectangle, draw=black,fill=red!20]
+
+\tikzstyle{box} = [global, draw=blue!60!green, fill=blue!5, very thick]
+\tikzstyle{boxtitle} = [above=-0.3cm,rounded corners, rectangle, draw=black,fill=blue!20]
+\tikzstyle{edge} = [black!90, ->, rounded corners, line width = 1pt, >=latex]
+\tikzstyle{edgeequiv} = [black!90, <->, rounded corners, max width = 3cm,double distance = 1pt, >=latex]
+\tikzstyle{edgegeneral} = [red!90, ->, rounded corners, max width = 6cm, line width = 1.5pt, >=latex]
+
+
+\usepackage{varwidth}
+\tikzset{
+    max width/.style args={#1}{
+        execute at begin node={\begin{varwidth}{#1}},
+        execute at end node={\end{varwidth}}
+    }
+}
+
+\setlength{\mathindent}{0pt}
+\begin{document}%
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+\begin{tikzpicture}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Theorie gen %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\node at (3,0) [generalbox, max width=6.5cm] (theoriegen){
+\[
+\begin{cases}
+I(\theta,q,y_t,u_t)=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} \\
+J(\theta, f)=\int_0^\pi f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right] \ud \omega
+\end{cases}
+\]
+\begin{align*}
+\hat\theta&\in\argmin \sum \alpha_i I(\theta,q,y_t,u_t^{(i)})+
+\beta_iJ(\theta, f_i)\\
+&s.c.\quad C\theta=a
+\end{align*}
+};
+\node[generaltitle] at (theoriegen.north) (theriegentitle) {Théorie générale};
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Gray Thompson%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\node at (0,7.8) [box, max width=6cm] (graythompson){
+\begin{gather*}
+y_t=\underbrace{\sum_{j=0}^p\beta_jt^j+\xi_t}_{=\mu_t}+\varepsilon_t,
+\quad \varepsilon_t \text{ bruit blanc}\\
+\text{Critères :}\begin{cases}
+    F(\theta)=\E{(\hat{\mu}_t-\mu_t)^2} \\
+    S(\theta)=\E{ (\Delta^{p+1}\hat{g}_{t})^{2}}
+\end{cases}
+\end{gather*}
+\begin{align*}
+\hat\theta\in&\argmin \alpha F(\theta) + (1-\alpha)S(\theta)\\
+&s.c.\quad X'_p\theta=e_1
+\end{align*}
+};
+\node[boxtitle] at (graythompson.north) (graythompsontitle) {Gray, Thompson (1996)};
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Guggemos et al %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\node at (0,-8) [box, max width=5cm] (guggemos){
+\[
+\text{Critères :}\begin{cases}
+F(\theta)=\sum_{j=-h}^h\theta_j^2 \\
+S(\theta)=\sum_{j=-h}^h(\Delta^q\theta_j)^2
+\end{cases}
+\]
+\begin{align*}
+\hat\theta\in&\argmin \alpha F(\theta) + (1-\alpha)S(\theta)\\
+&s.c.\quad X'_p\theta=e_1
+\end{align*}
+};
+\node[boxtitle] at (guggemos.north) (guggemostitle) {Guggemos \emph{et al} (2018)};
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Proietti et Luati %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\node at (20,-8) [box, max width=8cm] (proiettiluati){
+\[y_t=\sum_{j=0}^p\beta_jt^j+\varepsilon_t,
+\quad \varepsilon_t \text{ bruit blanc}
+\]
+$\kappa = (\kappa_{-h},\dots, \kappa_h)$ noyaux, $K=diag(\kappa_{-h},\dots,\kappa_{h})$
+\begin{gather*}
+(\hat \beta_0,\dots, \hat \beta_p)\in\argmin
+(y-X_p\hat \beta)'K(y-X\hat\beta) \\
+\implies \hat\theta = KX(X'KX)^{-1}e_{1}
+\end{gather*}
+};
+
+\node[boxtitle] at (proiettiluati.north) (proiettiluatititle) {Proietti et Luati (2008)};
+
+
+%%%%%%%%%%%%%%%%
+%%%%% RKHS %%%%%
+%%%%%%%%%%%%%%%%
+
+\node at (20,8) [box, max width=8cm] (rkhs){
+$f_0(t)$ noyau continu, $P_i$ polynômes orthonormaux de $\mathbb L^2(f_0)$ et $K_p(t)=\sum_{i=0}^{p-1}P_i(t)P_i(0)f_0(t)$.
+
+\begin{ceqn}
+\[
+\hat\theta_i = \frac{K_p(i/b)}{\sum_{j=-h}^h K_p(j/b)}
+\]
+\end{ceqn}
+};
+\node[boxtitle] at (rkhs.north) (rkhstitle) {Dagum et Bianconcini (2008) --- RKHS};
+
+
+%%%%%%%%%%%%%%%%%%
+%%%%% Noyaux %%%%%
+%%%%%%%%%%%%%%%%%%
+
+\node[boxtitle] at (10, -9) (henderson) {Henderson};
+\node[boxtitle] at (10, -7) (macaulay) {Filtre Macaulay};
+\node[boxtitle] at (10, -6) (epanechnikoff) {Filtre Epanechnikoff};
+\node[boxtitle, max width=3cm] at (10, -5) (nadarayawatson) {Nadaraya-Watson ou estimateur par noyaux
+};
+
+
+%%%%%%%%%%%%%%%%%%
+%%%%% Liens %%%%%%
+%%%%%%%%%%%%%%%%%%
+
+%% Gray Thompson - Guggemos
+\draw[edgeequiv] (guggemos.150) --  (graythompson.225) node[midway, right]{
+$\xi_t =0$
+
+$q=p+1$};
+
+% Luati - RKHS
+\draw[edgeequiv] (proiettiluatititle.north)--(rkhs.south) node[pos = 0.7, left]{
+$f_0=$ version continue de $\kappa_i$
+
+$b=h+1$};
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%% Theorie gen
+
+%% gray thomson
+\draw[edgegeneral] (theoriegen.150)--(graythompson.south) node[midway, right]{
+$F(\theta)=I(\theta,0,y_t,g_t)$
+
+$S(\theta)=I(\theta,p+1,y_t,0)$
+};
+
+%% guggemos
+\draw[edgegeneral] (theoriegen.208)--(guggemostitle.north) node[near start, right]{
+$F(\theta)=I(\theta,0,y_t,\E{M_\theta y_t})$
+
+$S(\theta)=I(\theta,q,y_t,\E{M_\theta y_t})$
+
+$y_t=\sum_{j=0}^p\beta_jt^j+\varepsilon_t, \quad \varepsilon_{t}\overset{i.i.d}{\sim}\mathcal{N}(0,\sigma^{2})$
+};
+
+%% proietti
+\draw[edgegeneral] (theoriegen.east)-|(proiettiluatititle.150) node[near end, left]{
+$y_t=\underbrace{\sum_{j=0}^p\beta_jt^j}_{g_t}+\varepsilon_t$,
+
+$\varepsilon=
+\begin{pmatrix}
+    \varepsilon_{t-h} \\ \vdots \\ \varepsilon_{t+h}
+\end{pmatrix}\sim \mathcal N (0,K)$
+
+Critère minimisation : 
+
+$I(\theta, 0, y_t, g_t)$
+};
+%%%%%%%%%%%%
+%%%%%% Noyaux
+
+%%% From Guggemos
+%% Henderson
+\draw[edge] (guggemos.east)|-(henderson.west) node[near end, below]{
+$p=2,\, q=3,$
+
+$\alpha = 0$
+};
+
+%% Macaulay
+\draw[edge] (guggemos.east)|-(macaulay.west) node[near end, below]{
+$q=p+1,\,\alpha=1$
+};
+
+%% Macaulay
+\draw[edge] (guggemos.east)|-(epanechnikoff.west) node[near end, below]{
+$q=p+1,\,\alpha=1$
+};
+
+%%% From Proietti
+%% Henderson
+\draw[edge, max width = 6cm] (proiettiluati.west)|-(henderson.east) node[pos=0.8]{
+\begin{align*}
+    \textstyle
+    \kappa_{j}^H = & \textstyle 
+      \left[1-\frac{j^2}{(h+1)^2}\right]
+      \left[1-\frac{j^2}{(h+2)^2}\right]\\
+     &  \textstyle
+      \left[1-\frac{j^2}{(h+3)^2}\right]
+\end{align*}
+};
+
+%% Macaulay
+\draw[edge] (proiettiluati.west)|-(macaulay.east) node[near end, below]{
+$\kappa_j^U=1$
+};
+
+%% epanechnikoff
+\draw[edge] (proiettiluati.west)|-(epanechnikoff.east) node[near end, below]{
+$\kappa_j^E=1-\left\lvert\frac{j}{h+1}\right\rvert^2$
+};
+
+%% Nadaraya-Watson
+\draw[edge] (proiettiluati.north west)|-(nadarayawatson.east) node[near end, below]{
+$p=0$
+};
+
+\end{tikzpicture}
+
+\end{document}

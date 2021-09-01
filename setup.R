@@ -1,5 +1,8 @@
+# knitr::knit_hooks$restore() # Pour les réinitialiser
+
 knitr::opts_chunk$set(echo = FALSE,
-                      fig.path = "img/")
+                      fig.path = "img/",
+                      cache = TRUE)
 library(kableExtra)
 
 # Fontawesome
@@ -22,103 +25,155 @@ if(is_html){
 ################################
 ########## KNITR ###############
 ################################
+is_html <- knitr::is_html_output()
+is_latex <- knitr::is_latex_output()
+library(htmltools)
 latex_emph <- function(entete = "Note", x, sep = "\n\n"){
     txt <- paste(sprintf("\\emph{%s}", x), collapse = sep)
     if(length(x)>1){
         entete <- paste0(entete,"s")
     }
-    sprintf("\\emph{%s} : %s", entete, txt)
+    sprintf("\n\\emph{%s} : %s", entete, txt)
 }
-add_footnote_latex_plot <- function(x, options){
-    if(is.null(options$fig.note) & is.null(options$fig.source)){
-        return(x)
-    }
-    ajouts <- "\\footnotesize"
-    if(!is.null(options$fig.source)){
-        ajouts <- paste(ajouts,
-                        latex_emph("Source", options$fig.source, sep = "---"),
-                        sep = "\n\n")
-    }
-    if(!is.null(options$fig.note)){
-        ajouts <- paste(ajouts,
-                        latex_emph("Note", options$fig.note, sep = "\n\n"),
-                        sep = "\n")
-    }
-    x <- sub("\\end{figure}",ajouts, x,fixed = TRUE)
-    paste0(x,"\\end{figure}")    
-}
-library(htmltools)
-add_footnote_html_plot <- function(x, options){
-    
-    if(!is.null(options$fig.source)){
-        # source <- withTags(p(class = "caption", id = "source",
-        #                      tagList(as.list())
-        # )
-        # )
-        first_txt <- tags$p(options$fig.source[1], id = "source", class = "title caption")
-        all_txt <- c(list(first_txt),
-                       lapply(options$fig.source[-1], tags$p, class = "caption"))
-        source <- withTags(
-            div(class = "caption", id = "source",
-                tagList(all_txt)
-            )
-        )
-        x <- paste(x,
-                   as.character(source),
-                   sep = "\n")
-    }
-    if(!is.null(options$fig.note)){
-        # note <- withTags(p(class = "caption", id = "note",
-        #                    tagList(as.list(options$fig.note))
-        #                    )
-        #                  )
-        # note <- withTags(
-        #     div(class = "caption", id = "note",
-        #         tagList(lapply(options$fig.note, p, class = "caption"))
-        #     )
-        # )
-        
-        first_txt <- tags$p(options$fig.note[1], id = "note", class = "title caption")
-        all_txt <- c(list(first_txt),
-                     lapply(options$fig.note[-1], tags$p, class = "caption"))
-        note <- withTags(
-            div(class = "caption", id = "note",
-                tagList(all_txt)
-            )
-        )
-        x <- paste(x,
-                   as.character(note),
-                   sep = "\n")
-    }
-    
+md_framed <- function(x, options){
+    if (!is_latex || is.null(options$mdframed) || !options$mdframed || 
+        is.null(options$fig.cap))
+        return (x)
+    # cap <- options$fig.cap
+    # label <- fig$label
+    # \label{fig:filtersdafcoefs}
+    # \includegraphics[width=3cm,height=3cm]{example-image-a}
+    #     \captionof{figure}{exampleimg}
+    x <- gsub("\\\\begin\\{figure\\}(\\[!?\\w*\\])?",
+              "", x)
+    x <- gsub("\\caption","\\captiontmp", x, fixed = TRUE)
+    # x <- gsub("^(\\n)*", "", x)
+    x <- gsub("\n\n{\\centering",
+              "\\begin{center}", x, fixed = TRUE)
+    x <- sub("} \n\n}","}", x, fixed = TRUE)
+    x <- gsub("\\end{figure}",
+              "\\end{center}", x, fixed = TRUE)
     x
 }
-add_footnote <- function(x, options){
+
+add_fig_opt_html <- function(x, options, nom_opt){
+    nom_opt_complet <- sprintf("fig.%s", tolower(nom_opt))
+    opt <- options[[nom_opt_complet]]
+    if(!is.null(opt)){
+        first_txt <- tags$p(opt[1], id = nom_opt, class = "title caption")
+        all_txt <- c(list(first_txt),
+                     lapply(opt[-1], tags$p, class = "caption"))
+        txt <- withTags(
+            div(class = "caption", id = nom_opt,
+                tagList(all_txt)
+            )
+        )
+        x <- paste(x,
+                   as.character(txt),
+                   sep = "\n")
+    }
+    x
+}
+
+add_fig_opt_latex <- function(x, options, nom_opt, 
+                              prefix = nom_opt,
+                              sep_multi = "---", sep_fichier = "\n\n"){
+    if(is.null(prefix)){
+        prefix <- nom_opt
+    }
+    if(is.null(sep_multi)){
+        sep_multi <- "---"
+    }
+    if(is.null(sep_fichier)){
+        sep_fichier <- "\n\n"
+    }
+    nom_opt_complet <- sprintf("fig.%s", tolower(nom_opt))
+    opt <- options[[nom_opt_complet]]
+    if(!is.null(opt)){
+        x <- paste(x,
+                   latex_emph(prefix, opt, sep = sep_multi),
+                   sep = sep_fichier)
+    }
+    x
+}
+add_footnote_latex <- function(x, options, envir = "figure", remove_envir = TRUE){
+    
+    fin_envir <- sprintf("\\end{%s}", envir)
+    if(length(grep(fin_envir, x, fixed = TRUE)) == 0){
+        return(x)
+    }
+    
+    params <- list(Source = list(),
+                   Champ = list(),
+                   Note = list(sep_multi = "\n\n"),
+                   Lecture = list(prefix = "Note de lecture"))
+    ajouts <- "\\footnotesize"
+    for (opt in names(params)){
+        ajouts <- add_fig_opt_latex(ajouts, options, opt,
+                                    prefix = params[[opt]]$prefix,
+                                    sep_multi = params[[opt]]$sep_multi,
+                                    sep_fichier = params[[opt]]$sep_fichier)
+    }
+    x <- paste0(x, ajouts, "\n\\normalsize")
+    if(remove_envir){
+        x <- sub(fin_envir, "", x, fixed = TRUE)
+        x <- paste0(x, fin_envir)  
+    }
+    x  
+}
+
+add_footnote_html <- function(x, options){
+    for (opt in c("source", "champ", "note", "lecture")){
+        x <- add_fig_opt_html(x, options, opt)
+    }
+    x
+}
+add_footnote_perso <- function(x, options, envir = "figure", remove_envir = TRUE){
     if(is_latex){
-        res <-  add_footnote_latex_plot(x, options)
+        res <-  add_footnote_latex(x, options, envir = envir, remove_envir = remove_envir)
     }else if(is_html){
-        res <-  add_footnote_html_plot(x, options)
+        res <-  add_footnote_html(x, options)
     }else{
         res <-  x
     }
     res
 }
-# local({
-hook_plot <- knitr::knit_hooks$get('plot')
-knitr::knit_hooks$set(plot = function(x, options) {
-    if(is.null(options$fig.cap))
-        return(hook_plot(x, options))
+add_footnote_kable <- function(x, options = knitr::opts_current$get()){
+    if(length(grep("\\end{table}", x, fixed = TRUE)) >0){
+        envir = "table"
+        remove_envir = TRUE
+    } else if(length(grep("\\end{longtable}", x, fixed = TRUE)) >0){
+        envir = "longtable"
+        remove_envir = FALSE
+    } 
+    x <- add_footnote_perso(x, options = options, envir = envir, remove_envir = remove_envir)
+    class(x) <- "knitr_kable"
     if(is_latex){
-        res <-  knitr:::hook_plot_tex(x, options)
-        # res <- add_footnote_latex(res, options)
+        attr(x, "format") <- "latex"
     }else if(is_html){
-        res <- hook_plot(x, options)
-        # res <- add_footnote_html(res, options)
-    }else{
-        res <-  hook_plot(x, options)
+        attr(x, "format") <- "html"
     }
-    res <- add_footnote(res, options)
-    res
+    x
+}
+
+local({
+    hook_plot2 <- knitr::knit_hooks$get('plot')
+    knitr::knit_hooks$set(plot = function(x, options) {
+        if(is.null(options$fig.cap))
+            return(hook_plot2(x, options))
+        if(is_latex){
+            res <-  knitr:::hook_plot_tex(x, options)
+            # res <- md_framed(res, options)
+            # res <- add_footnote_latex(res, options)
+        }else if(is_html){
+            res <- hook_plot2(x, options)
+            # res <- add_footnote_html(res, options)
+        }else{
+            res <-  hook_plot2(x, options)
+        }
+        res <- add_footnote_perso(res, options)
+        md_framed(res, options)
+    })
 })
 # library(knitr)
 # local({

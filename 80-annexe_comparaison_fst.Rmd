@@ -1,11 +1,16 @@
 # (APPENDIX) Annexe {-} 
-# Comparaison avec le filtre FST
+# Comparaison avec le filtre FST {#sec:annexeFST}
 
 Cette annexe synthétise les cas où il est possible de trouver un ensemble de poids tels que les filtres FST ont de meilleurs propriété (en termes de *fidelity*, *smoothness* et *timeliness*) que les filtres polynomiaux ou RKHS avec les mêmes contraintes sur la préservation des polynômes (ou des contraintes supérieures).
 
 ```{r, include = FALSE}
-note <- c("La zone grisée corresponds à l'ensemble $\\left\\{\\begin{pmatrix}x & y & z \\end{pmatrix}' : x+y+z=1\\right\\}$.",
-          "Le graphique est vide lorsque aucun poids ne permet de trouver de filtre FST qui minimise la \\emph{fidelity}, \\emph{smoothness} et la \\emph{timelisse} par rapport au filtre étudié.")
+if(is_latex){
+    note <- c("La zone grisée corresponds à l'ensemble $\\left\\{\\begin{pmatrix}x & y & z \\end{pmatrix}' : x+y+z=1\\right\\}$.",
+          "Le graphique est vide lorsque aucun poids ne permet de trouver de filtre FST qui minimise la \\emph{fidelity}, \\emph{smoothness} et la \\emph{timeliness} par rapport au filtre étudié.")
+}else{
+    note <- c("La zone grisée corresponds à l'ensemble $\\left\\{\\begin{pmatrix}x \\; y \\; z \\end{pmatrix}' : x+y+z=1\\right\\}$.",
+          "Le graphique est vide lorsque aucun poids ne permet de trouver de filtre FST qui minimise la fidelity, smoothness et la timeliness par rapport au filtre étudié.")
+}
 ```
 
 

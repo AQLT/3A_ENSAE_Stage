@@ -2,7 +2,7 @@
 
 ## Théorie générale de construction des filtres asymétriques {#subsec:theoriegen}
 
-Pour tenter établir une théorie générale englobant les principaux filtres linéaires, @ch15HBSA définissent deux critères :
+Pour établir une théorie générale englobant les principaux filtres linéaires, @ch15HBSA définissent deux critères :
 \begin{align}
 I(\theta,q,y_t,u_t)&=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} (\#eq:theoriegen1) \\
 J(\theta,f, \omega_1,\omega_2)&=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right] \ud \omega (\#eq:theoriegen2)

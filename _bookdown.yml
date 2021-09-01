@@ -21,5 +21,5 @@ language:
     chapter_name: 'Chapitre '
     appendix_name: ''
 before_chapter_script: setup.R
-rmd_files: ["index.Rmd", "01-intro.Rmd", "02-sa_to_tce.Rmd", "03-mm_properties.Rmd", "04-fst.Rmd", "05-localpolynomials.Rmd", "07-wildi.Rmd", "08-comparaison.Rmd", "80-annexe_comparaison_fst.Rmd", "99-references.Rmd"]
+# rmd_files: ["index.Rmd", "01-intro.Rmd", "02-sa_to_tce.Rmd", "03-mm_properties.Rmd", "04-fst.Rmd", "05-localpolynomials.Rmd", "07-wildi.Rmd", "08-comparaison.Rmd", "80-annexe_comparaison_fst.Rmd", "99-references.Rmd"]
 

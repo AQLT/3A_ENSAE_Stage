@@ -17,9 +17,35 @@ geometry: margin=1in
 always_allow_html: true
 ---
 
+
+
+
 ```{r setup, results='asis'}
 cat("\\newpage")
 ```
+
+```{r, eval = FALSE}
+local({
+    hook_plot <- knitr::knit_hooks$get('plot')
+    knitr::knit_hooks$set(plot = function(x, options) {
+        if(is.null(options$fig.cap) & is.null(options$fig.source))
+            return(hook_plot(x, options))
+        if(is_latex){
+            res <-  knitr:::hook_plot_tex(x, options)
+            # res <- add_footnote_latex(res, options)
+        }else if(is_html){
+            res <- hook_plot(x, options)
+            # res <- add_footnote_html(res, options)
+        }else{
+            res <-  hook_plot(x, options)
+        }
+        res <- add_footnote(res, options)
+        res
+    })
+})
+```
+
+
 
 # Résumés {-}
 
@@ -27,7 +53,7 @@ cat("\\newpage")
 
 :::: {.abstract data-latex=""}
 `r if (is_html) '
-:::{#title}
+:::{.title}
 Résumé
 :::
 '`
@@ -48,7 +74,7 @@ Enfin, l'approche FST semble l'emporter sur les autres méthodes.
 
 :::: {.abstract data-latex=""}
 `r if (is_html) '
-:::{#title}
+:::{.title}
 Abstract
 :::
 '`

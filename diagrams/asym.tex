@@ -1,0 +1,316 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+  10pt,
+  french,
+  a4paper, fleqn]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage[]{microtype}
+\usepackage[]{nccmath}
+
+\usepackage[landscape, margin=0in]{geometry}
+
+\usepackage{stmaryrd}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{animate, dsfont, here, xspace}
+%\usepackage{tikz}       
+\usepackage{tikz,pgfplots}
+ \pgfplotsset{compat=1.17}
+ \usepackage{lscape}%paysage
+%\includepdf[fitpaper=true, pages=-]{img/pdg.pdf}
+
+
+\DeclareMathOperator{\e}{e}
+\renewcommand{\P}{\mathds{P}} %Apparement \P existe déjà ?
+\newcommand\N{\mathds{N}}
+\newcommand\R{\mathds{R}}
+%\newcommand\C{\mathds{C}}
+%\newcommand\Z{\mathds{Z}}
+
+
+\newcommand\1{\mathds{1}}
+\newcommand{\E}[2][]{{\mathds{E}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand{\V}[2][]{{\mathds{V}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand\ud{\,\mathrm{d}}
+
+% blocks
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                    %
+%                           Styles tikz                              %
+%                                                                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzstyle{global}=[very thick, shape = rectangle, rounded corners, inner sep=10pt, inner ysep=10pt]
+\tikzstyle{generalbox} = [global, draw=red!50, fill=orange!10]
+\tikzstyle{submodelbox} = [very thick, shape = rectangle, rounded corners, draw=blue!60!green, fill=blue!5,scale = 0.9]
+
+\tikzstyle{generaltitle} = [above=-0.3cm,rounded corners, rectangle, draw=black,fill=red!20]
+
+\tikzstyle{box} = [global, draw=blue!60!green, fill=blue!5]
+\tikzstyle{boxtitle} = [above=-0.3cm,rounded corners, rectangle, draw=black,fill=blue!20]
+\tikzstyle{boxtitle2} = [rounded corners, rectangle, draw=black,fill=blue!20]
+\tikzstyle{multimodelbox} = [global, draw=blue!60!green, fill=blue!2, dashed]
+
+\tikzstyle{edge} = [blue!60!green, -, rounded corners, >=latex,double distance = 1pt, text = black]
+\tikzstyle{edgeequiv} = [black!90, <->, rounded corners, max width = 3cm,double distance = 1pt, >=latex]
+\tikzstyle{edgegeneral} = [red!90, ->, rounded corners, max width = 6cm, line width = 1.5pt, >=latex]
+
+
+\usepackage{varwidth}
+\tikzset{
+    max width/.style args={#1}{
+        execute at begin node={\begin{varwidth}{#1}},
+        execute at end node={\end{varwidth}}
+    }
+}
+
+
+\setlength{\mathindent}{0pt}
+\begin{document}%
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+
+
+\begin{tikzpicture}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Theorie gen %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\node at (3,0) [generalbox, max width=8cm] (theoriegen){
+\[
+\begin{cases}
+G(\theta,q,y_t,u_t)=\E{(\Delta^{q}L_\theta y_t-u_t)^{2}} \\
+F(\theta)=\int_0^\pi f\left[\phi_\theta(\omega, \varphi_\theta (\omega)\right] \ud \omega
+\end{cases}
+\]
+\begin{align*}
+\hat\theta&\in\argmin \sum \alpha_i G(\theta,q,y_t,u_t^{(i)})+
+\beta_iF_i(\theta)\\
+&s.c.\quad X'_p\theta=e_1
+\end{align*}
+};
+\node[generaltitle] at (theoriegen.north) (theriegentitle) {Théorie générale};
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Gray Thompson%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\node at (0,9) [box, max width=6cm] (graythompson){
+    Minimisation des révisions au filtre symétriques sous contrainte
+};
+\node[boxtitle] at (graythompson.north) (graythompsontitle) {Gray, Thompson (1996)};
+
+\node at (-2,7.5) [submodelbox, max width=3cm, below] (graythompson1){
+    Filtre asymétrique sans biais
+};
+\node at (2,7.5) [submodelbox, max width=3cm, below] (graythompson2){
+Filtre asymétrique de biais constant ($\implies X'_{p-1}\hat\theta^{a}=e_1$)
+};
+
+\draw [edge] (graythompson) -- (graythompson1) node[right, midway]{Contrainte};
+\draw [edge] (graythompson) -- (graythompson2);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Guggemos et al %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\node at (0,-9) [box, max width=8cm] (guggemos){
+$F(\theta)=\sum_{j=-h}^h\theta_j^2$
+
+$S(\theta)=\sum_{j=-h}^h(\Delta^q\theta_j)^2$
+
+$T(\theta)=\int_{0}^{\omega_1}\phi_\theta^2(\omega) \sin^2(\varphi_a(\omega)) \ud \omega$
+\begin{align*}
+\hat\theta&\in\argmin \nu_1 F(\theta) + \nu_2 S(\theta)+ (1-\nu_1-\nu_2)T(\theta)\\
+&s.c.\quad X'_p\theta=e_1
+\end{align*}
+};
+\node[boxtitle] at (guggemos.north) (guggemostitle) {Guggemos \emph{et al} (2018)};
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Proietti et Luati %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\draw[multimodelbox] (8,-10.8) rectangle (24.8, -3);
+
+\node at (20,-9) [box, max width=8cm, inner ysep=2pt] (proiettiluati){
+\begin{center}\centering \textbf{Modèle générale}\end{center}\vspace{-0.2cm}
+\[
+y=U\gamma+Z\delta+\varepsilon,\quad \varepsilon\sim\mathcal N (0,D)
+\text{ et } \begin{bmatrix} U & Z \end{bmatrix} \subset X
+\]
+
+Minimisation des révisions à $\theta^s$ sous contrainte :
+\[
+U'_p\theta^a=U\theta^s, \quad U=\begin{bmatrix} U_p \\ U_f \end{bmatrix} 
+\]
+};
+
+%\node[boxtitle] at (proiettiluati.north) (proiettiluatititle) {Proietti et Luati (2008)};
+\node[boxtitle2, below left] at (24.8,-3) (proiettiluatititle) {Proietti et Luati (2008)};
+
+%%%% DAF %%%%
+\node at (11,-9.7) [submodelbox, max width=4.5cm, above] (daf){
+\begin{center}\centering \textbf{DAF}\end{center}\vspace{-0.5cm}
+méthode symétrique mais avec moins de données
+};
+
+
+%%%% CQ %%%%
+\node at (11,-8.5) [submodelbox, max width=4.5cm, above] (cq){
+  \begin{center}\centering \textbf{CQ}\end{center}\vspace{-0.5cm}
+  \[
+  y_t=\gamma_0+\gamma_1 t+\gamma_2t^2+\delta t^3 +\varepsilon_t
+  \]
+  $\varepsilon_t$ bruit blanc et $\theta^a$ préserve tendances quadratiques
+};
+
+%%%% QL %%%%
+\node at (11,-6.5) [submodelbox, max width=4.5cm, above] (ql){
+  \begin{center}\centering \textbf{QL}\end{center}\vspace{-0.5cm}
+  \[
+  y_t=\gamma_0+\gamma_1 t+\delta t^2 +\varepsilon_t,
+  \]
+  $\varepsilon_t$ bruit blanc et $\theta^a$ préserve tendances linéaires
+};
+
+
+%%%% LC %%%%
+\node at (18,-5.5) [submodelbox, max width=4.5cm, above] (lc){
+\begin{center}\centering \textbf{LC/Musgrave}\end{center}\vspace{-0.5cm}
+\[
+y_t=\gamma_0+\delta t +\varepsilon_t, 
+\]
+$\varepsilon_t$ bruit blanc et $\theta^a$ préserve constantes
+};
+
+%%%% Liens
+\draw [edge, max width = 2cm] (proiettiluati) -- (daf) node[below, midway] {
+\[
+\begin{cases}
+  D=K^{-1}\\ 
+  U=X_3\\ 
+  Z=0
+\end{cases}
+\]
+};
+
+\draw[edge, max width = 2cm] (proiettiluati) -- (cq) node[above right=-0.2cm,near end] {
+\[
+\begin{cases}
+U=X_2\\ 
+Z=x_3\\
+D=\sigma^2I
+\end{cases}
+\]
+};
+
+\draw [edge, max width = 2cm] (proiettiluati.160) |- (ql) node[above, near end] {
+\[
+\begin{cases}
+U=X_1\\ 
+Z= x_2\\
+D=\sigma^2I
+\end{cases}
+\]
+};
+\draw [edge, max width = 2cm] (proiettiluati) -- (lc) node[right, midway] {
+\[
+\begin{cases}
+U=X_0\\ 
+  Z=x_1\\
+  D=\sigma^2I
+\end{cases}
+\]
+};
+
+%%%%%%%%%%%%%%%%
+%%%%% RKHS %%%%%
+%%%%%%%%%%%%%%%%
+
+
+\node at (20,8) [box, max width=8cm] (rkhs){
+$f_0(t)$ noyau continu, $P_i$ polynômes orthonormaux de $\mathbb L^2(f_0)$ et $K_p(t)=\sum_{i=0}^{p-1}P_i(t)P_i(0)f_0(t)$.
+$$
+\hat\theta_i = \frac{K_p(i/b)}{\sum_{j=-h}^q K_p(j/b)}
+$$
+};
+\node[boxtitle] at (rkhs.north) (rkhstitle) {Dagum et Bianconcini (2008) --- RKHS};
+
+
+%%%%%%%%%%%%%%%%
+%%%%% Wildi %%%%%
+%%%%%%%%%%%%%%%%
+
+
+\node at (10,7.6) [box, max width=8cm] (trilemna){
+\begin{align*}
+A_w&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
+T_w&= 8\int_0^{\omega_1}\rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
+S_w&= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)^{2}-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega%\\
+%R_w&= 8\int_{\omega_1}^\pi\rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega
+\end{align*}
+\[
+\min\nu_1T_w+\nu_2S_w+(1-\nu_1-\nu_2)A_w
+\]
+};
+\node[boxtitle] at (trilemna.north) (trilemnatitle) {Wildi, McElroy (2019)};
+
+
+
+%%%%%%%%%%%%%%%%%%
+%%%%% Liens %%%%%%
+%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+%%%%%% Theorie gen
+
+%% gray thomson
+\draw[edgegeneral] (theoriegen.150)--(graythompson.south) node[midway, right]{
+$F(\theta)=G(\theta,0,y_t,g_t)$
+
+$S(\theta)=G(\theta,p+1,y_t,0)$
+};
+
+%% guggemos
+\draw[edgegeneral] (theoriegen.208)--(guggemostitle.north) node[near start, right]{
+$F(\theta)=G(\theta,0,y_t,\E{L_\theta y_t})$
+
+$S(\theta)=G(\theta,q,y_t,\E{L_\theta y_t})$
+
+$T(\theta)=G(\theta,q,y_t,\E{L_\theta y_t})$
+
+$y_t=\sum_{j=0}^p\beta_jt^j+\varepsilon_t, \quad \varepsilon_{t}\overset{i.i.d}{\sim}\mathcal{N}(0,\sigma^{2})$
+};
+\end{tikzpicture}
+
+
+\end{document}
