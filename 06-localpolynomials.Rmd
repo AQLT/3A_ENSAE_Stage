@@ -1,7 +1,6 @@
 # Regression polynomiale locale
 
 @FengSchafer2021
-@GrayThomson1996
 @LuatiProietti2011
 
 Comme notamment montré par @Loader1999, la régression locale est un cas particulier de la régression non paramétrique. 
@@ -388,6 +387,40 @@ However, it depends on the data if we calibrate the filter with the "I-C" ratio.
 - Timeliness is not controlled.
 ::::
 
+## Gray et Thompson
+
+L'approche de @GrayThomson1996 est proche de celles @proietti2008 et @ch15HBSA.
+De la même façon que pour les autres méthodes, ils considèrent que la série initiale $y_t$ peut se décomposer entre une somme entre la tendance-cycle $g_t$ et d'un bruit blanc $\varepsilon_t$ de variance $\sigma^2$ : 
+$$y_t = g_t+\varepsilon_t.$$
+Toutefois, plutôt que de directement remplacer $g_t$ par un polynôme local de degré $p$, ils prennent en compte l'erreur d'approximation de la tendance :
+$$
+g_t=\sum_{j=0}^{p}\beta_{j}t^{j}+\xi_{t},
+$$
+où $\xi_t$ est un processus stochastique de moyenne nulle, autocorrélé mais non corrélé à $\varepsilon_t$.
+
+La tendance $g_t$ est estimée par une moyenne mobile : 
+$$
+\hat{g}_{t}=\sum_{s=-r}^{r}w_{s}y_{t+s}
+$$
+
+Pour le filtre symétrique, les coefficients de cette moyenne mobile sont déterminées en minimisant une somme pondérée de deux critères :
+\begin{equation}
+Q=\theta\underbrace{\E{(\hat{g}_{t}-g_{t})^{2}}}_{=F}+(1-\theta)\underbrace{\E\left\{ (\Delta^{p+1}\hat{g}_{t})^{2}\right\} }_{=S}
+\end{equation}
+
+La solution est donnée par 
+\[
+w=E_{\theta}^{-1}X\left[X'E_{\theta}^{-1}X\right]^{-1}e_{1}\text{ et }E_{\theta}=\theta\left(\sigma^{2}I+\Omega\right)+(1-\theta)\left(\sigma^{2}B_{p+1}+\Gamma\right)
+\]
+
+où :
+\[
+\begin{cases}
+\Omega_{jk} & =cov\left(\xi_{t+j}-\xi_{t},\xi_{t+k}-\xi_{t}\right)\\
+\Gamma_{jk} & =cov\left(\Delta^{p+1}\xi_{t+j},\Delta^{p+1}\xi_{t+k}\right)\\
+\sigma^{2}\left(B_{p+1}\right)_{jk} & =cov\left(\Delta^{p+1}\varepsilon_{t+j},\Delta^{p+1}\varepsilon_{t+k}\right)
+\end{cases}
+\]
 
 ## Choix des différents paramètres
 
