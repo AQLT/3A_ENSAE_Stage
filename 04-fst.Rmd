@@ -42,7 +42,7 @@ S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}.
 $$
 Ce critère mesure la proximité du signal de sortie à une tendance polynômiale de degré $d-1$. 
 Avec $d=3$, Henderson utilise ce critère de lissage pour construire des moyennes mobiles conservant des polynômes de degré 2.
-$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section XXXX).
+$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@(subsec:eqgraythompson)).
 
 
 - *Timeliness* (temporalité), $T_g$ : il mesure le déphasage entre le signal d'entrée et le signal de sortie à des fréquences spécifiques.
