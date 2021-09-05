@@ -16,75 +16,75 @@ Dans notre cas, on suppose que notre série initiale $y_t$ est désaisonnalisée
 $$
 y_t=TC_t+I_t.
 $$
-La tendance-cycle peut être déterministe ou stochastique. On suppose que c'est une fonction régulière du temps, elle peut être localement approchée par un polynôme de degré $p$ :
+La tendance-cycle peut être déterministe ou stochastique. On suppose que c'est une fonction régulière du temps, elle peut être localement approchée par un polynôme de degré $d$ :
 $$
-TC_{t+j}=TC_t(j)=a_0+a_1j+\dots+a_pj^p+\varepsilon_{t+j},\quad
+TC_{t+j}=TC_t(j)=a_0+a_1j+\dots+a_dj^d+\varepsilon_{t+j},\quad
 j\in\llbracket-h,h\rrbracket,
 $$
 où $\varepsilon_t$ est un bruit blanc non corrélé à $I_t$.
 
-Les coefficients $a_0,\dots,a_p$ peuvent être estimés par projection des observations du voisinage de $y_t$ sur le sous-espace $\mathbb P_p$ des polynômes de degré $p$, ou, de manière équivalente, par minimisation de la distance entre $y_t$ et $TC_t(j)$ :
+Les coefficients $a_0,\dots,a_d$ peuvent être estimés par projection des observations du voisinage de $y_t$ sur le sous-espace $\mathbb P_d$ des polynômes de degré $d$, ou, de manière équivalente, par minimisation de la distance entre $y_t$ et $TC_t(j)$ :
 \begin{equation}
-\underset{TC\in\mathbb P_p}{\min}\lVert y -TC \rVert^2 = 
-\underset{TC\in\mathbb P_p}{\min}\int_\R (y(t+s)-TC_t(s))^2f_0(s)\ud s.
+\underset{TC\in\mathbb P_d}{\min}\lVert y -TC \rVert^2 = 
+\underset{TC\in\mathbb P_d}{\min}\int_\R (y(t+s)-TC_t(s))^2f_0(s)\ud s.
 (\#eq:mintcrkhs)
 \end{equation}
-L'espace $\mathbb P_p$ étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir par exemple @berlinet2004). 
-C'est-à-dire qu'il existe une fonction $R_p(\cdot,\cdot)$ telle que :
+L'espace $\mathbb P_d$ étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir par exemple @berlinet2004). 
+C'est-à-dire qu'il existe une fonction $R_d(\cdot,\cdot)$ telle que :
 $$
-\forall P\in \mathbb P_p: \forall t:
-R_p(t,\cdot)\in\mathbb P_p\quad\text{et}\quad
-P(t)=\ps{R_p(t,\cdot)}{P(\cdot)}.
+\forall P\in \mathbb P_d: \forall t:
+R_d(t,\cdot)\in\mathbb P_d\quad\text{et}\quad
+P(t)=\ps{R_d(t,\cdot)}{P(\cdot)}.
 $$
 
-Le problème \@ref(eq:mintcrkhs) admet une solution unique qui dépend d'une fonction $K_{p+1}$ appelée *fonction de noyau* (*kernel function*). 
-Cette fonction est dite d'ordre $p+1$ car elle conserve les polynômes de degré $p$^[
-C'est-à-dire $\int_\R K_{p+1}(s)\ud s = 1$ et $\int_\R K_{p+1}(s) s^i\ud s = 1$ pour $i\in \llbracket 1, p\rrbracket$.
+Le problème \@ref(eq:mintcrkhs) admet une solution unique qui dépend d'une fonction $K_{d+1}$ appelée *fonction de noyau* (*kernel function*). 
+Cette fonction est dite d'ordre $d+1$ car elle conserve les polynômes de degré $d$^[
+C'est-à-dire $\int_\R K_{d+1}(s)\ud s = 1$ et $\int_\R K_{d+1}(s) s^i\ud s = 1$ pour $i\in \llbracket 1, d\rrbracket$.
 ]. 
 Cette  solution s'écrit :
 \begin{equation}
-\widehat{TC}(t)=\int_\R y(t-s)K_{p+1}(s) \ud s.
+\widehat{TC}(t)=\int_\R y(t-s)K_{d+1}(s) \ud s.
 (\#eq:rkhssoltc)
 \end{equation}
 Généralement $f_0(t) = 0$ pour $\lvert t \rvert>1$. 
 Cette solution s'écrit alors :
 \begin{equation}
-\widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{p+1}(s) \ud s.
+\widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 (\#eq:rkhssoltc2)
 \end{equation}
-On peut par ailleurs montrer que $K_{p+1}$ s'écrit en fonction $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, p-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
+On peut par ailleurs montrer que $K_{d+1}$ s'écrit en fonction $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
 $$
-K_{p+1}(t) = R_p(t,0)f_0(t) = \sum_{i=0}^pP_i(t)P_i(0)f_0(t).
+K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 $$
 
 Par ailleurs, dans le cas discret, la solution \@ref(eq:rkhssoltc2) s'écrit comme une somme pondérée du voisinage de $y_t$ :
 \begin{equation}
 \widehat{TC}_t=\sum_{j=-h}^h w_j y_{t+j}\quad
 \text{où} \quad
-w_j=\frac{K_{p+1}(j/b)}{\sum_{i=-h}^{^h}K_{p+1}(i/b)}.
+w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^h}K_{d+1}(i/b)}.
 (\#eq:rkhssym)
 \end{equation}
 Le paramètre $b$ est choisi de sorte que les $2h+1$ points autour de $y_t$ soient utilisés avec un poids non nul.
 
 Pour les filtres asymétriques, la formule \@ref(eq:rkhssym) est simplement adaptée au nombre d'observations connues :
 \begin{equation}
-\forall j\in\left\llbracket -h,q\right\rrbracket\::\: w_{a,j}=\frac{K_{p+1}(j/b)}{\sum_{i=-h}^{^q}K_{p+1}(i/b)}.
+\forall j\in\left\llbracket -h,q\right\rrbracket\::\: w_{a,j}=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^q}K_{d+1}(i/b)}.
 (\#eq:rkhsasym)
 \end{equation}
 En utilisant $b=h+1$ on retrouve les filtres symétriques obtenues par polynômes locaux.
 
-Comme notamment montré par @dagumbianconcini2016seasonal, $K_{p+1}$ peut s'exprimer simplement à partir des moments de $f_0$^[
+Comme notamment montré par @dagumbianconcini2016seasonal, $K_{d+1}$ peut s'exprimer simplement à partir des moments de $f_0$^[
 Cela vient en fait du procédé d'orthonomalisation de Gram-Schmidt.
 ]. 
-Ainsi, notons $H_{p+1}$ la matrice de Hankel associée aux moments de $f_0$ : 
+Ainsi, notons $H_{d+1}$ la matrice de Hankel associée aux moments de $f_0$ : 
 $$
-\forall i,j\in \llbracket 0, p\rrbracket:
-\left(H_{p+1}\right)_{i,j}=\ps{X^i}{X^j}=\int s^{i+j}f_0(s)\ud s.
+\forall i,j\in \llbracket 0, d\rrbracket:
+\left(H_{d+1}\right)_{i,j}=\ps{X^i}{X^j}=\int s^{i+j}f_0(s)\ud s.
 $$
-Notons également $H_{p+1}[1,t]$ la matrice obtenue en remplaçant la première ligne de $H_{p+1}$ par $\begin{pmatrix} 1 & t & t^2 & \dots & t^p\end{pmatrix}$. 
+Notons également $H_{d+1}[1,t]$ la matrice obtenue en remplaçant la première ligne de $H_{d+1}$ par $\begin{pmatrix} 1 & t & t^2 & \dots & t^d\end{pmatrix}$. 
 On a :
 \begin{equation}
-K_{p+1}(t)=\frac{\det{H_{p+1}[1,t]}}{\det{H_{p+1}}}f_0(t).
+K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 (\#eq:rkhskernelfun)
 \end{equation}
 C'est cette formule qui est utilisée dans le package `rjdfilters` pour calculer les différentes moyennes mobiles.
@@ -203,9 +203,9 @@ Comme montré dans la section précédente, la théorie des espaces de Hilbert �
 Comme le montrent @LuatiProietti2011, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l'approximation polynomiale locale mais en utilisant une fenêtre d'estimation asymétrique.
 Cependant, ils ne peuvent pas être obtenues par la formalisation de  @dagumbianconcini2008 mais par une discrétisation différente de la formule \@ref(eq:rkhskernelfun) :
 $$
-K_{p+1}(t)=\frac{\det{H_{p+1}[1,t]}}{\det{H_{p+1}}}f_0(t).
+K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 $$
-Dans le cas discret, $f_0(t)$ est remplacé par $\kappa_j$ et en remplaçant les moments théoriques par les moments empiriques $H_{p+1}$ devient $X'_pK_pX_p$ et les coefficients du filtre asymétrique sont obtenus en utilisant la formule :
+Dans le cas discret, $f_0(t)$ est remplacé par $\kappa_j$ et en remplaçant les moments théoriques par les moments empiriques $H_{d+1}$ devient $X'_pK_pX_p$ et les coefficients du filtre asymétrique sont obtenus en utilisant la formule :
 $$
 w_{a,j}=\frac{\det{X'_pK_pX_p[1,j]}
 }{
@@ -229,4 +229,3 @@ hat \beta_0 = \hat m_t= \sum_{j=-h}^q\frac{\det{X'_pK_pX_p[1,j]}
 }\kappa_j y_{t+j}.
 $$
 
-##
