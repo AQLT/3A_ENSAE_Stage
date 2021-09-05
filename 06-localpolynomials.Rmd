@@ -6,12 +6,12 @@
 Comme notamment montré par @Loader1999, la régression locale est un cas particulier de la régression non paramétrique. 
 Supposons que l'on ait un ensemble de points $(x_i,y_i)_{1\leq i\leq n}$. 
 La régression non paramétrique consiste à supposer qu'il existe une fonction $\mu$, à estimer, telle que $y_i=\mu(x_i)+\varepsilon_i$ avec $\varepsilon_i$ un terme d'erreur.
-D'après le théorème de Taylor, pour tout point $x_0$, si $\mu$ est différentiable $p$ alors :
+D'après le théorème de Taylor, pour tout point $x_0$, si $\mu$ est différentiable $d$ alors :
 $$
 \forall x \::\:\mu(x) = \mu(x_0) + \mu'(x_0)(x-x_0)+\dots +
-\frac{\mu^{(p)}(x_0)}{p!}(x-a)^p+R_p(x),
+\frac{\mu^{(d)}(x_0)}{d!}(x-a)^d+R_d(x),
 $$
-où $R_p$ est un terme résiduel négligeable au voisinage de $x_0$. 
+où $R_d$ est un terme résiduel négligeable au voisinage de $x_0$. 
 Dans un voisinage $\left[x_0-h(x_0),x_0-h(x_0)\right]$ de $x_0$, $\mu$ peut être approchée par un polynôme de degré $d$. 
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
 Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par moindre carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0-h(x_0)\right]$.
@@ -77,16 +77,16 @@ où $\kappa_j$ est un ensemble de poids appelés *noyaux* (*kernel*).
 On a $\kappa_j\geq 0:\kappa_{-j}=\kappa_j$, et en notant $K=diag(\kappa_{-h},\dots,\kappa_{h})$, l'estimateur $\beta$ peut s'écrire $\hat{\beta}=(X'KX)^{1}X'Ky$. 
 Avec $e_{1}=\begin{pmatrix}1&0&\cdots&0\end{pmatrix}'$, l'estimateur de la tendance peut donc s'écrire :
 $$
-\hat{m}_{t}=e_{1}\hat{\beta}=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}\text{ with }w=KX(X'KX)^{-1}e_{1}
+\hat{m}_{t}=e_{1}\hat{\beta}=\theta'y=\sum_{j=-h}^{h}\theta_{j}y_{t-j}\text{ avec }\theta=KX(X'KX)^{-1}e_{1}
 $$
-En somme, l'estimation de la tendance $\hat{m}_{t}$ est obtenue en appliquant une moyenne mobile symétrique $w$ à $y_t$^[
-$w$ est symmétrique du fait de la symmétrie des noyaux $\kappa_j$.
+En somme, l'estimation de la tendance $\hat{m}_{t}$ est obtenue en appliquant une moyenne mobile symétrique $\theta$ à $y_t$^[
+$\theta$ est symétrique du fait de la symétrie des noyaux $\kappa_j$.
 ].
 De plus, $X'w=e_{1}$ donc :
 $$
-\sum_{j=-h}^{h}w_{j}=1,\quad\forall r\in\left\llbracket 1,d\right\rrbracket :\sum_{j=-h}^{h}j^{r}w_{j}=0.
+\sum_{j=-h}^{h}\theta_{j}=1,\quad\forall r\in\left\llbracket 1,d\right\rrbracket :\sum_{j=-h}^{h}j^{r}\theta_{j}=0.
 $$
-Ainsi, la moyenne mobile $w$ préserve les polynômes de degré $d$.
+Ainsi, la moyenne mobile $\theta$ préserve les polynômes de degré $d$.
 
 #### Les différents noyaux {#sec:kernels}
 
@@ -203,10 +203,10 @@ Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
 Lorsque $p=0$ (ajustement local par une constante) on obtient l'estimateur de **Nadaraya-Watson** (ou l'estimateur par noyaux).
 
-Avec le noyau uniforme on obtient le filtre de **Macaulay**. 
+Avec le noyau uniforme on obtient le filtre de @macaulay1931smoothing. 
 Lorsque $p=0,1$, on retrouve la moyenne arithmétique : $w_j=w=\frac{1}{2h+1}$.
 
-Le noyau d'**Epanechnikov** est souvent recommandé comme le noyau optimal car il minimise l'erreur quadratique moyenne de l'estimation par polynômes locaux is often recommended as the optimal kernel that minimizes the mean square error of the estimation by local polynomial.
+Le noyau d'**Epanechnikov** est souvent recommandé comme le noyau optimal car il minimise l'erreur quadratique moyenne de l'estimation par polynômes locaux.
 
 Le **Loess** est une régression locale pondérée qui utilise le noyau tricube.
 
@@ -224,9 +224,9 @@ Par simplification, nous nous intéresserons uniquement aux filtres issus du noy
 
 ### Filtres asymétriques
 
-### Direct asymmetric filters (DAF)
+#### Direct asymmetric filters (DAF)
 
-Comme mentionné dans la partir XXX, pour l'estimation en temps réel, plusieurs approches peuvent être utilisées :
+Comme mentionné dans la partie XXX, pour l'estimation en temps réel, plusieurs approches peuvent être utilisées :
 
 1. Construire un filtre asymétrique par approximation polynomiale locale sur les observations disponibles  ($y_{t}$ pour $t\in\left\llbracket n-h,n\right\rrbracket$).
 
@@ -236,7 +236,7 @@ Comme mentionné dans la partir XXX, pour l'estimation en temps réel, plusieurs
 
 @proietti2008 montrent que les deux premières approches sont équivalentes lorsque les prévisions sont faites par extrapolation polynomiale de degré $d$ (prévisions générées en utilisant les mêmes contraintes polynomiales que les filtres symétriques).
 Elles sont également équivalentes à la troisième approche sous mêmes contraintes que le filtre symétrique.
-Cette méthode est appelée  *direct asymmetric filter* (DAF).
+Cette méthode est appelée *direct asymmetric filter* (DAF).
 
 Notons $q$ le nombre d'observations futures disponibles : $q$ varie entre 0 (filtre en temps réel) et $h$ (filtre symétrique).
 
@@ -251,92 +251,79 @@ y_{f}
 \end{pmatrix}
 $$
 où $y_{p}$ correspond aux données disponibles et $y_{f}$ aux données manquantes. 
-Le filtre DAF $w_a$ et les prévisions $\hat{y}_{f}$ peuvent s'écrire :
+Le filtre DAF $\theta_a$ et les prévisions $\hat{y}_{f}$ peuvent s'écrire :
 $$
-w_{a}=K_{p}X_{p}(X'_{p}K_{p}X_{p})^{-1}e_{1},
+\theta_{a}=K_{p}X_{p}(X'_{p}K_{p}X_{p})^{-1}e_{1},
 \quad
 \hat{y}_{f}=X_{f}(X'_{p}K_{p}X_{p})^{-1}X_{p}'K_{p}y_{p}
 $$
-De plus, on a les propriétés suivantes sur $w_a$ :
+De plus, on a les propriétés suivantes sur $\theta_a$ :
 
 - il préserve les tendances polynomiales de degré $d$ comme le filtre symétrique. 
 
-- $w_a$ minimize la distance pondérée (par le noyau) entre les coefficients du filtre asymétrique et ceux du filtre symétrique.
+- $\theta_a$ minimise la distance pondérée (par le noyau) entre les coefficients du filtre asymétrique et ceux du filtre symétrique.
 Cela prouve donc l'équivalence entre les trois méthodes.
 
-However, the weights $w_{a,0}$ of the DAF are highly concentrated in the current observation $t$ with an important change between $q=0$ (real-time filter) and $q=h$ (see figure \@ref(fig:filtersdafcoefs)). 
-Moreover the real-time filter doesn't have a satisfying gain functions: it is closer to one for all the frequencies (it thus has a low noise reduction power).
-Therefore, even if the real-time filter is unbiased (if the series is generated by a polynomial of degree $d$) it is at the expenses of a high variance. 
+L'inconvénient de cette méthode est que les poids de $\theta_{a,0}$ sont fortement concentrés sur l'estimation courrante, avec une révision importante entre $q=0$ (filtre en temps réel) et $q=h$ (filtre symétrique, voir \@ref(fig:filtersdafcoefs)). 
+Par ailleurs, le filtre en temps réel n'a pas de fonction de gain satisfaisante : elle est proche de 1 pour toutes les fréquences et a donc un pouvoir de réduction très faible.
+Ainsi, même si les estimations sont sans biais, c'est au coût d'une plus grande variance dans les estimations. 
 
-```{r filtersdafcoefs, fig.cap="Coefficients and gain function of direct asymmetric filters (DAF) computed by local polynomial of degree $3$ with the Henderson kernel for $h=6$.", fig.source = "toto", echo = FALSE, out.width="100%"}
+```{r filtersdafcoefs, fig.cap="Coefficients et fonctions de gain des filtres directs asymétriques (DAF) computed by local polynomial of degree $3$ with the Henderson kernel for $h=6$.", fig.source = "toto", echo = FALSE, out.width="100%"}
 knitr::include_graphics("img/daf/coef_gain_1.png")
 ```
-
-<!-- \begin{figure}[!ht] -->
-<!-- \animategraphics[autoplay,loop,width=\textwidth,controls]{2}{img/daf/coef_gain_}{1}{9} -->
-<!-- \caption{Coefficients and gain function of direct asymmetric filters (DAF) computed by local polynomial of degree $3$ with the Henderson kerne for $h=6$.}\label{fig:filtersdafcoefs}\footnotesize -->
-<!-- \emph{Note: to see the animation, the PDF must be open with Acrobat Reader, KDE Okular, PDF-XChange or Foxit Reader. -->
-<!-- Otherwise you will only be able to see the results for the Henderson kernel.} -->
-<!-- \end{figure} -->
-
-For all the kernels, we find the same results as in @proietti2008:
-
-- For a fixed value of $d$, the more the data is available ($q$ increases), the more the weight associated to the current observation $w_{a,0}$ decreases.
-
-- For a fixed value of $h$ and $q$, $w_{a,0}$ increases exponentially with the polynomial degree $d$ (in particular, for $d=h$, $w_{a,0}=1$).
 
 
 ### General class of asymmetric filters {#subsec:lppasymf}
 
-To deal with the problem of the variance of the estimates of the real-time filters, @proietti2008 suggest a general of asymmetric filters to make a tradeoff between bias and variance.
-It is a generalisation of Musgrave asymmetric filters (used in the seasonal adjustment algorithm X-12ARIMA, see @musgrave1964set).
+Pour résoudre le problème de la variance des estimations des filtres temps réel, @proietti2008 propose une méthode général pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
+Il s'agit d'une généralisation des filtres asymétriques @musgrave1964set (utilisés dans l'algorithme de désaisonnalisation X-12ARIMA).
 
-Here we consider that the data is generated by the model:
-$$
+On modélise ici la série en entrée par :
+\begin{equation}
 y=U\gamma+Z\delta+\varepsilon,\quad
 \varepsilon\sim\mathcal{N}(0,D)
-$$
-The goal is to find a filter $v$ which minimize the mean square revision error (with the symmetric filter $w$) subject to some constraints. 
-The constraints are summarized by the matrix $U=\begin{pmatrix}U_{p}'&U_{f}'\end{pmatrix}'$ (with $U_p$ the available observations of the matrix $U$ for the asymmetric filter): $U_p'v=U'w$. 
-The problem is equivalent to find $v$ that minimize:
+(\#eq:lpgeneralmodel)
+\end{equation}
+où $[U,Z]$ est de plein rang et forme un sous-ensemble des colonnes de $X$.
+L'objectif est de trouver un filtre $\theta_a$ qui minimisent l'erreur quadratique moyenne de révision (au filtre symétrique $\theta$) sous certaines contraintes.
+Ces contraintes sont représentées par la matrice $U=\begin{pmatrix}U_{p}'&U_{f}'\end{pmatrix}'$ (avec $U_p$ la matrice $(h+q+1)\times (d+1)$ qui contient les observations de la matrice $U$ connues lors de l'estimation par le filtre asymétrique) : $U_p'v=U'\theta$.
+Le problème est équivalent à trouver $\theta_a$ qui minimise :
 \begin{equation}
-\varphi(v)=
+\varphi(\theta_a)=
 \underbrace{
-  \underbrace{(v-w_{p})'D_{p}(v-w_{p})+
-  w_{f}'D_{f}w_{f}}_\text{revision error variance}+
-  \underbrace{[\delta'(Z_{p}'v-Z'w)]^{2}}_{biais^2}
-}_\text{Mean square revision error}+
-\underbrace{2l'(U_{p}'v-U'w)}_{\text{constraints}}
+  \underbrace{(\theta_a-\theta_{p})'D_{p}(\theta_a-\theta_{p})+
+  \theta_{f}'D_{f}\theta_{f}}_\text{variance de l'erreur de révision}+
+  \underbrace{[\delta'(Z_{p}'\theta_a-Z'\theta)]^{2}}_{biais^2}
+}_\text{Erreur quadratique moyenne de révision}+
+\underbrace{2l'(U_{p}'\theta_a-U'\theta)}_{\text{contraintes}}
 (\#eq:lppasym)
 \end{equation}
-with $l$ a vector of Lagrange multipliers.
+où $l$ est le vecteur des multiplicateurs de Lagrange.
 
-When $U=X$ this is equivalent to the constraint to preserve polynomial of degree $d$: we find the direct asymmetric filters $w_a$ with $D=K^{-1}$.
+Lorsque $U=X$, la contrainte équivaut à préserver les polynômes de degré $d$ : on retrouve les filtres directs asymétriques lorsque $D=K^{-1}$.
 
-When $U=\begin{pmatrix}1&\cdots&1\end{pmatrix}'$, $Z=\begin{pmatrix}-h&\cdots&+h\end{pmatrix}'$, $\delta=\delta_1$, $D=\sigma^2I$ and when the symmetric filter is the Henderson filter we obtain the Musgrave asymmetric filters. 
-With this filter we assume that the data is generated by a linear process and that the asymmetric filters preserve constant signals ($\sum v_i=\sum w_i=1$). 
-The asymmetric filters depends on the ratio $\delta_1/\sigma$, which is related to the "I-C" ratio $R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}$ ($\delta_1/\sigma=2/(R\sqrt{\pi})$), the ratio between the expected absolute difference of the irregular and of the trend-cycle.
-In the seasonal adjustment method, the I-C ratio^[
-To compute the I-C ratio, a first decomposition of the seasonally adjusted series is computed using a 13-term Henderson moving average.
-] is used to determine the bandwidth to use for the Henderson filter. For monthly data:
+Lorsque $U=\begin{pmatrix}1&\cdots&1\end{pmatrix}'$, $Z=\begin{pmatrix}-h&\cdots&+h\end{pmatrix}'$, $\delta=\delta_1$, $D=\sigma^2I$ et lorsque le filtre symétrique est le filtre d'Henderson, on retrouve les filtres asymétriques de Musgrave.
+Ce filtre suppose, que pour l'estimation en temps-réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes ($\sum v_i=\sum w_i=1$).
+Ces filtres asymétriques dépendent du rapport $\delta_1/\sigma$, qui est lié à l'I-C ratio $R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\ lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}$ ($\delta_1/\sigma=2/(R\sqrt{\pi})$).
+Dans l'algorithme X-12-ARIMA, l'I-C ratio^[
+Pour calculer l'I-C ratio, une première décomposition de la série désaisonnalisée est faite en utilisant un filtre d'Henderson de 13 termes.
+] est utilisé pour déterminer la longueur du filtre d'Henderson. For monthly data:
 
-- if $R<1$ a 9-term Henderson is used ($h=4$);
+- si $R<1$ un filtre d'Henderson de 9 termes est utilisé($h=4$);
 
-- if $1\leq R\leq3.5$ a 13-term Henderson is used ($h=6$);
+- si $1\leq R\leq3.5$ un filtre d'Henderson de 13 termes est utilisé ($h=6$);
 
-- if $3.5< R$ a 23-term Henderson is used ($h=12$).
+- si $3.5< R$ un filtre d'Henderson de 23 termes est utilisé ($h=12$).
 
-In this report, for simplicity we only consider 13-term symmetric filters: the ratio  $\delta^2/\sigma^2$ is fixed to $3.5$.
+Lorsque $U$ correspond aux $d^*+1$ premières colonnes de $X$, $d^*<d$, la contrainte consiste à reproduire des tendances polynomiales de degré $d^*$.
+Cela introduit du bais mais réduit la variance, c'est l'idée suivie par @proietti2008 qui proposent trois classes de filtres asymétriques :
 
-When $U$ corresponds to the first $d^*+1$ first the columns of $X$, $d^*<d$, the constraint is that the asymmetric filter should reproduce polynomial of degree $d^*$, the potential bias depends on the value of $\delta$.
-This will reduce the variance at the expense of a bias: it is the idea followed by @proietti2008 to propose three class of asymmetric filters:
+1. *Linear-Constant* (LC) : $y_t$ linéaire ($d=1$) et $\theta_a$ préserve les constantes ($d^*=0$). 
+On obtient le filtre de Musgrave avec le filtre d'Henderson comme filtre symétrique.
 
-1. *Linear-Constant* (LC): $y_t$ linear ($d=1$) and $v$ preserves constant signals ($d^*=0$). 
-We obtain Musgrave filters when the Henderson kernel is used.
+2. *Quadratic-Linear* (QL) : $y_t$ quadratique ($d=2$) et $\theta_a$ préserve les tendances linéaires ($d^*=1$).
 
-2. *Quadratic-Linear* (QL): $y_t$ quadratic ($d=2$) and $v$ preserves linear signals ($d^*=1$).
-
-3. *Cubic-Quadratic* (CQ): $y_t$ cubic ($d=3$) and $v$ preserves quadratic signals ($d^*=2$).
+3. *Cubic-Quadratic* (CQ) : $y_t$ cubic ($d=3$) et $\theta_a$ préserve les tendances quadratiques ($d^*=2$).
 
 
 The table \@ref(tab:criteriaLp) shows the quality criteria of the different methods with the Henderson kernel and $h=6$. 
@@ -368,59 +355,176 @@ The mean square revision errors are different in level but give same results com
 
 The results for the different kernels can also be visualized in an online application available at https://aqlt.shinyapps.io/FiltersProperties/.
 
-:::: {.summary_box data-latex="{Local polynomial filters}"}
+:::: {.summary_box data-latex="{Filtres locaux polynomiaux}"}
 `r if (is_html) '
 :::{.title}
-Local polynomial filters
+Filtres locaux polynomiaux
 :::
 '`
-**Advantages**:
+**Avantages** :
 
-- Simple models with an easy interpretation.
+- Modèles avec une interprétation simple.
 
 - The asymmetric linear filter is independent of the date of estimation. 
 However, it depends on the data if we calibrate the filter with the "I-C" ratio.
 
 
-**Drawbacks**:
+**Inconvénients** :
 
-- Timeliness is not controlled.
+- La timeliness n'est pas contrôlée.
 ::::
 
+## Extension avec le critère de timeliness
+
+La méthode précédente peut être facilement étendue pour ajouter le critère de *timeliness* définit par @ch15HBSA^[Cela a été codé en Java par Jean Palate dans in https://github.com/palatej/jdemetra-core.].
+En utilisant les mêmes notations que dans \@ref(subsec:lppasymf), $\theta=v$ and noting $g=v-w_p$, the Timeliness criterion can be rewritten:
+$$
+T_g(v)=v'Tv=g'Tg+2w_p'Tg+w_p'Tw_p
+\quad(T\text{ being symmetric)}
+$$
+Moreover, the objective function $\varphi$ of equation \@ref(eq:lppasym) can be rewritten as:
+\begin{align*}
+\varphi(v)&=(v-w_{p})'D_{p}(v-w_{p})+
+  w_{f}'D_{f}w_{f}+
+  [\delta'(Z_{p}'v-Z'w)]^{2}+
+2l'(U_{p}'v-U'w)\\
+&=g'Qg-2Pg+2l'(U_{p}'v-U'w)+c\quad\text{with }
+\begin{cases}
+Q=D_p+Z_p\delta\delta'Z'_p \\
+P=w_fZ_f\delta\delta'Z_p'\\
+c\text{ a constant independent of }v
+\end{cases}
+\end{align*}
+
+Adding the Timeliness criterion, it becomes:
+$$
+\widetilde\varphi(v)=g'\widetilde Qg-
+2\widetilde Pg+2l'(U_{p}'v-U'w)+
+\widetilde c\quad\text{with }
+\begin{cases}
+\widetilde Q=D_p+Z_p\delta\delta'Z'_p +\alpha_TT\\
+\widetilde P=w_fZ_f\delta\delta'Z_p'-\alpha_Tw_pT\\
+\widetilde c\text{ a constant independent of }v
+\end{cases}
+$$
+where $\alpha_T$ is the weight associated to the Timeliness criterion. With $\alpha_T=0$ we find $\varphi(v)$.
+
+The figures \@ref(fig:lppguglc) show the impact of $\alpha_T$ on the coefficients of the linear filter with the LC method:
+
+- The more $\alpha_T$ increases, the more the coefficient associated to the current observation increases: this is what we expected.
+
+- $\alpha_T$ impacts logarithmically the coefficients: we can restraint $\alpha_T$ to $[0,2000]$.
+
+- As expected, including the timeliness criterion has more impact for the value of $q$ that gives filters with higher timeliness: it corresponds to $q\leq2$ for the LC method. 
+For the QL method we find that $\alpha_T$ has an impact for medium values of $q$ ($2\leq q\leq4$).
+
+
+<!-- \begin{figure}[!ht] -->
+<!-- \animategraphics[autoplay,loop,width=\textwidth,controls]{0.5}{img/lppgug_lc_q}{0}{5}  -->
+<!-- \caption{Impact of the timeliness weight ($\alpha_T$) on the coefficients of the local polynomial filter with the LC method with $h=6$, $R=3.5$ and the Henderson kernel. -->
+<!-- }\label{fig:lppguglc}\footnotesize -->
+<!-- \emph{Note: to see the animation, the PDF must be open with Acrobat Reader, KDE Okular, PDF-XChange or Foxit Reader.  -->
+<!-- Otherwise you will only be able to see the results for $q=0$.} -->
+<!-- \end{figure} -->
+
 ## Gray et Thompson
+
+### Filtres symétriques
 
 L'approche de @GrayThomson1996 est proche de celles @proietti2008 et @ch15HBSA.
 De la même façon que pour les autres méthodes, ils considèrent que la série initiale $y_t$ peut se décomposer entre une somme entre la tendance-cycle $g_t$ et d'un bruit blanc $\varepsilon_t$ de variance $\sigma^2$ : 
 $$y_t = g_t+\varepsilon_t.$$
-Toutefois, plutôt que de directement remplacer $g_t$ par un polynôme local de degré $p$, ils prennent en compte l'erreur d'approximation de la tendance :
+Toutefois, plutôt que de directement remplacer $g_t$ par un polynôme local de degré $d$, ils prennent en compte l'erreur d'approximation de la tendance :
 $$
-g_t=\sum_{j=0}^{p}\beta_{j}t^{j}+\xi_{t},
+g_t=\sum_{j=0}^{d}\beta_{j}t^{j}+\xi_{t},
 $$
 où $\xi_t$ est un processus stochastique de moyenne nulle, autocorrélé mais non corrélé à $\varepsilon_t$.
 
 La tendance $g_t$ est estimée par une moyenne mobile : 
 $$
-\hat{g}_{t}=\sum_{s=-r}^{r}w_{s}y_{t+s}
+\hat{g}_{t}=\sum_{s=-r}^{r}\theta_{s}y_{t+s}.
 $$
 
-Pour le filtre symétrique, les coefficients de cette moyenne mobile sont déterminées en minimisant une somme pondérée de deux critères :
+Pour le filtre symétrique, les auteurs cherchent à avoir un estimateur $\hat g_t$ qui soit sans biais (ce qui implique que $\theta$ conserve les tendances de degré $d$) et qui minimise une somme pondérée d'un critère de *fidelity* et d'un critère de *smoothness* :
 \begin{equation}
-Q=\theta\underbrace{\E{(\hat{g}_{t}-g_{t})^{2}}}_{=F}+(1-\theta)\underbrace{\E\left\{ (\Delta^{p+1}\hat{g}_{t})^{2}\right\} }_{=S}
+Q=\alpha\underbrace{\E{(\hat{g}_{t}-g_{t})^{2}}}_{=F_{GT}}+
++(1-\alpha)\underbrace{\E{ (\Delta^{p+1}\hat{g}_{t})^{2}} }_{=S_{GT}}
+(\#eq:graythompsonindicators)
 \end{equation}
-
-La solution est donnée par 
+La solution est un filtre symétrique qui peut s'écrire sous la forme
 \[
-w=E_{\theta}^{-1}X\left[X'E_{\theta}^{-1}X\right]^{-1}e_{1}\text{ et }E_{\theta}=\theta\left(\sigma^{2}I+\Omega\right)+(1-\theta)\left(\sigma^{2}B_{p+1}+\Gamma\right)
+\theta=E_{\alpha}^{-1}X\left[X'E_{\alpha}^{-1}X\right]^{-1}e_{1}\text{ et }E_{\alpha}=\alpha\left(\sigma^{2}I+\Omega\right)+(1-\alpha)\left(\sigma^{2}B_{p+1}+\Gamma\right)
 \]
-
 où :
 \[
 \begin{cases}
 \Omega_{jk} & =cov\left(\xi_{t+j}-\xi_{t},\xi_{t+k}-\xi_{t}\right)\\
 \Gamma_{jk} & =cov\left(\Delta^{p+1}\xi_{t+j},\Delta^{p+1}\xi_{t+k}\right)\\
 \sigma^{2}\left(B_{p+1}\right)_{jk} & =cov\left(\Delta^{p+1}\varepsilon_{t+j},\Delta^{p+1}\varepsilon_{t+k}\right)
-\end{cases}
+\end{cases}.
 \]
+Les deux critères utilisés dans le programme de minimisation \@ref(eq:graythompsonindicators) sont des cas particuliers du critère $I$ définis dans l'équation \@ref(eq:theoriegen1) :
+\begin{align*}
+F_{GT}(\theta)&=I(\theta,0,y_t,M_\theta y_t)\\
+S_{GT}(\theta)&=I(\theta,d+1,y_t,0).
+\end{align*}
+La théorie générale définie dans la section \@(subsec:theoriegen) permet donc de retrouver les filtres de @GrayThomson1996.
+
+En ne minimisant que la *smoothness* et avec $\xi_t=0$ on retrouve le filtre d'Henderson.
+En ne minimisant que la *fidelity*, cette méthode est équivalente à l'estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de @proietti2008 avec $\sigma^2=0$ et $\Omega =K^{-1}$ et le filtre de Macalauy.
+
+### Filtres asymétriques
+
+L'approche retenue par @GrayThomson1996 est une approche de minimisation des révisions sous contraintes.
+Étant donné un filtre symétrique $\theta_s$ utilisé pour estimer la tendance au centre de la série, l'objectif est de chercher un filtre asymétrique $\theta_a=(\theta_{-h},\dots,\theta_q)$ de sorte à minimiser l'erreur quadratique moyenne de révision :
+$$
+\E{\left(Y-\hat Y\right)^2} = 
+\E{\left( \sum_{i=-h}^h\theta_sy_{t+s}-\sum_{i=-h}^q\theta_ay_{t+s} \right)^2}.
+$$
+Les auteurs étudient deux cas :
+
+1. Dans le premier cas ils cherchent un estimateur sans biais : cela implique que $\theta_a$ conserve les mêmes tendances polynomiales que $\theta_s$. 
+$\hat Y$  est alors le meilleur predicteur linéaire sans biais --- *best linear unbiased predictor* (BLUP) --- de $Y$. 
+
+2. Dans le second cas, ils autorisent l'estimateur à être biaisé mais imposent que ce biais soit constant dans le temps : si l'on modélise localement la tendance par un polynôme de degré $d$, cela implique que $\theta_a$ conserve les tendances polynomiales de degré $d-1$.
+$\hat Y$  est alors le meilleur predicteur linéaire à biais constant --- *best linear time invariant predictor* (BLIP) --- de $Y$. 
+Cela permet notamment de reproduire les filtres asymétriques de Musgrave.
+
+La méthode utilisée est donc très proche de celle de @proietti2008 : on retrouve d'ailleurs le filtre DAF avec $\sigma^2=0$ et $\Omega =K^{-1}$ et en utilisant la première méthode (estimation du BLUP) et les méthodes LC (filtre de Musgrave), QL et CQ avec la seconde méthode en utilisant respectivement $d=1$, $d=2$ et $d=3$.
+
+
+
+## Équivalence avec les autres méthodes {#subsec:eqgraythompson}
+
+La méthode de @GrayThomson1996 permet également de retrouver celles @ch15HBSA et @proietti2008.
+En effet, on peut retrouver les critères $F_g$ et $S_g$ peuvent se déduire de $F_{GT}$ et $S_{GT}$.
+
+Notons $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$, $\beta_{t}=\begin{pmatrix}\beta_{0} & \cdots & \beta^{d}\end{pmatrix}'$. 
+
+Pour le critère de *fidelity* :
+$$
+\hat{g}_{t}-g_{t}=\left(\sum_{j=-h}^{+h}\theta_{j}x_{t+j}-x_{t}\right)\beta+\sum_{j=-h}^{+h}\theta_{j}\varepsilon_{t+j}+\sum_{j=-h}^{+h}\theta_{j}(\xi_{t+j}-\xi_{t}),
+$$
+Si $\theta$ préserve les polynômes de degré $d$ alors $\sum_{j=-h}^{+h}\theta_{j}x_{t+j}=x_{t}$. où $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$. 
+Puis, comme $\xi_{t}$ et $\varepsilon_{t}$ sont de moyenne nulle et non corrélés :
+$$
+F_{GT}(\theta)=\E{(\hat{g}_{t}-g_{t})^{2}}=\theta^{'}\left(\sigma^{2}I+\Omega\right)\theta.
+$$
+Si $\xi_t=0$ alors $\Omega=0$ et $F_{GT}(\theta)=F_g(\theta)$.
+
+Pour la *smoothness* on a :
+$$
+\nabla^{q}\hat{g}_{t}=\sum_{j=h}^{h}\theta_{j}\underbrace{\nabla^{q}\left(\left(x_{j}-x_{0}\right)\beta\right)}_{=0\text{ si }q\geq d+1}+\sum_{j=h}^{h}\theta_{j}\nabla^{q}\varepsilon_{t+j}+\sum_{j=h}^{h}\theta_{j}\nabla^{q}\xi_{t+j}.
+$$
+D'où pour $q=d+1$ :
+$$
+S_{GT}(\theta)=\E{(\nabla^{q}\hat{g}_{t})^{2}}=\theta^{'}\left(\sigma^{2}B_{q}+\Gamma_{q}\right)\theta.
+$$
+On peut par ailleurs montrer que pour toute série temporelle $X_t$, $\nabla^{q}(M_{\theta}X_{t})=\left(-1\right)^{q}\sum_{k\in\Z}\left(\nabla^{q}\theta_{k}\right)X_{t+k-q}$ avec $\theta_k=0$ pour $|k|\geq h+1$. 
+Avec $\xi_t=0$ on trouve donc que $S_{GT}(\theta)=\sigma^2S_g(\theta)$.
+
+
+La modélisation de @GrayThomson1996, bien qu'antérieure étant proche de celle de @proietti2008, les moyennes mobiles symétriques et @ch15HBSA.
 
 ## Choix des différents paramètres
 
@@ -430,3 +534,7 @@ Deux paramètres sont cruciaux dans la précision de l'approximation :
 
 - le nombre de voisins $H=2h+1$ (ou la fenêtre $h$) : s'il est trop petit alors trop peu de données seront utilisées pour les estimations (ce qui conduira à une grande variance dans les estimations) et s'il est trop grand alors l'approximation polynomiale sera vraisemblablement fausse ce qui conduira à avoir des estimations biaisées.
 
+the principle of using prediction at the ends of series seems a key one which go es back to DeForest
+De Forest, E. L. (1877), On Adjustment Formulas, The Analyst, 4, 79-86, 107-113.
+ 
+As the first m and last m terms of the series cannot be reached directly by the formula, the series should be graphically extended by m terms at both ends, first plotting the observations on paper as ordinates, and then extending the curve along what seems to be its probable course, and measuring the ordinates of the extended portions. It is not necessary that this extension should coincide with what would be the true course of the curve in those parts. The important point is that the m terms thus added, taken together with the m+1 adjacent given terms, should follow a curve whose form is approximately algebraic and of a degree not higher than the third.
