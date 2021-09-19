@@ -2,7 +2,10 @@
 
 knitr::opts_chunk$set(echo = FALSE,
                       fig.path = "img/",
-                      cache = TRUE)
+                      cache = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+height_cube <- 1.7
 library(kableExtra)
 
 # Fontawesome
@@ -25,8 +28,6 @@ if(is_html){
 ################################
 ########## KNITR ###############
 ################################
-is_html <- knitr::is_html_output()
-is_latex <- knitr::is_latex_output()
 library(htmltools)
 latex_emph <- function(entete = "Note", x, sep = "\n\n"){
     txt <- paste(sprintf("\\emph{%s}", x), collapse = sep)
@@ -91,12 +92,31 @@ add_fig_opt_latex <- function(x, options, nom_opt,
     opt <- options[[nom_opt_complet]]
     if(!is.null(opt)){
         x <- paste(x,
-                   latex_emph(prefix, opt, sep = sep_multi),
+                   latex_emph(prefix, cite_ref_latex(opt), sep = sep_multi),
                    sep = sep_fichier)
     }
     x
 }
-add_footnote_latex <- function(x, options, envir = "figure", remove_envir = TRUE){
+cite_ref_latex <- function(x){
+    split <- strsplit(x, " ")
+    sapply(split, function(phrase){
+        id_ref <- grep("@", phrase)
+        for(i in id_ref){
+            x <- phrase[i]
+            suffix = gsub("^@\\w*","",x)
+            toremoved <- paste0("@",suffix)
+            nomref <- x
+            for(i_c in seq_len(nchar(toremoved))){
+                nomref <- gsub(substr(toremoved,i_c,i_c),"",
+                               nomref, fixed = TRUE) 
+            }
+            phrase[i] <- sprintf("\\textcite{%s}%s",nomref, suffix)
+        }
+        paste(phrase, collapse = " ")
+    })
+}
+add_footnote_latex <- function(x, options, envir = "figure", remove_envir = TRUE,
+                               stop_centering = FALSE){
     
     fin_envir <- sprintf("\\end{%s}", envir)
     if(length(grep(fin_envir, x, fixed = TRUE)) == 0){
@@ -114,9 +134,14 @@ add_footnote_latex <- function(x, options, envir = "figure", remove_envir = TRUE
                                     sep_multi = params[[opt]]$sep_multi,
                                     sep_fichier = params[[opt]]$sep_fichier)
     }
+    if(stop_centering){
+        x <- sub("\\\\centering", "{\n\\\\centering", x)
+        x <- paste0(x, "}\n")
+    }
     x <- paste0(x, ajouts, "\n\\normalsize")
     if(remove_envir){
         x <- sub(fin_envir, "", x, fixed = TRUE)
+        
         x <- paste0(x, fin_envir)  
     }
     x  
@@ -128,9 +153,13 @@ add_footnote_html <- function(x, options){
     }
     x
 }
-add_footnote_perso <- function(x, options, envir = "figure", remove_envir = TRUE){
+add_footnote_perso <- function(x, options, envir = "figure", remove_envir = TRUE,
+                               stop_centering = FALSE){
     if(is_latex){
-        res <-  add_footnote_latex(x, options, envir = envir, remove_envir = remove_envir)
+        res <-  add_footnote_latex(x, options, envir = envir,
+                                   remove_envir = remove_envir,
+                                   stop_centering = stop_centering)
+        
     }else if(is_html){
         res <-  add_footnote_html(x, options)
     }else{
@@ -138,7 +167,9 @@ add_footnote_perso <- function(x, options, envir = "figure", remove_envir = TRUE
     }
     res
 }
-add_footnote_kable <- function(x, options = knitr::opts_current$get()){
+add_footnote_kable <- function(x, options = knitr::opts_current$get(),
+                               stop_centering = FALSE){
+    envir = remove_envir = NULL
     if(length(grep("\\end{table}", x, fixed = TRUE)) >0){
         envir = "table"
         remove_envir = TRUE
@@ -146,7 +177,10 @@ add_footnote_kable <- function(x, options = knitr::opts_current$get()){
         envir = "longtable"
         remove_envir = FALSE
     } 
-    x <- add_footnote_perso(x, options = options, envir = envir, remove_envir = remove_envir)
+    x <- add_footnote_perso(x, options = options, envir = envir,
+                            remove_envir = remove_envir,
+                            stop_centering = stop_centering)
+    
     class(x) <- "knitr_kable"
     if(is_latex){
         attr(x, "format") <- "latex"
