@@ -4,7 +4,6 @@
 %
 \documentclass[
   10pt,
-  french,
   a4paper, fleqn]{article}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -102,34 +101,44 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Theorie gen %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
+
 \node at (3,0) [generalbox, max width=8cm] (theoriegen){
 \[
 \begin{cases}
-G(\theta,q,y_t,u_t)=\E{(\Delta^{q}L_\theta y_t-u_t)^{2}} \\
-F(\theta)=\int_0^\pi f\left[\phi_\theta(\omega, \varphi_\theta (\omega)\right] \ud \omega
+I(\theta,q,y_t,u_t)=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} \\
+J(\theta, f, \omega_1,\omega_2)=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right] \ud \omega
 \end{cases}
 \]
 \begin{align*}
-\hat\theta&\in\argmin \sum \alpha_i G(\theta,q,y_t,u_t^{(i)})+
-\beta_iF_i(\theta)\\
-&s.c.\quad X'_p\theta=e_1
-\end{align*}
+\hat\theta\in\argmin &\sum\alpha_i I(\theta,q_i,y_t,u_t^{(i)})+\beta_iJ(\theta, f_i,\omega_{1}^{(i)}, \omega_{2}^{(i)})\\
+&sc.\quad C\theta=a&
+\end{align*}%
 };
 \node[generaltitle] at (theoriegen.north) (theriegentitle) {Théorie générale};
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Gray Thompson%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
-\node at (0,9) [box, max width=6cm] (graythompson){
-    Minimisation des révisions au filtre symétriques sous contrainte
+\node (graythomsonA) at (-4,  9.7) {};
+\node (graythomsonB) at (4.5,  5.3) {};
+\node (graythomsonequiv) at (0,  5.3) {};
+\draw[multimodelbox] (graythomsonA) rectangle (graythomsonB);
+\node[boxtitle2, below right] at (graythomsonA) (graythompsontitle) {Gray, Thompson (1996)};
+\node at (0,9) [box, below, max width=6cm] (graythompson){
+    Minimisation des révisions au filtre symétrique sous contrainte
 };
-\node[boxtitle] at (graythompson.north) (graythompsontitle) {Gray, Thompson (1996)};
+%\node[boxtitle] at (graythompson.north) (graythompsontitle) {Gray, Thompson (1996)};
 
-\node at (-2,7.5) [submodelbox, max width=3cm, below] (graythompson1){
-    Filtre asymétrique sans biais
+
+\node at (-2.5,7) [submodelbox, max width=3cm, below] (graythompson1){
+    Filtre asymétrique sans biais 
+    
+$\implies X'_{p}\hat\theta^{a}=e_1$
 };
-\node at (2,7.5) [submodelbox, max width=3cm, below] (graythompson2){
-Filtre asymétrique de biais constant ($\implies X'_{p-1}\hat\theta^{a}=e_1$)
+\node at (2,7) [submodelbox, max width=3cm, below] (graythompson2){
+Filtre asymétrique de biais constant 
+
+$\implies X'_{p-1}\hat\theta^{a}=e_1$
 };
 
 \draw [edge] (graythompson) -- (graythompson1) node[right, midway]{Contrainte};
@@ -141,13 +150,13 @@ Filtre asymétrique de biais constant ($\implies X'_{p-1}\hat\theta^{a}=e_1$)
 
 
 \node at (0,-9) [box, max width=8cm] (guggemos){
-$F(\theta)=\sum_{j=-h}^h\theta_j^2$
+$F_g(\theta)=\sum_{j=-h}^h\theta_j^2$
 
-$S(\theta)=\sum_{j=-h}^h(\Delta^q\theta_j)^2$
+$S_g(\theta)=\sum_{j=-h}^h(\Delta^q\theta_j)^2$
 
-$T(\theta)=\int_{0}^{\omega_1}\phi_\theta^2(\omega) \sin^2(\varphi_a(\omega)) \ud \omega$
+$T_g(\theta)=\int_{0}^{\omega_1}\phi_\theta^2(\omega) \sin^2(\varphi_a(\omega)) \ud \omega$
 \begin{align*}
-\hat\theta&\in\argmin \nu_1 F(\theta) + \nu_2 S(\theta)+ (1-\nu_1-\nu_2)T(\theta)\\
+\hat\theta&\in\argmin \nu_1 F_g(\theta) + \nu_2 S_g(\theta)+ (1-\nu_1-\nu_2)T_g(\theta)\\
 &s.c.\quad X'_p\theta=e_1
 \end{align*}
 };
@@ -159,10 +168,13 @@ $T(\theta)=\int_{0}^{\omega_1}\phi_\theta^2(\omega) \sin^2(\varphi_a(\omega)) \u
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\draw[multimodelbox] (8,-10.8) rectangle (24.8, -3);
+\node (proiettiluatiA) at (8,-10.8) {};
+\node (proiettiluatiB) at (24.8,-3.5) {};
+\draw[multimodelbox] (proiettiluatiA) rectangle (proiettiluatiB);
+\node[boxtitle2, below left] at (proiettiluatiB) (proiettiluatititle) {Proietti et Luati (2008)};
 
 \node at (20,-9) [box, max width=8cm, inner ysep=2pt] (proiettiluati){
-\begin{center}\centering \textbf{Modèle générale}\end{center}\vspace{-0.2cm}
+\begin{center}\centering \textbf{Modèle général}\end{center}\vspace{-0.2cm}
 \[
 y=U\gamma+Z\delta+\varepsilon,\quad \varepsilon\sim\mathcal N (0,D)
 \text{ et } \begin{bmatrix} U & Z \end{bmatrix} \subset X
@@ -175,7 +187,7 @@ U'_p\theta^a=U\theta^s, \quad U=\begin{bmatrix} U_p \\ U_f \end{bmatrix}
 };
 
 %\node[boxtitle] at (proiettiluati.north) (proiettiluatititle) {Proietti et Luati (2008)};
-\node[boxtitle2, below left] at (24.8,-3) (proiettiluatititle) {Proietti et Luati (2008)};
+
 
 %%%% DAF %%%%
 \node at (11,-9.7) [submodelbox, max width=4.5cm, above] (daf){
@@ -194,7 +206,7 @@ méthode symétrique mais avec moins de données
 };
 
 %%%% QL %%%%
-\node at (11,-6.5) [submodelbox, max width=4.5cm, above] (ql){
+\node at (11,-6.8) [submodelbox, max width=4.5cm, above] (ql){
   \begin{center}\centering \textbf{QL}\end{center}\vspace{-0.5cm}
   \[
   y_t=\gamma_0+\gamma_1 t+\delta t^2 +\varepsilon_t,
@@ -204,7 +216,7 @@ méthode symétrique mais avec moins de données
 
 
 %%%% LC %%%%
-\node at (18,-5.5) [submodelbox, max width=4.5cm, above] (lc){
+\node at (20,-6) [submodelbox, max width=4.5cm, above] (lc){
 \begin{center}\centering \textbf{LC/Musgrave}\end{center}\vspace{-0.5cm}
 \[
 y_t=\gamma_0+\delta t +\varepsilon_t, 
@@ -273,13 +285,13 @@ $$
 
 \node at (10,7.6) [box, max width=8cm] (trilemna){
 \begin{align*}
-A_w&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
-T_w&= 8\int_0^{\omega_1}\rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
-S_w&= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)^{2}-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega%\\
+A_w(\theta)&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
+T_w(\theta)&= 8\int_0^{\omega_1}\rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
+S_w(\theta)&= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)^{2}-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega%\\
 %R_w&= 8\int_{\omega_1}^\pi\rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega
 \end{align*}
 \[
-\min\nu_1T_w+\nu_2S_w+(1-\nu_1-\nu_2)A_w
+\min\nu_1A_w + \nu_2T_w+(1-\nu_1-\nu_2)S_w
 \]
 };
 \node[boxtitle] at (trilemna.north) (trilemnatitle) {Wildi, McElroy (2019)};
@@ -294,21 +306,32 @@ S_w&= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)^{2}-\rho_\theta(\omega)\right)^{2
 %%%%%% Theorie gen
 
 %% gray thomson
-\draw[edgegeneral] (theoriegen.150)--(graythompson.south) node[midway, right]{
-$F(\theta)=G(\theta,0,y_t,g_t)$
-
-$S(\theta)=G(\theta,p+1,y_t,0)$
+\draw[edgegeneral] (theoriegen.150)--(graythomsonequiv) node[midway, right]{
+$y_t=\underbrace{\sum_{j=0}^d\beta_jt^j+\xi_t}_{=\mu_t}+\varepsilon_t$
 };
 
 %% guggemos
-\draw[edgegeneral] (theoriegen.208)--(guggemostitle.north) node[near start, right]{
-$F(\theta)=G(\theta,0,y_t,\E{L_\theta y_t})$
+\draw[edgegeneral, max width = 8cm] (theoriegen.208)--(guggemostitle.north) node[near start, right]{
+$F_g(\theta)=I(\theta,0,y_t,\E{L_\theta y_t})$
 
-$S(\theta)=G(\theta,q,y_t,\E{L_\theta y_t})$
+$S_g(\theta)=I(\theta,q,y_t,\E{L_\theta y_t})$
 
-$T(\theta)=G(\theta,q,y_t,\E{L_\theta y_t})$
+$T_g(\theta)=J(\theta,f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2,0, \,\omega_1)$
 
 $y_t=\sum_{j=0}^p\beta_jt^j+\varepsilon_t, \quad \varepsilon_{t}\overset{i.i.d}{\sim}\mathcal{N}(0,\sigma^{2})$
+};
+
+\draw[edgegeneral, max width = 8cm] (theoriegen.0)-|(trilemna.south) node[near end, left]{
+$\begin{cases}
+    f_1(\rho,\varphi, \omega)=2\left(\rho_s(\omega)-\rho\right)^{2}h(\omega) \\
+    f_2(\rho,\varphi, \omega)=8\rho_s(\omega)\rho\sin^{2}\left(\frac{\varphi}{2}\right)h(\omega)
+\end{cases}$
+\begin{align*}
+A_w(\theta)&= J(\theta,f_1,0,\omega_1)\\
+T_w(\theta)&= J(\theta,f_2,0,\omega_1)\\
+S_w(\theta)&= J(\theta,f_1,\omega_1,\pi)\\
+R_w(\theta)&= J(\theta,f_2,\omega_1,\pi).
+\end{align*}
 };
 \end{tikzpicture}
 
