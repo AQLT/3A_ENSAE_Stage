@@ -1,0 +1,258 @@
+# Comparaison avec le filtre FST {#sec:annexeFST}
+
+Cette annexe synthétise les cas où il est possible de trouver un ensemble de poids tels que les filtres FST ont de meilleurs propriété (en termes de *fidelity*, *smoothness* et *timeliness*) que les filtres polynomiaux ou RKHS avec les mêmes contraintes sur la préservation des polynômes (ou des contraintes supérieures).
+Par simplicité, les graphiques ne sont tracées que pour les principales méthodes étudiées : le filtre *Linear-Constant* (LC) et le filtre RKHS $b_{q,\varphi}$ obtenu par minimisation de la *timeliness*.
+Pour les filtres LC, l'I-C ratio a été fixé à 3,5 : le fixer à une autre valeur (4,5) ne change pas les résultats.
+
+```{r, include = FALSE}
+if(is_latex){
+    note <- c("La zone grisée corresponds à l'ensemble $\\left\\{\\begin{pmatrix}x & y & z \\end{pmatrix}' : x+y+z=1\\right\\}$.",
+          "Le graphique est vide lorsque aucun poids ne permet de trouver de filtre FST qui minimise la \\emph{fidelity}, \\emph{smoothness} et la \\emph{timeliness} par rapport au filtre étudié.")
+}else{
+    note <- c("La zone grisée corresponds à l'ensemble $\\left\\{\\begin{pmatrix}x \\; y \\; z \\end{pmatrix}' : x+y+z=1\\right\\}$.",
+          "Le graphique est vide lorsque aucun poids ne permet de trouver de filtre FST qui minimise la fidelity, smoothness et la timeliness par rapport au filtre étudié.")
+}
+```
+
+
+## Filtres polynomiaux locaux
+
+<!-- ### Méthode *Linear-Constant* (LC) -->
+
+```{r lc6d0ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Linear-Constant* (LC) sous contrainte de préservation des constantes ($d=0$) et pour $h=6$, $I/C=3,5$.", fig.note = note, fig.height=height_cube*2}
+data = readRDS(sprintf("data/comparaison_fst/comparison_fst_weights_h%s_all.RDS", 6))
+par(mfrow = c(2,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:5){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "LC", degree = 0, theta = 150,
+                titre = titre)
+}
+```
+
+
+```{r lc6d1ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Linear-Constant* (LC) sous contrainte de préservation des droites ($d=1$) et pour $h=6$, $I/C=3,5$.", fig.note = note, fig.height=height_cube*2}
+par(mfrow = c(2,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:5){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "LC", degree = 1, theta = 150,
+                titre = titre)
+}
+```
+
+
+
+```{r lc11d0ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Linear-Constant* (LC) sous contrainte de préservation des constantes ($d=0$) et pour $h=11$, $I/C=3,5$.", fig.note = note, fig.height=10, fig.height=height_cube*4}
+data = readRDS(sprintf("data/comparaison_fst/comparison_fst_weights_h%s_all.RDS", 11))
+par(mfrow = c(4,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:11){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "LC", degree = 0, theta = 150,
+                titre = titre)
+}
+```
+
+
+```{r lc11d1ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Linear-Constant* (LC) sous contrainte de préservation des droites ($d=1$) et pour $h=11$, $I/C=3,5$.", fig.note = note, fig.height=10, fig.height=height_cube*4}
+par(mfrow = c(4,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:11){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "LC", degree = 1, theta = 150,
+                titre = titre)
+}
+```
+
+
+<!-- ### Méthode *Quadratic-Linear* (QL) -->
+
+<!-- ```{r ql6d1ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Quadratic-Linear* (QL) sous contrainte de préservation des droites ($d=1$) et pour $h=6$, $I/C=3,5$.", fig.note = note} -->
+<!-- par(mfrow = c(2,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:5){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "QL", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- ```{r ql6d2ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Quadratic-Linear* (QL) sous contrainte de préservation des tendances quadratiques ($d=2$) et pour $h=6$, $I/C=3,5$.", fig.note = note} -->
+<!-- par(mfrow = c(2,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:5){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "QL", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+
+<!-- ```{r ql11d1ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Quadratic-Linear* (QL) sous contrainte de préservation des droites et pour $h=11$ ($d=1$), $I/C=3,5$.", fig.note = note, fig.height=10} -->
+<!-- par(mfrow = c(4,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:11){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "QL", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+
+<!-- ```{r ql11d2ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Quadratic-Linear* (QL) sous contrainte de préservation des tendances quadratiques ($d=2$) et pour $h=11$ $I/C=3,5$.", fig.note = note, fig.height=10} -->
+<!-- par(mfrow = c(4,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:11){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "QL", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ### Méthode *Cubic-Quadratic* (CQ) -->
+
+
+<!-- ```{r cq6d2ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Cubic-Quadratic* (CQ) sous contrainte de préservation des tendances quadratiques ($d=2$) et pour $h=6$, $I/C=3,5$.", fig.note = note} -->
+<!-- par(mfrow = c(2,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:5){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "CQ", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ```{r cq6d3ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Cubic-Quadratic* (CQ) sous contrainte de préservation des tendances cubiques ($d=3$) et pour $h=6$, $I/C=3,5$.", fig.note = note} -->
+<!-- par(mfrow = c(2,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:5){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "CQ", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+
+
+<!-- ```{r cq11d2ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Cubic-Quadratic* (CQ) sous contrainte de préservation des tendances quadratiques ($d=2$) et pour $h=11$ $I/C=3,5$.", fig.note = note, fig.height=10} -->
+<!-- par(mfrow = c(4,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:11){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "CQ", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ```{r cq11d3ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Cubic-Quadratic* (CQ) sous contrainte de préservation des tendances cubiques ($d=3$) et pour $h=11$ $I/C=3,5$.", fig.note = note, fig.height=10} -->
+<!-- par(mfrow = c(4,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:11){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "CQ", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ### Méthode *Direct Asymetric Filter* (DAF) -->
+
+
+<!-- ```{r daf6d3ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Direct Asymetric Filter* (DAF) sous contrainte de préservation des tendances cubiques ($d=3$) et pour $h=6$, $I/C=3,5$.", fig.note = note} -->
+<!-- par(mfrow = c(2,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:5){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "DAF", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+
+<!-- ```{r daf11d3ic35, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre *Direct Asymetric Filter* (DAF) sous contrainte de préservation des tendances cubiques ($d=3$) et pour $h=11$ $I/C=3,5$.", fig.note = note, fig.height=10} -->
+<!-- par(mfrow = c(4,3),  -->
+<!--     mar = 0 + c(1, 0, 1, 0), -->
+<!--     mai = c(0.2, 0.2, 0.2, 0.2)) -->
+<!-- for(q in 0:11){ -->
+<!--     titre <- sprintf("q = %i", q) -->
+<!--     global_plot(data, q = q, method = "DAF", degree = 1, theta = 150, -->
+<!--                 titre = titre) -->
+<!-- } -->
+<!-- ``` -->
+
+## Filtres RKHS
+
+<!-- ### Filtres minimisant le déphasage ($b_{q,\varphi}$) -->
+
+```{r rkhs6d0, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre $b_{q,\\varphi}$ sous contrainte de préservation des constantes ($d=0$) et pour $h=6$.", fig.note = note, fig.height=height_cube*2}
+data = readRDS(sprintf("data/comparaison_fst/comparison_fst_weights_h%s_all.RDS", 6))
+par(mfrow = c(2,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:5){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "phase", degree = 0, theta = 150,
+                titre = titre)
+}
+```
+
+
+```{r rkhs6d1, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre $b_{q,\\varphi}$ sous contrainte de préservation des droites ($d=1$) et pour $h=6$.", fig.note = note, fig.height=height_cube*2}
+par(mfrow = c(2,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:5){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "phase", degree = 1, theta = 150,
+                titre = titre)
+}
+```
+
+
+
+```{r rkhs11d0, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre $b_{q,\\varphi}$ sous contrainte de préservation des constantes ($d=0$) et pour $h=11$.", fig.note = note, fig.height=height_cube*4}
+data = readRDS(sprintf("data/comparaison_fst/comparison_fst_weights_h%s_all.RDS", 11))
+par(mfrow = c(4,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:11){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "phase", degree = 0, theta = 150,
+                titre = titre)
+}
+```
+
+
+```{r rkhs11d1, fig.cap = "Ensemble des poids pour lesquels la méthode FST donne des filtres de meilleurs qualité que le filtre $b_{q,\\varphi}$ sous contrainte de préservation des droites ($d=1$) et pour $h=11$.", fig.note = note, fig.height=height_cube*4}
+par(mfrow = c(4,3), 
+    mar = 0 + c(1, 0, 1, 0),
+    mai = c(0.2, 0.2, 0.2, 0.2))
+for(q in 0:11){
+    titre <- sprintf("q = %i", q)
+    global_plot(data, q = q, method = "phase", degree = 1, theta = 150,
+                titre = titre)
+}
+```
+
+
+

@@ -1,1 +1,4 @@
-# References {-}
+\newpage
+`r if (knitr::is_html_output()) '
+# Références {-}
+'`
