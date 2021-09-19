@@ -5,9 +5,11 @@
 Pour établir une théorie générale englobant les principaux filtres linéaires, @ch15HBSA définissent deux critères :
 \begin{align}
 I(\theta,q,y_t,u_t)&=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} (\#eq:theoriegen1) \\
-J(\theta,f, \omega_1,\omega_2)&=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right] \ud \omega (\#eq:theoriegen2)
+J(\theta,f, \omega_1,\omega_2)&=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega), \omega\right] \ud \omega (\#eq:theoriegen2)
 \end{align}
 où $y_t$ est la série étudiée, $u_t$ une série de référence et $\Delta$ est l'opérateur différence ($\Delta y_t=y_t-y_{t-1}$ et $\Delta^q=\underbrace{\Delta \circ \dots \circ \Delta}_{q\text{ fois}}$ pour $q\in\N$).
+Dans la majorité des cas, la fonction $f$ ne dépendra que de la fonction de de gain, $\phi_\theta$, et de la fonction de déphasage, $\varphi_\theta$.
+Dans ce cas, par simplification on écrira $f\left[\phi_\theta(\omega), \varphi_\theta (\omega), \omega\right] ) = f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right]$.
 
 Comme nous le montrerons dans ce rapport, la majorité des filtres linéaires peut s'obtenir par une minimisation d'une somme pondérée de ces critères, sous contrainte linéaire sur les coefficients :
 
@@ -21,7 +23,7 @@ $$
 
 C'est en particulier le cas de l'approche *Fidelity-Smoothness-Timeliness* (FST) développée par les mêmes auteurs.
 
-## Approche *Fidelity-Smoothness-Timeliness* (FST) {#sec:GuggemosEtAl}
+## Approche *Fidelity-Smoothness-Timeliness* (FST) {#subsec:GuggemosEtAl}
 
 Pour construire les moyennes mobiles symétriques, @GrunRehommeLadiray1994 et @GrayThomson1996 proposent un programme de minimisation sous contrainte qui fait un compromis entre réduction de la variance et "lissage" de la tendance. 
 @ch15HBSA étendent ces approches en les appliquant à la construction des filtres asymétriques et en ajoutant un critère permettant de contrôler le déphasage. 
@@ -42,18 +44,19 @@ S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}.
 $$
 Ce critère mesure la proximité du signal de sortie à une tendance polynômiale de degré $d-1$. 
 Avec $d=3$, Henderson utilise ce critère de lissage pour construire des moyennes mobiles conservant des polynômes de degré 2.
-$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@(subsec:eqgraythompson)).
+$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@(subsec:eqgraythomson)).
 
 
 - *Timeliness* (temporalité), $T_g$ : il mesure le déphasage entre le signal d'entrée et le signal de sortie à des fréquences spécifiques.
 Lorsqu'un filtre linéaire est appliqué, le niveau du signal d'entrée est également modifié par la fonction de gain : il est donc intuitif de considérer que plus le gain est élevé, plus l'impact du déphasage le sera.
 
 C'est pourquoi le critère de déphasage dépend des fonctions de gain et de déphasage ($\rho_\theta$ et $\varphi_{\theta}$), le lien entre les deux fonctions étant faite à partir d'une fonction de pénalité $f$^[
-@ch15HBSA suggèrent 6 conditions de régularité à la fonction de pénalité afin qu'elle soit adaptée au problème de déphasage : $f \geq 0$, $f\left(\rho,0\right)=0$, $f\left(0,\varphi\right)=0$, $f\left(\rho,\varphi\right)=f\left(\rho,-\varphi\right)$, $\frac{\partial f}{\partial \rho} \geq 0$ et
+@ch15HBSA suggèrent 6 conditions de régularité à la fonction de pénalité afin qu'elle soit adaptée au problème de déphasage.
+Dans leur article la fonction $f$ ne dépend que du gain et du déphasage de $\theta$ et les 6 conditions sont : $f \geq 0$, $f\left(\rho,0\right)=0$, $f\left(0,\varphi\right)=0$, $f\left(\rho,\varphi\right)=f\left(\rho,-\varphi\right)$, $\frac{\partial f}{\partial \rho} \geq 0$ et
 $\varphi \cdot \frac{\partial f}{\partial \varphi} \geq 0$.
 ] :
 $$
-\int_{\omega_{1}}^{\omega_{2}}f(\rho_{\theta}(\omega),\varphi_{\theta}(\omega))\ud\omega
+\int_{\omega_{1}}^{\omega_{2}}f(\rho_{\theta}(\omega),\varphi_{\theta}(\omega))\ud\omega.
 $$
 Comme fonction de pénalité, les auteurs suggèrent de prendre $f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2$. 
 Cela permet notamment d'avoir une *timeliness* qui peut s'écrire comme une forme quadratique positive ($T_g(\theta)=\theta'T\theta$ avec $T$ une matrice carré symmétrique d'ordre $p+f+1$, voir @ch15HBSA pour la démonstration).
