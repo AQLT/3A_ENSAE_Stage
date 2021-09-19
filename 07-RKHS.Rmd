@@ -130,8 +130,6 @@ b_{q,\varphi}=\underset{b_q\in[h; 3h]}{\min}
 $$
 Dans `rjdfilters` $h$ peut être fixée à la densité d'un bruit blanc ($h_{WN}(x)=1$) ou d'une marche aléatoire ($h_{RW}(x)=\frac{1}{2(1-\cos(x))}$).
 
-Un des inconvénients de cette méthode est qu'il n'y a as unicité de la solution et donc qu'il y a parfois plusieurs extremum (voir annexe \@ref(ann:minrkhs), graphiques \@ref(rkhstimeliness4wn), \@ref(rkhstimeliness4rw), \@ref(rkhstimeliness6wn), \@ref(rkhstimeliness6rw), \@ref(rkhstimeliness11wn) et \@ref(rkhstimeliness11rw) sur la timeliness).
-
 :::: {.remarque data-latex=""}
 Pour assurer une cohérence dans les définitions entre les différentes sections, les définitions de $b_{q,G}$, $b_{q,\gamma}$ et $b_{q,\varphi}$ ont été légèrement modifiées par rapport à celles définies dans @dagumbianconcini2015 où :
 
@@ -161,24 +159,29 @@ où $\Omega_S=[0,2\pi/36]$ est l'intervalle de fréquences associé aux cycles d
 ::::
 
 
-The table \@ref(tab:criteriarkhs) shows the quality criteria of the RKHS filters.
-Even if the symmetric filter preserves quadratic trends, this is not the case of the asymmetric filters: they only preserve constant trends.
-The more data is available (i.e.: $q$ increases), the less the asymmetric filters distort polynomial trends (for example, for $q=2$, $b_l\simeq0$ for $b_{q,G}$).
+Un des inconvénients de cette méthode est qu'il n'y a as unicité de la solution et donc qu'il y a parfois plusieurs extremum (voir annexe \@ref(ann:minrkhs), graphiques \@ref(rkhstimeliness4wn), \@ref(rkhstimeliness4rw), \@ref(rkhstimeliness6wn), \@ref(rkhstimeliness6rw), \@ref(rkhstimeliness11wn) et \@ref(rkhstimeliness11rw) sur la *timeliness*).
+Cela affecte uniquement les filtres qui minimisent la timeliness et uniquement pour certaines valeurs de $q$ (par exemple $q=5$ pour un filtre symétrique de 13 termes).
+Comme notamment montré dans @JSM2021AQLTLQ, la valeur optimal retenue par défaut par `rjdfilters` produit des discontinuités dans l'estimation de la tendance-cycle : dans les cas où il y a plusieurs extremum, il serait donc préférable de retenir celui pour lequel $b$ est maximal. 
+C'est ce qui a été retenu dans la suite de ce rapport, c'est également cohérent avec les valeurs optimales présentés dans @dagum2015new.
 
-```{r criteriarkhs, echo = FALSE}
-library(kableExtra)
-rkhs_diagnostics <- readRDS("data/rkhs_diagnostics.RDS")
-title <- "Critères de qualité de qualité des filtres asymétriques ($q=0,1,2$) calculés à partir des RKHS pour $h=6$."
-colnames(rkhs_diagnostics) <- gsub(" ?\\$ ?","$",colnames(rkhs_diagnostics))
-rkhs_diagnostics[,1] <- gsub(" ?\\$ ?","$",rkhs_diagnostics[,1])
-groupement <- table(rkhs_diagnostics[,1])
-rkhs_diagnostics[,-1] %>% 
-  kable(format.args = list(digits = 3), align = "c", booktabs = T, row.names = FALSE,
-        escape = FALSE,caption = title) %>% 
-  kable_styling(latex_options=c(#"striped", 
-                                "scale_down", "hold_position")) %>%
-  pack_rows(index = groupement, escape = FALSE)
-```
+<!-- The table \@ref(tab:criteriarkhs) shows the quality criteria of the RKHS filters. -->
+<!-- Even if the symmetric filter preserves quadratic trends, this is not the case of the asymmetric filters: they only preserve constant trends. -->
+<!-- The more data is available (i.e.: $q$ increases), the less the asymmetric filters distort polynomial trends (for example, for $q=2$, $b_l\simeq0$ for $b_{q,G}$). -->
+
+<!-- ```{r criteriarkhs, echo = FALSE} -->
+<!-- library(kableExtra) -->
+<!-- rkhs_diagnostics <- readRDS("data/rkhs_diagnostics.RDS") -->
+<!-- title <- "Critères de qualité de qualité des filtres asymétriques ($q=0,1,2$) calculés à partir des RKHS pour $h=6$." -->
+<!-- colnames(rkhs_diagnostics) <- gsub(" ?\\$ ?","$",colnames(rkhs_diagnostics)) -->
+<!-- rkhs_diagnostics[,1] <- gsub(" ?\\$ ?","$",rkhs_diagnostics[,1]) -->
+<!-- groupement <- table(rkhs_diagnostics[,1]) -->
+<!-- rkhs_diagnostics[,-1] %>%  -->
+<!--   kable(format.args = list(digits = 3), align = "c", booktabs = T, row.names = FALSE, -->
+<!--         escape = FALSE,caption = title) %>%  -->
+<!--   kable_styling(latex_options=c(#"striped",  -->
+<!--                                 "scale_down", "hold_position")) %>% -->
+<!--   pack_rows(index = groupement, escape = FALSE) -->
+<!-- ``` -->
 
 :::: {.summary_box data-latex="{RKHS filters}"}
 `r if (is_html) '
