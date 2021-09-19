@@ -1,20 +1,15 @@
 # Moving average and filters {#sec:propMM}
 
-<!-- [toto]: sec-propMM.html#toto  "1" -->
+Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple @ch12HBSA pour plus de détails). 
 
-<!-- ello Here is [1][toto] -->
-
-<!-- \@ref(toto) -->
-
-
-Cette section décrit des définitions et les propriétés des moyennes mobiles (voir par exemple @ch12HBSA pour plus de détails). 
-
-Soient deux entiers $p$ et $f$. Une *moyenne mobile* $M_\theta$ ou $M$ est un opérateur linéaire définit par un ensemble de coefficients $\theta=(\theta_{-p},\dots,\theta_{f})'$ qui transforme toute série temporelle $X_t$ en :
+Soient deux entiers $p$ et $f$.
+Une *moyenne mobile* $M_\theta$ ou $M$ est un opérateur linéaire définit par un ensemble de coefficients $\theta=(\theta_{-p},\dots,\theta_{f})'$ qui transforme toute série temporelle $X_t$ en :
 $$
 M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}.
 $$
+On a les définitions suivantes :
 
-- $p+f+1$ est appelée *ordre de la moyenne mobile*.
+- La quantité $p+f+1$ est appelée *ordre de la moyenne mobile*.
 
 - Lorsque $p=f$ la moyenne mobile est dite *centrée*. 
 Si de plus on a $\forall k:\:\theta_{-k} = \theta_k$, la moyenne mobile $M_\theta$ est dite *symétrique*. 
@@ -40,12 +35,12 @@ Cette fonction est parfois définie comme  $\phi_\theta(\omega)=\frac{\Phi_\thet
 ]. 
 Pour tous les filtres symétriques on a $\Phi_\theta(\omega)\equiv 0 \pmod{\pi}$.
 
-En somme, l'application d'une moyenne mobile à une série harmonique la modifie de deux façons :
+En somme, appliquer une moyenne mobile à une série harmonique la modifie de deux façons :
 
-- en la multipliant par un coefficient égal à $G_{\theta}\left(\omega\right)$ ;
+- en la multipliant par un coefficient égal à $G_{\theta}\left(\omega\right)$ (gain) ;
 
-- en la "décalant" dans le temps de $\Phi_\theta(\omega)/\omega$, ce qui a un impact sur la détection des points de retournement^[
-Lorsque $\Phi_\theta(\omega)/\omega>0$ le déphasage est positif: le point de retournement est détecté avec retard.
+- en la "décalant" dans le temps de $\Phi_\theta(\omega)/\omega$, ce qui a un impact sur la détection des points de retournement (déphasage) ^[
+Lorsque $\Phi_\theta(\omega)/\omega>0$ le déphasage est positif : le point de retournement est détecté avec retard.
 ].
 
 Par exemple, avec $M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}$ on a:
@@ -81,14 +76,18 @@ xticklabels={0,$\pi$,$2\pi$,$3\pi$,$4\pi$,$5\pi$}
 \caption{Lissage de la série $X_t=\sin(\omega t)$ par la moyenne mobile $M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}$ pour $\omega=\pi/2$.}\label{fig:exgainPhase}
 \end{figure}
 
-```{r exgainPhase, echo=FALSE, out.width="100%", fig.cap="Lissage de la série $X_t=\\sin(\\omega t)$ par la moyenne mobile $M_{\\theta_0}X_t=\\frac{1}{2}X_{t-1}+\\frac{1}{2}X_{t}$ pour $\\omega=\\pi/2$.", eval=!is_latex}
+<!-- knitr::include_graphics("img/tikz-def-mm.png") -->
+
+
+```{r exgainPhase2, echo=FALSE, out.width="100%", fig.cap="Lissage de la série $X_t=\\sin(\\omega t)$ par la moyenne mobile $M_{\\theta_0}X_t=\\frac{1}{2}X_{t-1}+\\frac{1}{2}X_{t}$ pour $\\omega=\\pi/2$.", eval=!is_latex}
 knitr::include_graphics("img/tikz-def-mm.png")
 ```
 
 
 ## Propriétés souhaitables d'une moyenne mobile
 
-Pour décomposer une série temporelle en une composante saisonnière, une tendance-cyle et l'irrégulier, l'algorithme de décomposition X-11 utilise une succession de moyennes mobiles ayant toutes des contraintes spécifiques. Dans cette sous-section nous décrivons trois types de contraintes :
+Pour décomposer une série temporelle en une composante saisonnière, une tendance-cycle et l'irrégulier, l'algorithme de décomposition X-11 utilise une succession de moyennes mobiles ayant toutes des contraintes spécifiques. 
+Dans cette sous-section nous décrivons trois types de contraintes :
 
 - la préservation de certaines tendances ;
 
@@ -132,16 +131,16 @@ $$
 
 Soit $S_t$ une série à saisonnalité fixe de périodicité $P$ ($P=12$ pour une série mensuelle, $P=4$ pour une série trimestrielle, etc.). 
 On a donc $S_t=S_{t+P}$ et la somme de $P$ termes consécutifs est constante dans le temps^[
-Dans le cadre de la désaisonnalisation, cette constante est supposée égale à 0 car dans le cas contraire cette constante serait plutôt affectée à la composante tendance-cycle.
+Dans le cadre de la désaisonnalisation, cette constante est supposée égale à 0 car, dans le cas contraire, elle serait plutôt affectée à la composante tendance-cycle.
 ]. Ainsi, une moyenne mobile simple d'ordre $P$ (dont tous les coefficients sont égaux à $1/P$) supprime les saisonnalités fixes.
 
-Il est également possible de constituer des moyennes mobiles plus complexes supprimant la saisonnalité qui évoluerait polynomialement dans le temps (voir par exemple @GrunRehommeLadiray1994)
+Il est également possible de constituer des moyennes mobiles plus complexes supprimant la saisonnalité qui évoluerait polynomialement dans le temps (voir par exemple @GrunRehommeLadiray1994).
 
 
 ### Réduction du bruit
 
 Toutes les séries temporelles sont affectées par du bruit qui peut brouiller l'extraction du signal. 
-C'est pourquoi on cherche à réduire ce bruit (en réduisant la variance) tout en conservant le signal (en utilisant les propriétés vues dans les sections précédentes).
+C'est pourquoi on cherche à réduire ce bruit (en réduisant sa variance) tout en conservant le signal (en utilisant les propriétés vues dans les sections précédentes).
 La somme des carrés des coefficients $\sum_{k=-p}^{+f}\theta_k^2$ est le rapport de *réduction de la variance*.
 
 En effet, soit $\{\varepsilon_t\}$ une suite de variables aléatoires indépendantes avec $\E{\varepsilon_t}=0$, $\V{\varepsilon_t}=\sigma^2$. 
@@ -152,80 +151,115 @@ $$
 \sigma^2\sum_{k=-p}^{+f} \theta_k^2.
 $$
 
-## Real-time estimation and asymmetric moving average {#defAsymProb}
+## Estimation en temps réel et moyennes mobiles asymétriques {#sec:mmasym}
 
-For symmetric filters, the phase shift function is equal to zero (modulo $\pi$).
-Therefore, there is no delay in any frequency: that's why they are preferred to the asymmetric ones. 
-However, they cannot be used in the beginning and in the end of the time series because no past/future value can be used. 
-Thus, for real-time estimation, it is needed to build asymmetric moving average that approximate the symmetric moving average.
 
-The approximation is summarized by quality indicators. 
-In this paper we focus on the ones defined by @ch15HBSA and @trilemmaWMR2019 to build the asymmetric filters.
+Pour les filtres symétriques, la fonction de déphasage est égale à zéro (modulo $\pi$).
+Il n'y a donc aucun retard dans la détection de points de retournement : c'est notamment pourquoi ils sont préférés aux asymétriques.
+Toutefois, ils ne peuvent pas être utilisés au début et à la fin de la série car aucune valeur passée/future ne peut être utilisée.
+Ainsi, pour l'estimation en temps réel, il est nécessaire de construire une moyenne mobile asymétrique qui se rapproche de la moyenne mobile symétrique.
 
-@ch15HBSA propose a general approach to derive linear filters, based on an optimization problem of three criteria: *Fidelity* ($F_g$, noise reduction), *Smoothness* ($S_g$) and *Timeliness* ($T_g$, phase shift between input and ouput signals). 
-See section \@ref(sec:GuggemosEtAl) for more details.
+### Moyennes mobiles asymétriques et prévision {#subec:mmetprev}
 
-@trilemmaWMR2019 propose an approach based on the decomposition of the mean squared error between the symmetric and the asymmetric filter in four quantities: *Accuracy* ($A_w$), *Timeliness* ($T_w$), *Smoothness* ($S_w$) and *Residual* ($R_w$).
-See section \@ref(sec:WildiMcLeroy) for more details.
+En début et en fin de série, les moyennes mobiles asymétriques ne peuvent être utilisées du fait du manque de données disponibles.
+Une solution est de prolonger la série par prévision pour ensuite appliquer le filtre symétrique.
+Cette méthode semble remonter à @deforest1877adjustment qui suggèrent également de modéliser en fin de période une tendance polynomiale de degré au plus 3 :
 
-All the indicators are summarized in table \@ref(tab:QC).
+:::{.quote data-latex=""}
+« *As the first $m$ and last $m$ terms of the series cannot be reached directly by the formula, the series should be graphically extended by m terms at both ends, first plotting the observations on paper as ordinates, and then extending the curve along what seems to be its probable course, and measuring the ordinates of the extended portions.* 
+*It is not necessary that this extension should coincide with what would be the true course of the curve in those parts. *
+*The important point is that the m terms thus added, taken together with the $m+1$ adjacent given terms, should follow a curve whose form is approximately algebraic and of a degree not higher than the third.* »
+:::
 
-\begin{table}[!ht]
-$$\begin{array}{ccc}
-\hline \text{Sigle} & \text{Description} & \text{Formula}\\
-\hline b_{c} & \text{Constant bias} & \sum_{k=-p}^{+f}\theta_{k}-1\\
-\hline b_{l} & \text{Linear bias} & \sum_{k=-p}^{+f}k\theta_{k}\\
-\hline b_{q} & \text{Quadratic bias} & \sum_{k=-p}^{+f}k^{2}\theta_{k}\\
-\hline F_{g} & \text{Variance reduction / Fidelity (Guggemos)} & \sum_{k=-p}^{+f}\theta_{k}^{2}\\
-\hline S_{g} & \text{Smoothness (Guggemos)} & \sum_{j}(\nabla^{3}\theta_{j})^{2}\\
-\hline T_{g} & \text{Timeliness (Guggemos)} & \int_{0}^{2\pi/12}\rho_{\theta}(\omega)\sin(\varphi_{\theta}(\omega))^{2}\ud\omega\\
-\hline A_{w} & \text{Accuracy (Wildi)} & 2\int_0^{2\pi/12}\left(\rho_{s}(\omega)-\rho_{\theta}(\omega)\right)^{2}h_{RW}(\omega)\ud\omega\\
-\hline T_{w} & \text{Timeliness (Wildi)} & 8\int_0^{2\pi/12} \rho_{s}(\omega)\rho_{\theta}(\omega)\sin^{2}\left(\frac{\varphi_s(\omega)-\varphi_\theta(\omega)}{2}\right)h_{RW}(\omega)\ud\omega\\
-\hline S_{w} & \text{Smoothness (Wildi)} & 2\int_{2\pi/12}^{\pi}\left(\rho_{s}(\omega)-\rho_{\theta}(\omega)\right)^{2}h_{RW}(\omega)\ud\omega\\
-\hline R_{w} & \text{Residual (Wildi)} & 8\int_{2\pi/12}^{\pi} \rho_{s}(\omega)\rho_{\theta}(\omega)\sin^{2}\left(\frac{\varphi_s(\omega)-\varphi_\theta(\omega)}{2}\right)h_{RW}(\omega)\ud\omega\\
-\hline \\
-\end{array} $$
-\caption{Criteria used to check the quality of a linear filter defined by its coefficients $\theta=(\theta_k)_{-p\leq k\leq f}$ and its gain and phase shift function, $\rho_{\theta}$ and $\varphi_\theta$.} 
-\label{tab:QC}
-\footnotesize
-\emph{Note: $X_g$ criteria are derived from \textcite{ch15HBSA} and $X_w$ criteria from \textcite{trilemmaWMR2019}.}
+C'est également l'approche utilisée dans les méthodes de désaisonnalisation TRAMO-SEATS et X-13ARIMA qui prolongent la série sur 1 an par un modèle ARIMA.
+In fine, cela revient à utiliser des moyennes mobiles asymétriques puisque les prévisions sont des combinaisons linéaires du passé.
 
-\emph{$\rho_s$ and $\varphi_s$ represent the gain and phase shift function of the Henderson symmetric filter.}
+Inversement, à partir d'une moyenne mobile symétrique de référence, on peut déduire les prévisions implicites d'une moyenne mobile asymétrique.
+Notons $v=(v_{-h},\dots, v_{h})$ la moyenne mobile symétrique de référence et $w^0,\dots w^{h-1}$ une suite de moyennes mobiles asymétriques, d'ordre $h+1$ à $2h$ utilisée pour l'estimation des $h$ dernier points avec pour convention $w_t^q=0$ pour $t>q$.
+C'est-à-dire que $w^0=(w_{-h}^0,\dots, w_{0}^0)$ est utilisée pour l'estimation en temps réel (lorsque l'on ne connait aucun point dans le futur), $w^1=(w_{-h}^1,\dots, w_{1}^1)$ pour l'estimation de l'avant-dernier point (lorsque l'on ne connait qu'un point dans le futur), etc.
+Notons également $y_{-h},\dots,y_{0}$ la série étudiée observée et $y_{1}^*,\dots y_h^*$ la prévision implicite induite par $w^0,\dots w^{h-1}$.
+Cela signifie, que pour tout $q$ on a :
+$$
+\forall q, \quad \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{lissage par }v\text{ de la série prolongée}}
+=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{lissage par }w^q\text{ de la série prolongée}}.
+$$
+Ce qui est équivalent à :
+$$
+\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^**
+=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
+$$
+En somme, matriciellement, cela revient donc à résoudre :
+$$
+\begin{pmatrix}
+  v_1 & v_2 & \cdots & v_h \\
+  v_1 - w_1^1 & v_2 & \cdots & v_h \\
+  \vdots & \vdots & \cdots & \vdots \\ 
+   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h 
+\end{pmatrix}
+\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
+\begin{pmatrix}
+  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
+  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
+  \vdots & \vdots & \cdots & \vdots \\ 
+  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
+\end{pmatrix}
+\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.
+$$
+C'est ce qui implémenté dans la fonction `rjdfilters::implicit_forecast`.
 
-\emph{$h_{RW}$ is the spectral density of a random walk: $h_{RW}(\omega)=\frac{1}{2(1-\cos(\omega))}$.}
-\end{table}
+Comme notamment souligné par @wildischis2004, étendre la série par prévision d'un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisées par rapport à la prévision avec une longueur d'avance --- *one-step ahead forecasting*. 
+C'est-à-dire que l'on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
+Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s'intéresser à la performance des prévisions avec plusieurs longueurs d'avance --- *multi-step ahead forecasting*.
+Par ailleurs, le déphasage induit par les filtres asymétriques n'est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.
+C'est pourquoi il peut être nécessaire de définir des critères alternatifs pour juger la qualité des moyennes mobiles asymétriques.
 
-```{r QC, echo = FALSE, eval=is_html}
+### Indicateurs de qualité des moyennes mobiles asymétriques
+
+Dans ce rapport, nous nous concentrons sur ceux définis par @ch15HBSA et @trilemmaWMR2019 pour construire les filtres asymétriques.
+
+@ch15HBSA proposent une approche générale pour dériver des filtres linéaires, basée sur un problème d'optimisation de trois critères : *Fidelity* ($F_g$, réduction de la variance), *Smoothness* ($S_g$, lissage) et *Timeliness* ($T_g$, déphasage).
+Voir section \@ref(subsec:GuggemosEtAl) pour plus de détails.
+
+@trilemmaWMR2019 proposent une approche basée sur la décomposition de l'erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : *Accuracy* ($A_w$, précision), *Timeliness* ($T_w$, déphasage), *Smoothness* ($S_w$, lissage) et *Residual* ($R_w$, résidus).
+Voir section \@ref(sec:WildiMcLeroy) pour plus de détails.
+
+Tous les indicateurs de qualité sont résumés dans le tableau \@ref(tab:QC) et sont calculables avec la fonction `rjdfilters::diagnostic_matrix`.
+
+```{r, include=FALSE}
+title <- "Critères de qualité d'une moyenne mobile $\\theta=(\\theta_k)_{-p\\leq k\\leq f}$ définie par une fonction de gain $\\rho_{\\theta}$ et une fonction de déphasage $\\varphi_\\theta$."
+footnotes <- c("$X_g$ critères provenant de @ch15HBSA et $X_w$ critères provenant de @trilemmaWMR2019.",
+               "$\\rho_s$ et $\\varphi_s$ représentent le gain et la fonction de déphasage du filtre symétrique d'Henderson.",
+               "$h$ est la densité spectrale de la série en entrée, fixée celle d'un bruit blanc, $h_{WN}(x)=1$, ou d'une marche aléatoire, $h_{RW}(x)=\\frac{1}{2(1-\\cos(x))}$."
+)
+```
+
+
+```{r QC, echo = FALSE, fig.note = footnotes, cache = FALSE}
 criteria_mm <- data.frame(Sigle = c("b_c", "b_l", "b_q",
                                     "F_g", "S_g", "T_g",
                                     "A_w", "T_w", "S_w", "R_w"),
-                          Description = c(sprintf("%s bias", c("Constant", "Linear", "Quadratic")),
+                          Description = c(sprintf("%s biais", c("Constant", "Linéaire", "Quadratique")),
                                           sprintf("%s (Guggemos)",
-                                                  c("Variance reduction / Fidelity", "Smoothness", "Timeliness")),
+                                                  c("Réduction de la variance / Fidelity", "Smoothness", "Timeliness")),
                                           sprintf("%s (Wildi)",c("Accuracy", "Timeliness", "Smoothness", "Residual"))),
-                          Formula = c("\\sum_{k=-p}^{+f}\\theta_{k}-1",
+                          Formule = c("\\sum_{k=-p}^{+f}\\theta_{k}-1",
                                       "\\sum_{k=-p}^{+f}k\\theta_{k}",
                                       "\\sum_{k=-p}^{+f}k^{2}\\theta_{k}",
                                       "\\sum_{k=-p}^{+f}\\theta_{k}^{2}",
                                       "\\sum_{j}(\\nabla^{3}\\theta_{j})^{2}",
-                                      "\\int_{0}^{2\\pi/12}\\rho_{\\theta}(\\omega)\\sin(\\varphi_{\\theta}(\\omega))^{2}\\ud\\omega",
-                                      "2\\int_0^{2\\pi/12}\\left(\\rho_{s}(\\omega)-\\rho_{\\theta}(\\omega)\\right)^{2}h_{RW}(\\omega)\\ud\\omega",
-                                      "8\\int_0^{2\\pi/12} \\rho_{s}(\\omega)\\rho_{\\theta}(\\omega)\\sin^{2}\\left(\\frac{\\varphi_s(\\omega)-\\varphi_\\theta(\\omega)}{2}\\right)h_{RW}(\\omega)\\ud\\omega",
-                                      "2\\int_{2\\pi/12}^{\\pi}\\left(\\rho_{s}(\\omega)-\\rho_{\\theta}(\\omega)\\right)^{2}h_{RW}(\\omega)\\ud\\omega",
-                                      "8\\int_{2\\pi/12}^{\\pi} \\rho_{s}(\\omega)\\rho_{\\theta}(\\omega)\\sin^{2}\\left(\\frac{\\varphi_s(\\omega)-\\varphi_\\theta(\\omega)}{2}\\right)h_{RW}(\\omega)\\ud\\omega"))
+                                      "\\int_{0}^{\\omega_1}\\rho_{\\theta}(\\omega)\\sin(\\varphi_{\\theta}(\\omega))^{2}\\ud\\omega",
+                                      "2\\int_0^{\\omega_1}\\left(\\rho_{s}(\\omega)-\\rho_{\\theta}(\\omega)\\right)^{2}h(\\omega)\\ud\\omega",
+                                      "8\\int_0^{\\omega_1} \\rho_{s}(\\omega)\\rho_{\\theta}(\\omega)\\sin^{2}\\left(\\frac{\\varphi_s(\\omega)-\\varphi_\\theta(\\omega)}{2}\\right)h(\\omega)\\ud\\omega",
+                                      "2\\int_{\\omega_1}^{\\pi}\\left(\\rho_{s}(\\omega)-\\rho_{\\theta}(\\omega)\\right)^{2}h(\\omega)\\ud\\omega",
+                                      "8\\int_{\\omega_1}^{\\pi} \\rho_{s}(\\omega)\\rho_{\\theta}(\\omega)\\sin^{2}\\left(\\frac{\\varphi_s(\\omega)-\\varphi_\\theta(\\omega)}{2}\\right)h(\\omega)\\ud\\omega"))
 criteria_mm[,1] <- sprintf("$%s$", criteria_mm[,1])
 criteria_mm[,3] <- sprintf("$%s$", criteria_mm[,3])
 library(kableExtra)
-title <- "Criteria used to check the quality of a linear filter defined by its coefficients $\\theta=(\\theta_k)_{-p\\leq k\\leq f}$ and its gain and phase shift function, $\\rho_{\\theta}$ and $\\varphi_\\theta$."
-footnotes <- c("$X_g$ criteria are derived from @ch15HBSA and $X_w$ criteria from @trilemmaWMR2019.",
-               "$\\rho_s$ and $\\varphi_s$ represent the gain and phase shift function of the Henderson symmetric filter.",
-               "$h_{RW}$ is the spectral density of a random walk: $h_{RW}(\\omega)=\\frac{1}{2(1-\\cos(\\omega))}$."
-)
 
 criteria_mm %>% 
   kbl(align = "c", booktabs = T, row.names = FALSE,
         escape = FALSE,caption = title) %>% 
-    footnote(general=footnotes, escape = FALSE)
+    add_footnote_kable(stop_centering = TRUE)
 ```
 
 
