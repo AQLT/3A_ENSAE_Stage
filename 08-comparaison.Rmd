@@ -2,10 +2,9 @@
 
 ## Comparison with the FST approach
 
-L'approche FST fournit un
-
-The FST approach provides a useful tool to validate a method of construction of linear filter. 
-Indeed, a linear filter can be considered as suboptimal if we can find a set of weight for the FST approach that gives better results (in terms of fidelity, smoothness and timeliness) with the same (or higher) polynomial constraints.
+L'approche FST fournit un outil utile pour valider des méthodes de construction des filtres linéaires.
+En effet, si l'on se concentre sur les trois critères de *fidelity*, *smoothness* et *timeliness*, un filtre linéaire peut être considéré comme sous-optimal si l'on peut trouver un ensemble de poids tels que l'approche FST produise un filtre de meilleure qualité (selon ces trois criètres) avec les mêmes contraintes polynomiales (ou des contraintes polynomiales plus grandes).
+L'annexe \@(sec:annexeFST) trace l'ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais synthétisons ici les résultats pour $h=6$ (filtre symétrique de 13 termes).
 
 For $h=6$ (13-term symmetric filter), for the RKHS filters we find that:
 
@@ -34,22 +33,6 @@ For simplicity, for the FST approach we only show an extreme filter example mini
 For local polynomial filters, the Henderson kernel is used with $R=3.5$.
 The figure \@ref(fig:cl2all) shows the results around a turning point (the economic crisis of 2009) and during "normal cycles" (between 2000 and 2008), from $q=0$ (real-time estimates) to $q=3$ (three future available observations).
 
-\begin{figure}[!ht]
-\animategraphics[autoplay,loop,width=\textwidth,controls]{2}{img/illustration/illustration_}{1}{7}
-\caption{Application of asymmetric filters to the French industrial production index of manufacture of motor vehicles, trailers and semi-trailers.}\label{fig:cl2all}\footnotesize
-\emph{Note: The final trend is the one computed by a symmetric 13-terms Henderson filter}
-
-\emph{To see the animation, the PDF must be open with Acrobat Reader, KDE Okular, PDF-XChange or Foxit Reader.
-Otherwise you will only be able to see the results for the DAF filter.}
-\end{figure}
-
-```{r cl2all, echo = FALSE, fig.cap = "Application of asymmetric filters to the French industrial production index of manufacture of motor vehicles, trailers and semi-trailers.", eval = is_html, note = "The final trend is the one computed by a symmetric 13-terms Henderson filter."}
-slickR::slickR(
-    sprintf("img/illustration/illustration_%i.png",1:7),
-    height = 500,
-    width = '95%')
-```
-<p class="caption" id ="note">Note: The final trend is the one computed by a symmetric 13-terms Henderson filter.</p>
 
 For this example, in terms of time lag to detect the turning point of February 2009^[
 A turning point (upturn) is defined to occur at time $t$ if $y_{t-k}\geq\cdots\geq y_{t-1}<y_t\leq y_{t+1}\leq\cdots y_{t+m}$. 
