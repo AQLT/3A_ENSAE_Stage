@@ -44,7 +44,7 @@ S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}.
 $$
 Ce critère mesure la proximité du signal de sortie à une tendance polynômiale de degré $d-1$. 
 Avec $d=3$, Henderson utilise ce critère de lissage pour construire des moyennes mobiles conservant des polynômes de degré 2.
-$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@(subsec:eqgraythomson)).
+$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@(subsec:equivlpfst)).
 
 
 - *Timeliness* (temporalité), $T_g$ : il mesure le déphasage entre le signal d'entrée et le signal de sortie à des fréquences spécifiques.
@@ -59,7 +59,7 @@ $$
 \int_{\omega_{1}}^{\omega_{2}}f(\rho_{\theta}(\omega),\varphi_{\theta}(\omega))\ud\omega.
 $$
 Comme fonction de pénalité, les auteurs suggèrent de prendre $f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2$. 
-Cela permet notamment d'avoir une *timeliness* qui peut s'écrire comme une forme quadratique positive ($T_g(\theta)=\theta'T\theta$ avec $T$ une matrice carré symmétrique d'ordre $p+f+1$, voir @ch15HBSA pour la démonstration).
+Cela permet notamment d'avoir une *timeliness* qui peut s'écrire comme une forme quadratique positive ($T_g(\theta)=\theta'T\theta$ avec $T$ une matrice carré symétrique d'ordre $p+f+1$, voir @ch15HBSA pour la démonstration).
 Dans cet article nous utilisons $\omega_1=0$ et $\omega_2=2\pi/12$: on ne s'intéresse qu'à des séries mensuelles et au déphasage qui impactent les cycles d'au minimum 12 mois.
 
 En somme, dans l'approche FST consiste à minimiser une somme pondérée de ces trois critères sous certaines contraintes (généralement préservation polynomiales).
@@ -67,12 +67,14 @@ En somme, dans l'approche FST consiste à minimiser une somme pondérée de ces 
 \begin{equation}
 \begin{cases}
 \underset{\theta}{\min} &
-\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)\\
+\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta) = \theta'(F+S+T)\theta\\
 s.t. & C\theta=a
 \end{cases}. (\#eq:gugemmos)
 \end{equation}
 
-Les conditions $\alpha,\beta,\gamma\geq 0$ et $\alpha\beta\ne 0$ garantissent que $\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)$ soit strictement convexe et donc garantissent l'unicité de la solution.
+Les conditions $0\leq\alpha,\beta,\gamma\leq 1$ et $\alpha+\beta\ne0$ garantissent que $\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)$ soit strictement convexe et donc garantissent l'unicité de la solution. 
+Dans ce cas, la solution s'écrit $\hat \theta = [\alpha F+\beta S+ \gamma T]^{-1}C'\left(C[\alpha F+\beta S+ \gamma T]^{-1}C'\right)^{-1}a$.
+
 Un autre avantage de cette approche est que les filtres asymétriques construits sont totalement indépendants des données, de la date d'estimation et du filtre symétrique choisis.
 
 On obtient par exemple le filtre d'Henderson avec les paramètres suivants :
