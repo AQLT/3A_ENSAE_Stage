@@ -1,7 +1,6 @@
 # Regression polynomiale locale
 
 @FengSchafer2021
-@LuatiProietti2011
 
 Comme notamment montré par @Loader1999, la régression locale est un cas particulier de la régression non paramétrique. 
 Supposons que l'on ait un ensemble de points $(x_i,y_i)_{1\leq i\leq n}$. 
@@ -533,13 +532,18 @@ Minimiser des critères de révision serait donc préférable puisque cela revie
 - Les valeurs de la *fidelity* et de la *smoothness* ne dépendent pas du temps au centre de la série mais en dépendent en fin de série. 
 Ainsi, même si au centre de la série le choix des poids entre les deux critères contrôle indirectement le niveau des indicateurs, ce n'est plus le cas en fin de série.
 De plus, en fin de série, cela pourrait introduire des déphasages plus importants car $S_{GT}$ dépend du temps et des valeurs passées (du fait du l'utilisation de l'opérateur différence).
+
+Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée
+ne considère pas ici le critère de révision dont on peut en fait prouver qu'il est très fortement corrélé à une combinaison 􏰀xée, donc non ajustable par l'utilisateur, des critères de Fidélité et de Temporalité
 ::::
 
 
-## Équivalence avec l'approche FST {#subsec:eqgraythomson}
+## Équivalence avec l'approche FST {#subsec:equivlpfst}
 
-La méthode de @GrayThomson1996 permet également de retrouver celles @ch15HBSA et @proietti2008.
-En effet, on peut retrouver les critères $F_g$ et $S_g$ peuvent se déduire de $F_{GT}$ et $S_{GT}$.
+### Liens entre les critères de Gray et Thomson et ceux de Guggemos *et ali*
+
+Les critères $F_g$ et $S_g$ peuvent se déduire de $F_{GT}$ et $S_{GT}$.
+Les approches de @GrayThomson1996 et @ch15HBSA sont donc équivalentes pour le filtre symétrique.
 
 Notons $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$, $\beta_{t}=\begin{pmatrix}\beta_{0} & \cdots & \beta^{d}\end{pmatrix}'$. 
 
@@ -548,7 +552,7 @@ $$
 \hat{g}_{t}-g_{t}=\left(\sum_{j=-h}^{+h}\theta_{j}x_{t+j}-x_{t}\right)\beta+\sum_{j=-h}^{+h}\theta_{j}\varepsilon_{t+j}+\sum_{j=-h}^{+h}\theta_{j}(\xi_{t+j}-\xi_{t}),
 $$
 Si $\theta$ préserve les polynômes de degré $d$ alors $\sum_{j=-h}^{+h}\theta_{j}x_{t+j}=x_{t}$. où $x_{t}=\begin{pmatrix}1 & t & t^{2} & \cdots & t^{d}\end{pmatrix}$. 
-Puis, comme $\xi_{t}$ et $\varepsilon_{t}$ sont de moyenne nulle et non corrélés :
+Puis, comme $\xi_{t}$ et $\varepsilon_{t}$ sont de moyenne nulle et sont non corrélés :
 $$
 F_{GT}(\theta)=\E{(\hat{g}_{t}-g_{t})^{2}}=\theta^{'}\left(\sigma^{2}I+\Omega\right)\theta.
 $$
@@ -564,6 +568,14 @@ S_{GT}(\theta)=\E{(\nabla^{q}\hat{g}_{t})^{2}}=\theta^{'}\left(\sigma^{2}B_{q}+\
 $$
 On peut par ailleurs montrer que pour toute série temporelle $X_t$, $\nabla^{q}(M_{\theta}X_{t})=\left(-1\right)^{q}\sum_{k\in\Z}\left(\nabla^{q}\theta_{k}\right)X_{t+k-q}$ avec $\theta_k=0$ pour $|k|\geq h+1$. 
 Avec $\xi_t=0$ on trouve donc que $S_{GT}(\theta)=\sigma^2S_g(\theta)$.
+
+### Équivalence avec les moindres carrés pondérés
+
+Du fait de la forme des filtres obtenus par la méthode de @ch15HBSA, lorsque les contraintes imposées sont la préservation des tendances de degré $d$, celle-ci est équivalente à une estimation locale d'une tendance polynomiale de degré $d$ par moindres carrés généralisés.
+En effet, dans ce cas la solution est $\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1$ avec $\Sigma=\alpha F+\beta S+ \gamma T$, et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est $\Sigma^{-1}$.
+
+@LuatiProietti2011
+
 
 
 <!-- La modélisation de @GrayThomson1996, bien qu'antérieure étant proche de celle de @proietti2008, les moyennes mobiles symétriques et @ch15HBSA. -->
