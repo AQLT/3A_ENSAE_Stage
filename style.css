@@ -69,7 +69,7 @@ body {
     display: inline;/*pour ne pas passer à la ligne*/
 }
 .remarque:before {
-  content: "Remark. ";
+  content: "Remarque : ";
   font-weight: bold;
   font-style: normal;
 }
