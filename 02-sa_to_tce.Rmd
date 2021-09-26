@@ -21,7 +21,7 @@ La tendance et le cycle n'étant pas observés et étant difficiles à séparer,
  
 Toutes ces composantes étant inobservées, l'estimation de l'une dépend de l'estimation des autres.
 Ainsi, même si dans ce rapport, nous nous intéresserons aux méthodes d'extraction de tendance-cycle, celles-ci ne peuvent s'étudier indépendamment du processus du désaisonnalisation.
-Ce lien explique également que toutes les méthodes utilisées dans ce rapport sont implémentées dans les bibliothèques de base de JDemetra+ ^[Voir https://github.com/jdemetra/jdemetra-core.], le logiciel de désaisonnalisation recommandé par Eurostat.
+Ce lien explique également que toutes les méthodes utilisées dans ce rapport sont implémentées dans les bibliothèques de Java de JDemetra+ ^[Voir https://github.com/jdemetra/jdemetra-core.], le logiciel de désaisonnalisation recommandé par Eurostat.
 Une interface `r fa_r_project`, dévelopée au cours de ce stage, est implémentée dans le package `rjdfilters`^[Disponible sur https://github.com/palatej/rjdfilters.].
  
 Les filtres linéaires (ou moyennes mobiles) sont omniprésents dans la désaisonnalisation et l'estimation des différentes composantes.
@@ -47,13 +47,11 @@ D'une part cela permet de rassembler une première revue de la littérature sur 
 D'autre part cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
  
 Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec:theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques, qui permet de minimiser les effets de déphasage(section \@ref(subsec:GuggemosEtAl)).
+Des diagrammes synthétiques des liens entre les différentes méthodes étudiés sont présentés dans l'annexe \@ref(an:diag).
  
 Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-12ARIMA.
 Pour maintenir la cohérence avec l'approche non paramétrique de X-12ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
-C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec:WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées.
+C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec:WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
+L'ensemble des filtres utilisés dans résumés dans l'annexe \@ref(an:graphs).
  
-
-<!-- ```{r, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Some caption.', engine.opts = list(template = "tikz2pdf.tex")} -->
-
-<!-- ``` -->
 
