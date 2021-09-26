@@ -65,7 +65,7 @@ Comme le montrent @tuckerwildi2020, cette méthode peut également être étendu
 Un des inconvénients de cette méthode est qu'il n'y a pas de garantie d'unicité de la solution.
 En revanche, son avantage par rapport à la méthode de \@ref(subsec:GuggemosEtAl) est que la décomposition de l'erreur quadratique moyenne permet de normaliser les différents indicateurs et les coefficients $\vartheta_{1}$, $\vartheta_{2}$ et $1-\vartheta_{1}-\vartheta_{2}$ peuvent être comparés entre eux.
 
-Les quatres critères $A_w$, $T_w$, $S_w$ et $R_w$ étant des cas particuliers du critère $J$ défini dans l'équation \@ref(eq:theoriegen1), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@(subsec:theoriegen).
+Les quatre critères $A_w$, $T_w$, $S_w$ et $R_w$ étant des cas particuliers du critère $J$ défini dans l'équation \@ref(eq:theoriegen1), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec:theoriegen).
 En effet, en notant :
 $$
 \begin{cases}
