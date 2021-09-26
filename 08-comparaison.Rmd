@@ -1,66 +1,72 @@
 # Comparison des différentes méthodes {#sec:comparison}
 
-## Comparison with the FST approach
+## Méthodologie
 
-L'approche FST fournit un outil utile pour valider des méthodes de construction des filtres linéaires.
-En effet, si l'on se concentre sur les trois critères de *fidelity*, *smoothness* et *timeliness*, un filtre linéaire peut être considéré comme sous-optimal si l'on peut trouver un ensemble de poids tels que l'approche FST produise un filtre de meilleure qualité (selon ces trois criètres) avec les mêmes contraintes polynomiales (ou des contraintes polynomiales plus grandes).
-L'annexe \@(sec:annexeFST) trace l'ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais synthétisons ici les résultats pour $h=6$ (filtre symétrique de 13 termes).
+Dans cette section, on compare les différentes moyennes mobiles en termes de délai pour détecter les points de retournement.
+Dans ce rapport on définit de la façon suivante les points de retournement en distinguant deux cas :
 
-For $h=6$ (13-term symmetric filter), for the RKHS filters we find that:
+- les redressements (*upturn*) où l'on passe d'une phase de récession à une phase d'expansion de l'économie (comme généralement le cas après une crise économique). 
+C'est le cas lorsqu'à la date $t$ $y_{t-k}\geq\cdots\geq y_{t-1}<y_t\leq y_{t+1}\leq\cdots y_{t+m}$.
 
-- imposing that asymmetric filters preserve constants, the FST approach gives better results for all values of $q$ for the filters computed with $b_{q,G}$ and $b_{q,\gamma}$, and for $q\leq 3$ for the one computed with $b_{q,\varphi}$.
+- les ralentissements (*downturn*) où l'on passe d'une phase d'expansion à une phase de récession.
+C'est le cas lorsqu'à la date $t$ $y_{t-k}\leq\cdots\leq y_{t-1}>y_t\geq y_{t+1}\geq\cdots y_{t+m}$.
 
-- imposing that asymmetric filters preserve linear trends, the FST approach gives better results for $q\in[2,5]$ for the filters computed with $b_{q,G}$ and $b_{q,\gamma}$, and for $q\in[2,4]$ for the one computed with $b_{q,\varphi}$.
+En suivant @Zellner1991, du fait du caractère relativement lisse de la tendance-cycle, on retient les paramètres $k=3$ and $m=1$. 
 
-`r fa_arrow_circle_right` Therefore, the RKHS approach seems not to be the better approach to build asymmetric filters to apply to monthly regular data (i.e.: data for which we usually use $h=6$).
+On compare la performance des différents filtres sur la base d'Eurostat des indices de production industriels déjà corrigés des jours ouvrables (`sts_inpr_m`, 2 404 séries).
+Les points de retournement finaux sont ceux qui sont trouvés sur la composante tendance-cycle estimée avec la méthode X-13ARIMA sur l'ensemble de la période.
+Le déphasage est défini comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future (il est donc possible que ce déphasage ne soit pas calculable si pour une méthode donnée on ne détecte pas le bon point de retournement à la dernière date d'estimation).
 
-For the local polynomial filters we find that:
+Pour chaque série et chaque date, la méthodologie suivante est utilisée :
 
-- imposing that asymmetric filters preserve constants, the FST approach gives better results than the LC method for all values of $q$. 
-Adding the timeliness criterion allows to have better results than the FST approach for $q=0,1$.
+1. La série est désaisonnalisée avec la méthode X-13ARIMA^[
+On utilise pour cela la fonction `x13()` du package `RJDemetra` avec le paramètre `spec = "RSA3"` (détection automatique des différents paramètres sans correction des jours ouvrables).
+] pour extraire différents paramètres qui seront fixés entre les différentes méthodologie : la série linéarisée (i.e. : la série initiale corrigée de points atypiques par un Reg-ARIMA), la longueur des filtres saisonniers et du filtre utilisé pour extraire la tendance-cycle, le schéma de décomposition et l'I-C ratio.
 
-- imposing that asymmetric filters preserve linear trends, the FST approach gives better results for $q\in[2,5]$ for the LC and QL methods. 
-Adding the timeliness criterion doesn't change the results.
+2. Une nouvelle désaisonnalisation est effectuée sur la série linéarisée en utilisant l'algorithme de décomposition de X-13ARIMA et en utilisant les mêmes paramètres que précédemment et en changement uniquement les filtres asymétriques utilisés pour extraire la tendance-cycle^[
+Cela peut être fait en utilisant la fonction `rjdfilters::x11()`.
+].  
+Pour contrôler l'impact des estimations des paramètres et des points atypiques dans le modèle Reg-ARIMA model, la série linéarisée utilisée ici correspond à celle calculée sur l'ensemble de la série.  
+Pour la méthode de référence (X-13ARIMA), la série linéarisée est prolongée par prévision sur un an avant la décomposition mais pour toutes les autres méthodes on n'utilise pas les prévisions dans la décomposition.
+Une description plus détaillée de l'algorithme de décomposition est disponible en annexe \@ref(an:x11).
 
-`r fa_arrow_circle_right` In terms of quality criteria, local polynomial seems to perform better for real-time and one-period ahead filters ($q=0,1$).
-
-Those comparisons can be seen in an online application available at https://aqlt.shinyapps.io/FSTfilters/.
-
-## Illustration with an example
-
-In this section we compare the different asymmetric filters applying them to the French industrial production index of manufacture of motor vehicles, trailers and semi-trailers^[This series is produced by the INSEE, the French National Statistical Office, and is available at https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010537940.]. 
-For simplicity, for the FST approach we only show an extreme filter example minimizing the phase shift by putting a large weight to the timeliness ($\alpha = 0$, $\beta = 1$, $\gamma = 1000$). 
-For local polynomial filters, the Henderson kernel is used with $R=3.5$.
-The figure \@ref(fig:cl2all) shows the results around a turning point (the economic crisis of 2009) and during "normal cycles" (between 2000 and 2008), from $q=0$ (real-time estimates) to $q=3$ (three future available observations).
-
-
-For this example, in terms of time lag to detect the turning point of February 2009^[
-A turning point (upturn) is defined to occur at time $t$ if $y_{t-k}\geq\cdots\geq y_{t-1}<y_t\leq y_{t+1}\leq\cdots y_{t+m}$. 
-A downturn would be equivalently defined as a date $t$ $y_{t-k}\leq\cdots\leq y_{t-1}>y_t\geq y_{t+1}\geq\cdots y_{t+m}$.
-Following @Zellner1991, $k=3$ and $m=1$ are chosen given the smoothness of the trend-cycle data. 
-], the DAF is the worst filter since it introduces a delay of one month until $q=3$. 
-LC, QL, $b_{q,\gamma}$ filters introduce a delay only for real-time filter ($q=0$) of two months for QL filter and one month for the others.
-Surprisingly, the FST filter that minimize the phase shift introduce a time lag for $q=0$ and $q=1$ (the upturn is detected earlier), whereas $b_{q,\phi}$ doesn't introduce any time lag.
-
-:::: {.remarque data-latex=""}
-Those results differ from the one obtained in the real-time during the economic crisis. 
-Indeed, here we take the time series already seasonally adjusted in the overall period, whereas during the real-time estimates, the seasonal adjustment process also introduce a time lag.
-::::
+3. Pour chaque estimation de la tendance-cycle, on calcule les points de redressement et de ralentissement.
 
 
-In terms of revision error, the DAF filters also give the worst results. 
-For real-time estimates ($q=0$), the LC and RKHS filters minimize the revision between 2000 and 2008 but when more data are available all the methods (except the DAF filters) give similar results. 
-As excepted, the QL filter minimizes the revision around the turning point of 2009 since it is the only filter that preserve polynomial trends of degree 1. 
-For small values of $q$, $b_{q,\phi}$ filter distorts less polynomial trends of degree 1 and 2 than the other RKHS filters ($b_l$ and $b_q$ statistics are lower, table \@ref(tab:criteriarkhs)): it explains why it performs better around the turning point.
 
-With this simple example we cannot generalize properties on the different asymmetric filters, but it gives some leads to extend this study:
+## Comparaison des filtres polynomiaux locaux et des filtres RKHS
 
-- minimize the timeliness doesn't imply earlier detection of turning points: more investigations on the timeliness criterion could be done;
+Du fait du fort degré de liberté de l'approche FST (dans le choix des différents paramètres), dans cette section, on ne compare la méthode X-13ARIMA qu'à l'approche polynomiale locale et aux filtres RKHS.
+Pour les filtres RKHS on ne retient que ceux qui minimisent la *timeliness* puisque dans notre cas on souhaite minimiser le délai dans la détection de point de retournement.
 
-- accept some bias in polynomial trends preservation can lead to asymmetric filters that performs better in term of turning points detection;
 
-- for almost all the filters, there is no time lag to detect the turning points when two future observations are available, and the different methods gives similar results. 
-Therefore, it is pointless to optimize asymmetric filters when too much future observations are available.
+## Comparaison avec l'approche FST
+
+Pour limiter les degrés de liberté dans le choix des poids dans l'approche FST, une approche peut être de les sélectionner comparativement à une autre moyenne mobile.
+En effet, si l'on se concentre sur les trois critères de *fidelity*, *smoothness* et *timeliness*, comparativement à une moyenne mobile fixée, un ensemble de poids peut être considéré comme optimal s'il conduit à un filtre de meilleure qualité (selon ces trois critères) avec les mêmes contraintes polynomiales (ou des contraintes polynomiales plus grandes).
+L'annexe \@ref(sec:annexeFST) trace l'ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais synthétisons ici les résultats pour $h=6$ (filtre symétrique de 13 termes).
+
+
+<!-- For $h=6$ (13-term symmetric filter), for the RKHS filters we find that: -->
+
+<!-- - imposing that asymmetric filters preserve constants, the FST approach gives better results for all values of $q$ for the filters computed with $b_{q,G}$ and $b_{q,\gamma}$, and for $q\leq 3$ for the one computed with $b_{q,\varphi}$. -->
+
+<!-- - imposing that asymmetric filters preserve linear trends, the FST approach gives better results for $q\in[2,5]$ for the filters computed with $b_{q,G}$ and $b_{q,\gamma}$, and for $q\in[2,4]$ for the one computed with $b_{q,\varphi}$. -->
+
+<!-- `r fa_arrow_circle_right` Therefore, the RKHS approach seems not to be the better approach to build asymmetric filters to apply to monthly regular data (i.e.: data for which we usually use $h=6$). -->
+
+<!-- For the local polynomial filters we find that: -->
+
+<!-- - imposing that asymmetric filters preserve constants, the FST approach gives better results than the LC method for all values of $q$.  -->
+<!-- Adding the timeliness criterion allows to have better results than the FST approach for $q=0,1$. -->
+
+<!-- - imposing that asymmetric filters preserve linear trends, the FST approach gives better results for $q\in[2,5]$ for the LC and QL methods.  -->
+<!-- Adding the timeliness criterion doesn't change the results. -->
+
+<!-- `r fa_arrow_circle_right` In terms of quality criteria, local polynomial seems to perform better for real-time and one-period ahead filters ($q=0,1$). -->
+
+<!-- Those comparisons can be seen in an online application available at https://aqlt.shinyapps.io/FSTfilters/. -->
+
 
 Moreover, this example also illustrates that the different methods perform better than the DAF filters. 
 The real-time estimates methods that use this filter could be easily improved.
