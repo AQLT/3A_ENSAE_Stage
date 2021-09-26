@@ -1,0 +1,8 @@
+# (APPENDIX) Annexe {-} 
+
+\newpage
+# Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles {#an:diag}
+
+<!-- ```{r, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png', fig.cap='Some caption.', engine.opts = list(template = "img/tikz2pdf.tex")} -->
+
+<!-- ``` -->

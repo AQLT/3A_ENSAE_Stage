@@ -2,6 +2,7 @@
 # Critères de minimisation dans les filtres RKHS {#ann:minrkhs}
 
 Cette annexe montre la fonction objectif que l'on cherche à minimiser dans la construction des filtres asymétriques par la méthode des RKHS.
+Utiliser, dans le calcul des critères, la densité spectrale d'une marche aléatoire a peu d'influence sur la valeurs des critères
 
 ```{r, include = FALSE}
 library(ggplot2)
@@ -98,6 +99,7 @@ wrap_plots(plots)
 <!-- wrap_plots(plots) -->
 <!-- ``` -->
 
+\newpage
 ## Filtre symétrique de 13 termes ($h=6$)
 
 ```{r, include = FALSE}
@@ -135,7 +137,7 @@ wrap_plots(plots)
 ```
 
 
-
+\newpage
 ## Filtre symétrique de 23 termes ($h=11$)
 
 ```{r, include = FALSE}

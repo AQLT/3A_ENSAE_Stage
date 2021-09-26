@@ -1,0 +1,102 @@
+\newpage
+
+# Décomposition avec X-13ARIMA {#an:x11}
+
+
+Pour décomposer une série, l'algorithme X-13-ARIMA (et TRAMO-SEATS) fonctionnent en deux grandes étapes :
+
+1. Dans la première étape, la série est corrigée des jours ouvrables et des points atypiques à l'aide d'un modèle ARIMA. La série initiale est également prolongée par prévision sur la dernière année pour la seconde étape. La série corrigée et prolongée est appelée série *linéarisée*.
+
+2. Dans une seconde étape, cette série linéarisée, notée $X_t$ est décomposée en trois composantes saisonnalité $S_t$, tendance-cycle $TC_t$ et irrégulier $I_t$.
+
+Dans ce rapport nous nous intéressons essentiellement à cette seconde étape, où la méthode utilisée pour extraire la composante tendance-cycle en fin de période sera modifiée, car la première est identique dans les différentes simulations.
+La méthode utilisée dans X-13ARIMA est détaillée de manière très précise dans @ladiray1999comprendre.
+Cette annexe reprend de manière synthétique la description faite dans cet article.
+
+Pour la décomposition l'algorithme estime itérativement les différentes composantes en appliquant des moyennes mobiles.
+Cette algorithme peut se décomposer en l'application de deux blocs successifs.
+Pour une série mensuelle et dans le cadre d'une décomposition dite additive ($X_t=S_t+TC_t+I_t$) :
+
+1. Estimation de la tendance-cycle par une moyenne mobile $M_{2\times 12}$.
+C'est une moyenne mobile symétrique qui conserve les tendances linéaires et supprime la saisonnalité (elle est calculée en composant les deux moyennes mobiles $1/12(B^6+B^5+\dots+B^{-5})$ et $1/12(B^5+B^4+\dots+B^{-6})$).
+À cette étape aucune moyenne mobile asymétrique n'est utilisée, les 6 premiers points et les 6 derniers points ne sont donc pas calculés.
+$$
+TC_t^{(1)}=M_{2\times 12}(X_t)
+$$
+2. Estimation de la composante saisonnier-irrégulier :
+$$
+(S_t+I_t)^{(1)}= X_t - TC_t^{(1)}
+$$
+3. Estimation de la composante saisonnière par moyenne mobile $M_{3\times 3}$ (composition de deux moyennes mobiles symétriques simples de 3 termes $1/3(B+I+B^{-1})$) appliquée chaque mois de manière indépendante.
+En fin de période, des moyennes mobiles asymétriques spécifiques sont utilisées :
+$$
+S_t^{(1)}= M_{3\times 3}\left[(S_t+I_t)^{(1)}\right]
+$$
+Puis une normalisation est faite entre les mois :
+$$
+Snorm_t^{(1)}= S_t^{(1)} - M_{2\times 12}\left(S_t^{(1)}\right)
+$$
+En fin de série, la moyenne mobile $M_{2\times 12}\left(S_t^{(1)}\right)$ ne pouvant être calculée sur les 6 derniers mois, la dernière valeur calculée de $M_{2\times 12}\left(S_t^{(1)}\right)$ est prolongée sur les 6 derniers mois (et inversement pour le début de période).
+Les coefficients saisonniers manquants (du fait de la première estimation de la tendance-cycle à l'étape 1) sont imputés en utilisant la valeur la plus proche du mois considéré.
+
+4. Estimation de la série corrigée des variations saisonnières :
+$$
+Xsa_t^{(1)}= (TC_t+I_t)^{(1)} = X_t - Snorm_t^{(1)}
+$$
+
+Ensuite, les mêmes étapes sont répétées mais en faisant la première estimation de la tendance-cycle sur la série désaisonnalisée. Cela permet notamment d'utiliser des moyennes mobiles ayant de meilleurs propriétés en termes de préservation polynomiale (celles notamment présentées dans ce rapport) mais qui ne supprime pas la saisonnalité.
+
+5. Estimation de la tendance-cycle par moyenne de Henderson.
+L'ordre de la moyenne mobile est déterminée de automatiquement, à partir de l'I-C ratio, entre une moyenne centrée de 9 termes ($h=4$), 13 termes ($h=6$, c'est ce qui est retenu dans la majorité des cas) et 23 termes($h=11$) (généralement 13 termes).
+En fin de période, des moyennes mobiles asymétriques de Musgrave sont utilisées.
+C'est à cette étape que dans nos différentes simulations nous modifions les filtres asymétriques utilisés.
+$$
+TC_t^{(2)}=H_{13}(Xsa_t^{(1)})
+$$
+
+6. Estimation de la composante saisonnier-irrégulier :
+$$
+(S_t+I_t)^{(2)}= X_t - TC_t^{(2)}
+$$
+
+7. Estimation de la composante saisonnière par moyenne mobile dont l'ordre est détectée automatiquement entre une moyenne mobile $M_{3\times 3}$, $M_{3\times 5}$ (ce qui est généralement retenu) et $M_{3\times 5}$. Sur chaque mois :
+$$
+S_t^{(2)}= M_{3\times 5}\left[(S_t+I_t)^{(2)}\right]
+$$
+Puis une normalisation est faite (avec même traitement en fin de période qu'à l'étape 3) :
+$$
+Snorm_t^{(2)}=S_t^{(2)} - M_{2\times 12}\left(S_t^{(2)}\right)
+$$
+
+8. Estimation de la série corrigée des variations saisonnières :
+$$
+Xsa_t^{(2)}= (TC_t+I_t)^{(2)} = X_t - Snorm_t^{(2)}
+$$
+
+L'étape 5 est répétée une dernière fois sur cette série désaisonnalisée afin d'avoir l'estimation finale de la tendance-cycle.
+
+Les moyennes mobiles étant très sensibles à la présence de points atypiques, une correction automatique de l'irrégulier est effectuée à partir de $S_t+I_t$, avant les étapes 3 et 7 :
+
+- Une première estimation de $S_t$ et donc de $I_t$ (par soustraction) est effectuée de la même façon qu'aux étapes 3 et 7.
+
+- Ensuite, pour chaque année, un écart-type mobile de l'irrégulier, noté $_sigma$, est calculé sur 5 ans, l'année étudiée étant l'année centrale (pour les deux dernières années, l'écart-type de l'antépénultième année est considérée).
+
+- On affecte, à chaque valeur de $I_t$, un poids $p_t$ en fonction de son écart à l'écart-type associé (voir graphique \@ref(fig:correctionautox11)) :
+
+  - si $\lvert I_t\rvert\leq 1,5 \sigma$ un poids de 1 est affecté à la date $t$ (i.e. : le point n'est pas considéré comme atypique) ;
+
+  - si $\lvert I_t\rvert\geq 2,5 \sigma$, un poids de 0 est affecté à la date $t$ ;
+
+  - si $1,5 \sigma<\lvert I_t\rvert< 2,5 \sigma$, un poids variant linéairement entre 0 et 1 est affecté à la date $t$.
+
+Les seuils de 1,5 et de 2,5 peuvent être modifiés par l'utilisateur.
+
+```{r correctionautox11, echo=FALSE, out.width="100%", fig.cap="Poids utilisés par X-13ARIMA pour la correction de l'irrégulier."}
+img <- "img/correction_auto_X11.png"
+knitr::include_graphics(img)
+```
+
+- Enfin, pour chaque date pour laquelle l'irrégulier n'a pas un poids de 1, $(S+I)_t$ est remplacée par une moyenne pondérée de 5 valeurs : la valeur à la date $t$ avec un poids $p_t$ et les deux valeurs précédentes et suivantes, pour le même mois, ayant une pondération de 1.
+En fin de période, la moyenne pondérée est calculée à partir de l'observation courante et les quatre valeur les plus proches du même mois ayant une pondération de 1.
+
+<!-- Dans nos simulations, pour chaque date et chaque série -->
