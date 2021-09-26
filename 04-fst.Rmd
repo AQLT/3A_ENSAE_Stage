@@ -42,9 +42,9 @@ $F_g$ peut également être écrite comme une forme quadratique positive : $F_g(
 $$
 S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}.
 $$
-Ce critère mesure la proximité du signal de sortie à une tendance polynômiale de degré $d-1$. 
+Ce critère mesure la proximité du signal de sortie à une tendance polynomiale de degré $d-1$. 
 Avec $d=3$, Henderson utilise ce critère de lissage pour construire des moyennes mobiles conservant des polynômes de degré 2.
-$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@(subsec:equivlpfst)).
+$S_g$ peut également s'écrire sous une forme quadratique positive $S_g(\theta)=\theta'S\theta$ avec $S$ une matrice symétrique d'ordre $p+f+1$ (voir section \@ref(subsec:equivlpfst)).
 
 
 - *Timeliness* (temporalité), $T_g$ : il mesure le déphasage entre le signal d'entrée et le signal de sortie à des fréquences spécifiques.
@@ -92,7 +92,7 @@ a=\begin{pmatrix}
 Un des inconvénients de cette  approche est les différents critères ne sont pas normalisés : leurs valeurs ne peuvent pas être comparés et n'ont donc pas de sens.
 Il n'y a par exemple pas d’interprétation à donner un poids deux fois plus important à la *timeliness* qu'à la *fidelity*.
 
-Les trois critères utilisés dans le programme de minimisation \@(eq:gugemmos) sont des cas particuliers de ceux définis dans la section \@(subsec:theoriegen). 
+Les trois critères utilisés dans le programme de minimisation \@ref(eq:gugemmos) sont des cas particuliers de ceux définis dans la section \@ref(subsec:theoriegen). 
 En effet, en notant $y_t=TC_t+\varepsilon_t,\quad\varepsilon_t\sim\Norm(0,\sigma^2)$ avec $TC_t$ une tendance déterministe, on a :
 \begin{align*}
 F_g(\theta) & = I(\theta,\,0,\,y_t,\,\E{M_\theta y_t})\\
