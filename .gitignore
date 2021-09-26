@@ -4,3 +4,6 @@
 .Ruserdata
 .DS_Store
 Stage_3A_cache
+*.aux
+*.log
+*.synctex
