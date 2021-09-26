@@ -1,4 +1,4 @@
-# Regression polynomiale locale
+# Regression polynomiale locale {#sec:lppfilters}
 
 @FengSchafer2021
 
@@ -197,7 +197,6 @@ Les noyaux d'Henderson, trapézoïdal and gaussien sont particuliers :
 Le noyau trapézoïdal est implémenté dans `rjdfilters` car il permet d'extraire les moyennes mobiles utilisées dans l'algorithme X-12ARIMA pour l'extraction des composantes saisonnières. 
 Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
-
 ### Quelques filtres symétriques particuliers {#sec:sympolyfilter}
 
 Lorsque $p=0$ (ajustement local par une constante) on obtient l'estimateur de **Nadaraya-Watson** (ou l'estimateur par noyaux).
@@ -217,9 +216,7 @@ Il montre l'équivalence entre les trois problèmes suivants :
 2. minimiser la somme du carré de la différence d'ordre trois des coefficients du filtre, c'est le critère de lissage (*smoothness*) : $S=\sum_j(\nabla^{3}\theta_{j})^{2}$;  
 3. estimer une tendance localement cubique par les moindres carrés pondérés, où les poids sont choisis de sorte à minimiser la *smoothness* (cela conduit au noyau présenté dans la section \@ref(sec:kernels).
 
-
-Par simplification, nous nous intéresserons uniquement aux filtres issus du noyau d'Henderson
-
+Par simplification, nous nous intéresserons uniquement aux filtres issus du noyau d'Henderson.
 
 ### Filtres asymétriques
 
@@ -263,13 +260,9 @@ De plus, on a les propriétés suivantes sur $v$ :
 - $v$ minimise la distance pondérée (par le noyau) entre les coefficients du filtre asymétrique et ceux du filtre symétrique.
 Cela prouve donc l'équivalence entre les trois méthodes.
 
-L'inconvénient de cette méthode est que les poids de $\theta_{a,0}$ sont fortement concentrés sur l'estimation courrante, avec une révision importante entre $q=0$ (filtre en temps réel) et $q=h$ (filtre symétrique, voir \@ref(fig:filtersdafcoefs)). 
+L'inconvénient de cette méthode est que les poids de $\theta_{a,0}$ sont fortement concentrés sur l'estimation courrante, avec une révision importante entre $q=0$ (filtre en temps réel) et $q=h$ (filtre symétrique, voir \@ref(fig:graphsdaf)). 
 Par ailleurs, le filtre en temps réel n'a pas de fonction de gain satisfaisante : elle est proche de 1 pour toutes les fréquences et a donc un pouvoir de réduction très faible.
 Ainsi, même si les estimations sont sans biais, c'est au coût d'une plus grande variance dans les estimations. 
-
-```{r filtersdafcoefs, fig.cap="Coefficients et fonctions de gain des filtres directs asymétriques (DAF) computed by local polynomial of degree $3$ with the Henderson kernel for $h=6$.", echo = FALSE, out.width="100%"}
-knitr::include_graphics("img/daf/coef_gain_1.png")
-```
 
 
 ### Classe générale  {#subsec:lppasymf}
@@ -533,8 +526,7 @@ Minimiser des critères de révision serait donc préférable puisque cela revie
 Ainsi, même si au centre de la série le choix des poids entre les deux critères contrôle indirectement le niveau des indicateurs, ce n'est plus le cas en fin de série.
 De plus, en fin de série, cela pourrait introduire des déphasages plus importants car $S_{GT}$ dépend du temps et des valeurs passées (du fait du l'utilisation de l'opérateur différence).
 
-Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée
-ne considère pas ici le critère de révision dont on peut en fait prouver qu'il est très fortement corrélé à une combinaison 􏰀xée, donc non ajustable par l'utilisateur, des critères de Fidélité et de Temporalité
+<!-- Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*. -->
 ::::
 
 
@@ -572,9 +564,24 @@ Avec $\xi_t=0$ on trouve donc que $S_{GT}(\theta)=\sigma^2S_g(\theta)$.
 ### Équivalence avec les moindres carrés pondérés
 
 Du fait de la forme des filtres obtenus par la méthode de @ch15HBSA, lorsque les contraintes imposées sont la préservation des tendances de degré $d$, celle-ci est équivalente à une estimation locale d'une tendance polynomiale de degré $d$ par moindres carrés généralisés.
-En effet, dans ce cas la solution est $\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1$ avec $\Sigma=\alpha F+\beta S+ \gamma T$, et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est $\Sigma^{-1}$.
+En effet, dans ce cas la solution est $\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1$ avec $\Sigma=\alpha F+\beta S+ \gamma T$, et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est $\Sigma$.
+L'équivalence entre la méthode de @ch15HBSA et celle de @proietti2008 peuvent donc se voir comme un cas particulier de l'équivalence entre les moindres carrés pondérés et les moindres carrés généralisés.
+C'est par exemple le cas des filtres symétriques d'Henderson qui peuvent s'obtenir par les deux méthodes.
 
-@LuatiProietti2011
+Dans ce sens, @henderson1916note a montré que les poids $w=(w_{-p},\dots w_{f})$ de associés à la moyenne mobile issue de la régression polynomiale locale par moindres carrés pondérés pouvaient s'écrire sous la forme :
+$$
+w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
+$$
+Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\dots \theta_{f})$ qui préserve les tendances de degré $d$ et donc le diagramme des coefficients change au plus $d$ fois de signes peut être obtenu par une régression polynomiale locale de degré $p$ estimée par moindres carrés pondérés. 
+Pour cela il suffit de trouver un polynôme $P\left(\frac{x}{p+f+1}\right)$ de degré inférieur ou égal à $d$ et dont les changements de signes coïncident avec les changements de signes de $\theta$. 
+Le noyau associé est alors $\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}$.
+C'est le cas de tous les filtres symétriques issues de l'approche FST et de la majorité des filtres asymétriques (voir annexe \@ref(an:equivfstlp)). 
+
+
+Plus récemment @LuatiProietti2011 se sont intéressés aux cas d'équivalences entre les moindres carrés pondérés et les moindres carrés généralisés d'équivalences pour déterminer des les noyaux optimaux (au sens de Gauss-Markov).
+Ils montrent que le noyau d'Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidus, $\varepsilon_t$, est un processus moyenne mobile (MA) non inversible d'ordre 1 (i.e. : $\varepsilon_t=(1-B)\xi_t$ avec $\xi_t$ un bruit blanc). 
+Dans ce cas, la matrice $\Sigma$ de variance-covariance correspond à la matrice obtenue par le critère de *smoothness* avec le paramètre $q=2$ ($\sum_{j}(\nabla^{2}\theta_{j})^{2} = \theta'\Sigma\theta$) : il y a donc équivalence avec l'approche FST.
+De même, le noyau d'Henderson est le noyau optimal associé à la régression polynomiale locale où le résidus est un processus moyenne mobile (MA) non inversible d'ordre 2 (i.e. : $\varepsilon_t=(1-B)^2\xi_t$ avec $\xi_t$ un bruit blanc).
 
 
 
