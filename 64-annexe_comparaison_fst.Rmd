@@ -19,7 +19,7 @@ note <- c("La zone grisée corresponds à l'ensemble $\\left\\{\\begin{pmatrix}x
 # fig.width = knitr::opts_chunk$get("fig.width")*3
 ```
 
-```{r, include = FALSE, eval=is_latex}
+```{r, include = FALSE}
 # Pour réduire la taille des images
 knitr::opts_chunk$set(dev = "png",
                       fig.ext = fig.ext_cube,

@@ -1,17 +1,18 @@
 \newpage
-# Equiv FST {#an:equivfstlp}
+# Équivalence entre l'approche FST et les filtres polynomiaux locaux {#an:equivfstlp}
 
- et avec $q=3$ ($S_g(\theta) = \sum_{j}(\nabla^{3}\theta_{j})^{2}$)
+Dans cette annexe sont tracés les rares poids pour lesquels l'approche FST **n'est pas** équivalente à l'approche polynomiale locale, pour $h=6$ (filtre symétrique de 13 termes) et $h=11$ (filtre symétrique de 23 termes).
+La *smoothness* est calculée avec le paramètre $q=3$ ($S_g(\theta) = \sum_{j}(\nabla^{3}\theta_{j})^{2}$), comme pour le filtre symétrique d'Henderson.
  
  
-```{r, include = FALSE, eval=is_latex}
+```{r, include = FALSE}
 # Pour réduire la taille des images
 knitr::opts_chunk$set(dev = "png",
                       fig.ext = fig.ext_cube,
                       dpi=150)
 ```
  
-```{r thhendersonh6, fig.cap = "Ensemble des poids pour lesquels la méthode FST n'est pas équivalente aux moindres carrés pondérés pour $h=6$ (filtre symétrique de 12 termes), sous contrainte de préservation des polynômes de degré au plus 2 ($d=0,1,2$).",fig.height=height_cube}
+```{r thhendersonh6, fig.cap = "Ensemble des poids pour lesquels la méthode FST n'est pas équivalente aux moindres carrés pondérés pour $h=6$ (filtre symétrique de 13 termes), sous contrainte de préservation des polynômes de degré au plus 2 ($d=0,1,2$)."}
 poids_non_equiv <- readRDS(sprintf("data/th_henderson/poids_non_equiv_h%i.RDS",6))
 
 par(mfrow = c(1,3), 
