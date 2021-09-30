@@ -1,17 +1,31 @@
+library(kableExtra)
 # knitr::knit_hooks$restore() # Pour les réinitialiser
 
+is_html <- knitr::is_html_output()
+is_latex <- knitr::is_latex_output()
+
+fig.ext <- ifelse(is_latex,"pdf",ifelse(is_html,"svg", "jpg"))
+fig.ext_cube <- ifelse(is_latex,"jpg","jpg")
+dev <- ifelse(is_latex,"pdf","svg")
+# dev2 <- knitr::opts_chunk$get("dev")
+fig.path <- ifelse(is_latex,"pdf",ifelse(is_html,"html", "autres"))
 knitr::opts_chunk$set(echo = FALSE,
-                      fig.path = "img/",
+                      fig.path = sprintf("img/bookdown/%s/", fig.path),
+                      fig.ext = fig.ext,
+                      dev = dev, dpi = 76,
                       cache = TRUE,
                       warning = FALSE,
-                      message = FALSE)
+                      message = FALSE,
+                      fig.align = 'center',
+                      fig.pos = "",
+                      out.extra = NULL)
 height_cube <- 1.7
-library(kableExtra)
+
+
 
 # Fontawesome
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
-is_html <- knitr::is_html_output()
-is_latex <- knitr::is_latex_output()
+
 if(is_html){
     fa_arrow_circle_right <- '<i class="fas fa-arrow-circle-right"></i>'
     fa_r_project <- '<i class="fab fa-r-project"></i>'
@@ -29,6 +43,28 @@ if(is_html){
 ########## KNITR ###############
 ################################
 library(htmltools)
+markdown_latex <- function(text, to = "latex"){
+    res <- sapply(text, function(x){
+        dir = tempdir()
+        infile <- tempfile(fileext=".md", tmpdir = dir)
+        writeLines(x, infile)
+        file.copy("biblio.bib",file.path(dir,"biblio.bib"))
+        outfile <- tempfile(fileext=".tex", tmpdir = dir)
+        rmarkdown::pandoc_convert(infile,
+                                  to = to,
+                                  from = "markdown",
+                                  citeproc = FALSE,
+                                  options = c("--bibliography=biblio.bib",
+                                              "--biblatex"
+                                              ),
+                                  output = outfile,
+                                  wd = dir)
+        paste(readLines(outfile), collapse = " ")
+    })
+    names(res) <- NULL
+    res
+}
+converttext <- ifelse(is_latex,markdown_latex, \(x) x)
 latex_emph <- function(entete = "Note", x, sep = "\n\n"){
     txt <- paste(sprintf("\\emph{%s}", x), collapse = sep)
     if(length(x)>1){
@@ -92,7 +128,9 @@ add_fig_opt_latex <- function(x, options, nom_opt,
     opt <- options[[nom_opt_complet]]
     if(!is.null(opt)){
         x <- paste(x,
-                   latex_emph(prefix, cite_ref_latex(opt), sep = sep_multi),
+                   latex_emph(prefix,
+                              markdown_latex(opt),
+                              sep = sep_multi),
                    sep = sep_fichier)
     }
     x
@@ -196,6 +234,8 @@ local({
         if(is.null(options$fig.cap))
             return(hook_plot2(x, options))
         if(is_latex){
+            # res <-  knitr:::hook_plot_tex(x, options)
+            options$fig.cap <- markdown_latex(options$fig.cap)
             res <-  knitr:::hook_plot_tex(x, options)
             # res <- md_framed(res, options)
             # res <- add_footnote_latex(res, options)
@@ -377,4 +417,46 @@ scatter_3D <- function(x, titre = NULL, phi = 40,
                   zlab = "\n\nTimeliness",
                   main = titre)
     }
+}
+
+table_tp <- function(x, digits = 2, diff = FALSE, rapport = FALSE, quartile = FALSE){
+    x <- do.call(rbind, x)
+    if(length(grep("X12|X13|X11", colnames(x)))>0){
+        col_names <- c("X13-ARIMA",colnames(x)[-1])
+    }else{
+        col_names <- colnames(x)
+    }
+    
+    # On enlève les deux dernières colonnes qui contiennent dates + nom série
+    x <- x[, c(1,0)-ncol(x)] 
+    col_names <- col_names[c(1,0)-length(col_names)] 
+    if(diff & !rapport){
+        x <- diff_x13(x)
+        col_names <- col_names[-1]
+    }
+    if(!diff & rapport){
+        x <- rapport_x13(x)
+        col_names <- col_names[-1]
+    }
+    nb_series = nrow(x)
+    if(quartile){
+        by <- 0.25
+        def_row <- c("Q1", "Méd.", "Q3")
+    }else{
+        by <- 0.1
+        def_row <- c("D1", "D2", "D3", "D4", "Méd.", "D6", "D7",
+                     "D8", "D9")
+    }
+    data_q <- apply(x,2,quantile,seq(0,1, by))
+    data_q <- round(rbind(data_q,
+                          apply(x, 2, mean)), digits)
+    colnames(data_q) <- col_names
+    rownames(data_q) <- c("Min", def_row, "Max", "Moy")
+    list(n = nb_series, table = data_q)
+}
+
+capitalize <- function(x){
+    gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2",    # Uppercase with Base R
+         x,
+         perl = TRUE)
 }
