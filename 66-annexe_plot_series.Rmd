@@ -1,0 +1,70 @@
+\newpage
+# Exemples d'estimations de la tendance-cycle {#an:plotseries}
+
+```{r, include = FALSE, cache = FALSE}
+fig_ext <- ifelse(is_latex, "pdf", "jpeg")
+if(is_latex){
+    out.extra <- ''
+}else{
+    out.extra <- NULL
+}
+ 
+knitr::opts_chunk$set(fig.pos = "H",
+                      out.extra = out.extra)
+```
+
+```{r,include=FALSE}
+file_path <- paste0("img/simulations/%s_%s.", fig_ext)
+nom_serie <- "C235_DE"
+nom_serie2 <- "C25_SE"
+title = "Estimations de la tendance-cycle pour l'indice de production industriel dans la fabrication de ciment, chaux et plâtre (C235) en Allemagne (point de retournement en février 2020)."
+title2 = "Estimations de la tendance-cycle pour l'indice de production industriel dans la fabrication de produits métalliques, à l'exception des machines et des équipements (C25) en Suède (point de retournement en février 2020)."
+```
+
+```{r c235dep1, fig.cap=title, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie),
+                                c("x13", "rkhs_timeliness", "lc")))
+```
+
+```{r c235dep2, fig.cap=title, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie),
+                                c("ql", "cq", "daf")))
+```
+
+```{r c235dep3, fig.cap=title, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie),
+                                c("fst_lc", "fst_lc_min", "fst_lc_med")))
+```
+
+```{r c235dep4, fig.cap=title, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie),
+                                c("fst_rkhs_timeliness")))
+```
+
+```{r c25sep1, fig.cap=title2, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie2),
+                                c("x13", "rkhs_timeliness", "lc")))
+```
+
+```{r c25sep2, fig.cap=title2, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie2),
+                                c("ql", "cq", "daf")))
+```
+
+```{r c25sep3, fig.cap=title2, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie2),
+                                c("fst_lc", "fst_lc_min", "fst_lc_med")))
+```
+
+```{r c25sep4, fig.cap=title2, fig.show="hold", out.width='90%'}
+knitr::include_graphics(sprintf(file_path, 
+                                tolower(nom_serie2),
+                                c("fst_rkhs_timeliness")))
+```

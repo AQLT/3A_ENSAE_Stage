@@ -1,4 +1,4 @@
-# Moving average and filters {#sec:propMM}
+# Quelques propriétés sur les moyennes mobiles {#sec:propMM}
 
 Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple @ch12HBSA pour plus de détails). 
 
@@ -43,12 +43,12 @@ En somme, appliquer une moyenne mobile à une série harmonique la modifie de de
 Lorsque $\Phi_\theta(\omega)/\omega>0$ le déphasage est positif : le point de retournement est détecté avec retard.
 ].
 
-Par exemple, avec $M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}$ on a:
+Par exemple, avec $M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}$ on a: 
 $$
 \Gamma_{\theta_0}(\omega)=\frac{1}{2}+\frac{1}{2}\e^{-i\omega}
-=\lvert\cos(\omega/2)\rvert\e^{-i\frac{\omega}{2}}
+=\lvert\cos(\omega/2)\rvert\e^{-i\frac{\omega}{2}}.
 $$
-La figure \@ref(fig:exgainPhase) trace le gain et le déphasage pour $\omega=\pi/2$ and $X_t=\sin(\omega t)$.
+La figure \@ref(fig:exgainPhase) montre l'impact gain et du déphasage pour $\omega=\pi/2$ and $X_t=\sin(\omega t)$.
 
 \begin{figure}[!ht]
 \pgfplotsset{width=\textwidth,height=6cm,every axis legend/.append style={font=\footnotesize,
@@ -86,7 +86,7 @@ knitr::include_graphics("img/tikz-def-mm.png")
 
 ## Propriétés souhaitables d'une moyenne mobile
 
-Pour décomposer une série temporelle en une composante saisonnière, une tendance-cycle et l'irrégulier, l'algorithme de décomposition X-11 utilise une succession de moyennes mobiles ayant toutes des contraintes spécifiques. 
+Pour décomposer une série temporelle en une composante saisonnière, une tendance-cycle et l'irrégulier, l'algorithme de décomposition X-11 (utilisé dans X-13ARIMA) utilise une succession de moyennes mobiles ayant toutes des contraintes spécifiques. 
 Dans cette sous-section nous décrivons trois types de contraintes :
 
 - la préservation de certaines tendances ;
@@ -110,7 +110,7 @@ C'est-à-dire qu'il faut que la somme des coefficients $\sum_{k=-p}^{+f}\theta_k
 
 - Pour conserver les tendances linéaires $X_t=at+b$ il faut que :
 $$
-\forall t:\:M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}=\sum_{k=-p}^{+f}\theta_k[a(t+k)+b]=at\sum_{k=-p}^{+f}k\theta_k+b\sum_{k=-p}^{+f}\theta_k=at+b.
+\forall t:\:M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}=\sum_{k=-p}^{+f}\theta_k[a(t+k)+b]=a\sum_{k=-p}^{+f}k\theta_k+(at+b)\sum_{k=-p}^{+f}\theta_k=at+b.
 $$
 Ce qui est équivalent à :
 $$
@@ -155,9 +155,8 @@ $$
 
 
 Pour les filtres symétriques, la fonction de déphasage est égale à zéro (modulo $\pi$).
-Il n'y a donc aucun retard dans la détection de points de retournement : c'est notamment pourquoi ils sont préférés aux asymétriques.
-Toutefois, ils ne peuvent pas être utilisés au début et à la fin de la série car aucune valeur passée/future ne peut être utilisée.
-Ainsi, pour l'estimation en temps réel, il est nécessaire de construire une moyenne mobile asymétrique qui se rapproche de la moyenne mobile symétrique.
+Il n'y a donc aucun retard dans la détection de points de retournement : c'est notamment pourquoi ils sont préférés aux filtres asymétriques.
+Ils ne peuvent toutefois pas être utilisés au début et à la fin de la série car aucune valeur passée/future ne peut être utilisée.
 
 ### Moyennes mobiles asymétriques et prévision {#subec:mmetprev}
 
@@ -175,7 +174,7 @@ C'est également l'approche utilisée dans les méthodes de désaisonnalisation 
 In fine, cela revient à utiliser des moyennes mobiles asymétriques puisque les prévisions sont des combinaisons linéaires du passé.
 
 Inversement, à partir d'une moyenne mobile symétrique de référence, on peut déduire les prévisions implicites d'une moyenne mobile asymétrique.
-Notons $v=(v_{-h},\dots, v_{h})$ la moyenne mobile symétrique de référence et $w^0,\dots w^{h-1}$ une suite de moyennes mobiles asymétriques, d'ordre $h+1$ à $2h$ utilisée pour l'estimation des $h$ dernier points avec pour convention $w_t^q=0$ pour $t>q$.
+Notons $v=(v_{-h},\dots, v_{h})$ la moyenne mobile symétrique de référence et $w^0,\dots w^{h-1}$ une suite de moyennes mobiles asymétriques, d'ordre $h+1$ à $2h$ utilisée pour l'estimation des $h$ derniers points avec, pour convention, $w_t^q=0$ pour $t>q$.
 C'est-à-dire que $w^0=(w_{-h}^0,\dots, w_{0}^0)$ est utilisée pour l'estimation en temps réel (lorsque l'on ne connait aucun point dans le futur), $w^1=(w_{-h}^1,\dots, w_{1}^1)$ pour l'estimation de l'avant-dernier point (lorsque l'on ne connait qu'un point dans le futur), etc.
 Notons également $y_{-h},\dots,y_{0}$ la série étudiée observée et $y_{1}^*,\dots y_h^*$ la prévision implicite induite par $w^0,\dots w^{h-1}$.
 Cela signifie, que pour tout $q$ on a :
@@ -207,7 +206,7 @@ $$
 $$
 C'est ce qui implémenté dans la fonction `rjdfilters::implicit_forecast`.
 
-Comme notamment souligné par @wildischis2004, étendre la série par prévision d'un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisées par rapport à la prévision avec une longueur d'avance --- *one-step ahead forecasting*. 
+Comme notamment souligné par @wildischis2004, étendre la série par prévision d'un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d'avance --- *one-step ahead forecasting*. 
 C'est-à-dire que l'on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
 Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s'intéresser à la performance des prévisions avec plusieurs longueurs d'avance --- *multi-step ahead forecasting*.
 Par ailleurs, le déphasage induit par les filtres asymétriques n'est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.

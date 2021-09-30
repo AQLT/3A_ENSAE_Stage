@@ -1,6 +1,6 @@
 # Filtres dépendant des données : trilemme ATS {#sec:WildiMcLeroy}
 
-@trilemmaWMR2019 proposent une approche dépendant des données (*data-dependent*) pour calculer des filtres linéaires.
+@trilemmaWMR2019 proposent une approche dépendante des données (*data-dependent*) pour calculer des filtres linéaires.
 Ils décomposent l'erreur quadratique moyenne de révision en un trilemme de trois quantités appelées *accuracy* (précision), *timeliness* (temporalité) et *smoothness* (lissage), d'où son nom *ATS-trilemna*.
 
 Soient :
@@ -46,11 +46,11 @@ Residual =R_w(\theta)&= 8\int_{\omega_1}^\pi\rho_s(\omega)\rho_\theta(\omega)\si
 
 
 :::: {.remarque data-latex=""}
-Afin d'avoir des définitions cohérentes entre les différentes sections, les formules des quatre critères ont été légèrement modifiés par rapport à ceux définis par @trilemmaWMR2019 :
+Afin d'avoir des définitions cohérentes entre les différentes sections, les formules des quatre critères ont été légèrement modifiées par rapport à ceux définis par @trilemmaWMR2019 :
 
-- dans ce rapport l'intervalle d'intégration est $[0,\pi]$ plutôt que $[-\pi;\pi]$ (toutes les fonctions étant paires cela revient à multiplier par 2 toutes les intégrales) ;
+- dans ce rapport l'intervalle d'intégration est $[0,\pi]$ plutôt que $[-\pi,\pi]$ (toutes les fonctions étant paires cela revient à multiplier par 2 toutes les intégrales) ;
 
-- dans l'article originel, l'intervalle pass-band dépend de la fonction de gain du filtre symétrique (pass-band$=\{\omega |\rho_s(\omega)\geq 0.5\}$) : cela correspond donc à l'intervalle contenant les fréquences conservées sans trop de distorsion par le filtre symétrique. 
+- dans l'article originel, l'intervalle pass-band dépend de la fonction de gain du filtre symétrique (pass-band$=\{\omega |\rho_s(\omega)\geq 0,5\}$) : cela correspond donc à l'intervalle contenant les fréquences conservées sans trop de distorsion par le filtre symétrique. 
 Dans le cas du filtre symétrique d'Henderson de 13 termes, cela correspond à l'intervalle $[0, 2\pi/8]$, c'est-à-dire aux cycles de plus de 8 mois.
 :::: 
 
@@ -89,7 +89,7 @@ ATS-trilemna
 '`
 **Avantages** :
 
-- Les valeurs des différents critères peuvent être comparés et les poids associés peuvent être interprétés.
+- Les valeurs des différents critères peuvent être comparées et les poids associés peuvent être interprétés.
 
 - Méthode généralisable aux cas multivariés
 
@@ -105,5 +105,5 @@ ATS-trilemna
 
 Cette méthode étant totalement dépendante des données, son intégration dans des algorithmes non-paramétriques tels que X-11 serait compliquée. 
 C'est pourquoi elle n'est pour l'instant pas comparée aux autres.
-Pour avoir des critères qui ne dépendent pas des données, une idée serait de fixer la densité spectrale par exemple à celle d'un bruit blanc ($h_{WN}(x)=1$) ou d'une marche aléatoire ($h_{RW}(x)=\frac{1}{2(1-\cos(x))}$). 
+Pour avoir des critères qui ne dépendent pas des données, une idée serait de fixer la densité spectrale, par exemple à celle d'un bruit blanc ($h_{WN}(x)=1$) ou d'une marche aléatoire ($h_{RW}(x)=\frac{1}{2(1-\cos(x))}$). 
 C'est ce qui est implémenté dans la fonction `rjdfilters::dfa_filter()`.

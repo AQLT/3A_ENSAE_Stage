@@ -1,8 +1,13 @@
 \newpage
+
 # Critères de minimisation dans les filtres RKHS {#ann:minrkhs}
 
 Cette annexe montre la fonction objectif que l'on cherche à minimiser dans la construction des filtres asymétriques par la méthode des RKHS.
-Utiliser, dans le calcul des critères, la densité spectrale d'une marche aléatoire a peu d'influence sur la valeurs des critères
+Utiliser, dans le calcul des critères, la densité spectrale d'une marche aléatoire a peu d'influence sur la valeur des critères.
+
+```{r, include = FALSE, cache = FALSE}
+knitr::opts_chunk$set(fig.pos = "H")
+```
 
 ```{r, include = FALSE}
 library(ggplot2)
@@ -21,6 +26,10 @@ plot_rkhs_fun <- function(q, horizon, asymmetricCriterion = "Timeliness", densit
     opt_bw <- rkhs_optimal_bw(degree = 3,horizon = horizon,
                               asymmetricCriterion = asymmetricCriterion, 
                               density = density)[sprintf("q=%i", q)]
+    ylab = asymmetricCriterion
+    if(ylab == "FrequencyResponse"){
+        ylab <- "MSE"
+    }
     p <- ggplot() +
         scale_x_continuous(breaks = scales::pretty_breaks(n = 6),
                            limits = c(horizon-0.2, 2*horizon+1),
@@ -35,10 +44,10 @@ plot_rkhs_fun <- function(q, horizon, asymmetricCriterion = "Timeliness", densit
                       label = formatC(opt_bw, digits = 1,format = "f",
                                       decimal.mark = outDec)),
                   vjust = .5, hjust = 0, size = 3, nudge_x = 0.4)+ 
-        labs(title = sprintf("q = %i", q), y = asymmetricCriterion,
+        labs(title = sprintf("q = %i", q), y = ylab,
              x = "b") + AQLTools:::theme_aqltools() 
 }
-fig.note <- c("Le trait horizontal correspond à la valeurs obtenues dans rjdfilters.",
+fig.note <- c("Le trait horizontal correspond à la valeur obtenue par défaut dans rjdfilters.",
               "Dans la définition des indicateurs $\\omega_1=2\\pi/12$.")
 ```
 
@@ -49,7 +58,7 @@ horizon <- 4
 ```
 
 
-```{r rkhsoptimse4wn, fig.cap = "Erreur quadratique moyenne pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note}
+```{r rkhsoptimse4wn, fig.cap = "Erreur quadratique moyenne pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "FrequencyResponse")
 wrap_plots(plots)
@@ -61,7 +70,7 @@ wrap_plots(plots)
 <!-- wrap_plots(plots) -->
 <!-- ``` -->
 
-```{r rkhstimeliness4wn, fig.cap = "*Timeliness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note}
+```{r rkhstimeliness4wn, fig.cap = "*Timeliness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "Timeliness")
 wrap_plots(plots)
@@ -73,7 +82,7 @@ wrap_plots(plots)
 <!-- wrap_plots(plots) -->
 <!-- ``` -->
 
-```{r rkhsoptiaccuracy4wn, fig.cap = "*Accuracy* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note}
+```{r rkhsoptiaccuracy4wn, fig.cap = "*Accuracy* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "Accuracy")
 wrap_plots(plots)
@@ -86,7 +95,7 @@ wrap_plots(plots)
 <!-- wrap_plots(plots) -->
 <!-- ``` -->
 
-```{r rkhsoptismoothness4wn, fig.cap = "*Smoothness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note}
+```{r rkhsoptismoothness4wn, fig.cap = "*Smoothness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 9 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "Smoothness")
 wrap_plots(plots)
@@ -107,14 +116,14 @@ horizon <- 6
 ```
 
 
-```{r rkhsoptimse6wn, fig.cap = "Erreur quadratique moyenne pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note}
+```{r rkhsoptimse6wn, fig.cap = "Erreur quadratique moyenne pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "FrequencyResponse")
 wrap_plots(plots)
 ```
 
 
-```{r rkhstimeliness6wn, fig.cap = "*Timeliness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note}
+```{r rkhstimeliness6wn, fig.cap = "*Timeliness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "Timeliness")
 wrap_plots(plots)
@@ -122,7 +131,7 @@ wrap_plots(plots)
 
 
 
-```{r rkhsoptiaccuracy6wn, fig.cap = "*Accuracy* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note}
+```{r rkhsoptiaccuracy6wn, fig.cap = "*Accuracy* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "Accuracy")
 wrap_plots(plots)
@@ -130,7 +139,7 @@ wrap_plots(plots)
 
 
 
-```{r rkhsoptismoothness6wn, fig.cap = "*Smoothness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note}
+```{r rkhsoptismoothness6wn, fig.cap = "*Smoothness* pour les filtres RKHS avec $h_{WN}(x)=1$ (série initiale est un bruit blanc) en fonction du paramètre $b$ pour un filtre symétrique de 13 termes.", fig.note = fig.note, fig.height=height_cube*2.5}
 plots <- lapply(0:(horizon-1), plot_rkhs_fun, horizon = horizon,
                 asymmetricCriterion = "Smoothness")
 wrap_plots(plots)
