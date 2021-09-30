@@ -93,7 +93,7 @@ p.caption {
   content: "Note : ";
   display: inline-block;
 }
-#source{
+#source, #lecture{
   margin-top: -1.2em;
   margin-bottom: 0em;
   font-style: italic;
@@ -101,5 +101,9 @@ p.caption {
 }
 #source .title:before{
   content: "Source : ";
+  display: inline-block;
+}
+#lecture .title:before{
+  content: "Note de lecture : ";
   display: inline-block;
 }
