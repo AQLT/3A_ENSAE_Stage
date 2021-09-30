@@ -4,7 +4,7 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">Stage 3A AQLT</a></li>
-    download: ["pdf", "epub"]
+    download: ["pdf", "docx"]
   includes:
     before_body: preamble.html
 bookdown::pdf_document2:
@@ -20,3 +20,7 @@ bookdown::pdf_document2:
     in_header: preamble.tex
     after_header: \thispagestyle{empty}\newpage
   citation_package: biblatex
+  toc_bib: true
+bookdown::word_document2:
+  toc: true
+  
