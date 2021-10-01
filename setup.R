@@ -229,10 +229,10 @@ add_footnote_kable <- function(x, options = knitr::opts_current$get(),
 }
 
 local({
-    hook_plot2 <- knitr::knit_hooks$get('plot')
+    # hook_plot2 <- knitr::knit_hooks$get('plot')
     knitr::knit_hooks$set(plot = function(x, options) {
         if(is.null(options$fig.cap))
-            return(hook_plot2(x, options))
+            return(knitr::hook_plot_md(x, options))
         if(is_latex){
             # res <-  knitr:::hook_plot_tex(x, options)
             options$fig.cap <- markdown_latex(options$fig.cap)
@@ -240,10 +240,10 @@ local({
             # res <- md_framed(res, options)
             # res <- add_footnote_latex(res, options)
         }else if(is_html){
-            res <- hook_plot2(x, options)
+            res <- knitr::hook_plot_md(x, options)
             # res <- add_footnote_html(res, options)
         }else{
-            res <-  hook_plot2(x, options)
+            res <-  knitr::hook_plot_md(x, options)
         }
         res <- add_footnote_perso(res, options)
         md_framed(res, options)
