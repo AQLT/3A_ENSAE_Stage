@@ -1,4 +1,4 @@
-# Régression polynomiale locale {#sec:lppfilters}
+# Régression polynomiale locale {#sec-lppfilters}
 
 Comme notamment montré par @Loader1999, la régression locale est un cas particulier de la régression non paramétrique. 
 Supposons que l'on ait un ensemble de points $(x_i,y_i)_{1\leq i\leq n}$. 
@@ -13,7 +13,7 @@ Dans un voisinage $\left[x_0-h(x_0),x_0-h(x_0)\right]$ de $x_0$, $\mu$ peut êtr
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
 Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par moindre carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0-h(x_0)\right]$.
 
-## Approche de Proietti et Luati {#sec:proietti}
+## Approche de Proietti et Luati {#sec-proietti}
 
 ### Filtres symétriques
 
@@ -89,7 +89,7 @@ Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus 
 
 - le nombre de voisins $H=2h+1$ (ou la fenêtre $h$) : s'il est trop petit alors trop peu de données seront utilisées pour les estimations (ce qui conduira à une grande variance dans les estimations) et s'il est trop grand alors l'approximation polynomiale sera vraisemblablement fausse ce qui conduira à avoir des estimations biaisées.
 
-#### Les différents noyaux {#sec:kernels}
+#### Les différents noyaux {#sec-kernels}
 
 Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date $t$ : pour estimer la tendance-cycle à la date $t$, les observations celles qui sont proches de $t$.
 
@@ -155,7 +155,7 @@ $$\kappa_j^{TC}=\left(
   \right\lvert^3
 \right)^3$$
 
-- noyau d'Henderson (voir partie \@ref(sec:sympolyfilter) pour plus de détails) :
+- noyau d'Henderson (voir partie \@ref(sec-sympolyfilter) pour plus de détails) :
 $$
 \kappa_{j}=\left[1-\frac{j^2}{(h+1)^2}\right]
 \left[1-\frac{j^2}{(h+2)^2}\right]
@@ -199,7 +199,7 @@ Les noyaux d'Henderson, trapézoïdal and gaussien sont particuliers :
 Le noyau trapézoïdal est implémenté dans `rjdfilters` car il permet d'extraire les moyennes mobiles utilisées dans l'algorithme X-13ARIMA pour l'extraction des composantes saisonnières. 
 Il n'est pas adapté dans le cas de l'extraction de la tendance-cycle.
 
-### Quelques filtres symétriques particuliers {#sec:sympolyfilter}
+### Quelques filtres symétriques particuliers {#sec-sympolyfilter}
 
 Lorsque $p=0$ (ajustement local par une constante) on obtient l'estimateur de **Nadaraya-Watson** (ou l'estimateur par noyaux).
 
@@ -216,7 +216,7 @@ Il montre l'équivalence entre les trois problèmes suivants :
 
 1. minimiser la variance de la différence d'ordre trois de la série lissée par l'application d'une moyenne mobile ;  
 2. minimiser la somme du carré de la différence d'ordre trois des coefficients du filtre, c'est le critère de lissage (*smoothness*) : $S=\sum_j(\nabla^{3}\theta_{j})^{2}$ ;  
-3. estimer une tendance localement cubique par les moindres carrés pondérés, où les poids sont choisis de sorte à minimiser la *smoothness* (cela conduit au noyau présenté dans la section \@ref(sec:kernels).
+3. estimer une tendance localement cubique par les moindres carrés pondérés, où les poids sont choisis de sorte à minimiser la *smoothness* (cela conduit au noyau présenté dans la section \@ref(sec-kernels).
 
 Par simplification, nous nous intéresserons uniquement aux filtres issus du noyau d'Henderson.
 
@@ -267,7 +267,7 @@ Par ailleurs, le filtre en temps réel n'a pas de fonction de gain satisfaisante
 Ainsi, même si les estimations sont sans biais, c'est au coût d'une plus grande variance dans les estimations. 
 
 
-### Classe générale  {#subsec:lppasymf}
+### Classe générale  {#subsec-lppasymf}
 
 Pour résoudre le problème de la variance des estimations des filtres temps réel, @proietti2008 propose une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
 Il s'agit d'une généralisation des filtres asymétriques @musgrave1964set (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
@@ -363,10 +363,10 @@ Toutefois, il dépend indirectement des données si le filtre est calibré sur l
 - La *timeliness* n'est pas contrôlée (mais peut être introduite dans le programme de minimisation).
 ::::
 
-## Extension avec le critère de *timeliness* {#subsec:lptimeliness}
+## Extension avec le critère de *timeliness* {#subsec-lptimeliness}
 
 La méthode précédente peut être facilement étendue pour ajouter le critère de *timeliness* définit par @ch15HBSA^[Cela a été codé en Java par Jean Palate dans in https://github.com/palatej/jdemetra-core.].
-En utilisant les mêmes notations que dans \@ref(subsec:lppasymf), $\theta$ le filtre symétrique et $v$ le filtre asymétrique. 
+En utilisant les mêmes notations que dans \@ref(subsec-lppasymf), $\theta$ le filtre symétrique et $v$ le filtre asymétrique. 
 Notons également $\theta=\begin{pmatrix}\theta_p\\\theta_f\end{pmatrix}$ avec $\theta_p$ de même longueur que $v$, et $g=v-\theta_p$. 
 Le critère de *timeliness* s'écrit :
 $$
@@ -400,9 +400,9 @@ $$
 $$
 où $\alpha_T$ est le poids associé au critère de *timeliness*. 
 Avec $\alpha_T=0$ on retrouve $\varphi(v)$.
-Cette extension permet donc de retrouver tous les filtres symétriques et asymétriques présentés dans la section précédente mais généralise également l'approche de @GrayThomson1996 présentée dans la section \@ref(subsec:graythomson).
+Cette extension permet donc de retrouver tous les filtres symétriques et asymétriques présentés dans la section précédente mais généralise également l'approche de @GrayThomson1996 présentée dans la section \@ref(subsec-graythomson).
 
-Cette extension s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec:theoriegen).
+Cette extension s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec-theoriegen).
 Cela revient en effet à minimiser une somme pondérée de l'erreur quadratique de révision :
 $$
 \E{\left( \sum_{i=-h}^h\theta^s_{i}y_{t+s}-\sum_{i=-h}^qv_iy_{t+s} \right)^2}
@@ -419,7 +419,7 @@ sous une contrainte linéaire.
 <!-- F_{GT}(\theta)&=I(\theta,0,y_t,M_\theta y_t)\\ -->
 <!-- S_{GT}(\theta)&=I(\theta,d+1,y_t,0). -->
 <!-- \end{align*} -->
-<!-- La théorie générale définie dans la section \@(subsec:theoriegen) permet donc de retrouver les filtres de @GrayThomson1996. -->
+<!-- La théorie générale définie dans la section \@(subsec-theoriegen) permet donc de retrouver les filtres de @GrayThomson1996. -->
 
 
 
@@ -441,7 +441,7 @@ sous une contrainte linéaire.
 <!-- Otherwise you will only be able to see the results for $q=0$.} -->
 <!-- \end{figure} -->
 
-## Gray et Thomson {#subsec:graythomson}
+## Gray et Thomson {#subsec-graythomson}
 
 ### Filtres symétriques
 
@@ -482,7 +482,7 @@ Les deux critères utilisés dans le programme de minimisation \@ref(eq:graythom
 F_{GT}(\theta)&=I(\theta,0,y_t,M_\theta y_t)\\
 S_{GT}(\theta)&=I(\theta,d+1,y_t,0).
 \end{align*}
-La théorie générale définie dans la section \@ref(subsec:theoriegen) permet donc de retrouver les filtres de @GrayThomson1996.
+La théorie générale définie dans la section \@ref(subsec-theoriegen) permet donc de retrouver les filtres de @GrayThomson1996.
 
 En ne minimisant que la *smoothness* et avec $\xi_t=0$ on retrouve le filtre d'Henderson.
 En ne minimisant que la *fidelity*, cette méthode est équivalente à l'estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de @proietti2008 avec $\sigma^2=0$ et $\Omega =K^{-1}$, ainsi que le filtre de Macalauy.
@@ -512,7 +512,7 @@ Cela permet notamment de reproduire les filtres asymétriques de Musgrave.
 
 La méthode utilisée est donc très proche de celle de @proietti2008 : on retrouve d'ailleurs le filtre DAF avec $\sigma^2=0$ et $\Omega =K^{-1}$ et en utilisant la première méthode (estimation du BLUP) et les méthodes LC (filtre de Musgrave), QL et CQ avec la seconde méthode en utilisant respectivement $d=1$, $d=2$ et $d=3$.
 
-La théorie générale définie dans la section \@ref(subsec:theoriegen) permet également de retrouver les filtres asymétriques puisqu'ils sont construits en minimisant l'erreur quadratique moyenne des révisions sous contraintes linéaires (préservation d'un polynôme de degré $p$).
+La théorie générale définie dans la section \@ref(subsec-theoriegen) permet également de retrouver les filtres asymétriques puisqu'ils sont construits en minimisant l'erreur quadratique moyenne des révisions sous contraintes linéaires (préservation d'un polynôme de degré $p$).
 
 
 :::: {.remarque data-latex=""}
@@ -532,7 +532,7 @@ Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dan
 ::::
 
 
-## Équivalence avec l'approche FST {#subsec:equivlpfst}
+## Équivalence avec l'approche FST {#subsec-equivlpfst}
 
 ### Liens entre les critères de Gray et Thomson et ceux de Guggemos *et alii*
 
@@ -578,7 +578,7 @@ Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\d
 Pour cela il suffit de trouver un polynôme $P\left(\frac{X}{p+f+1}\right)$ de degré inférieur ou égal à $d$ et dont les changements de signes coïncident avec les changements de signes de $\theta$. 
 Le noyau associé est alors $\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}$.
 C'est le cas de tous les filtres symétriques issues de l'approche FST et de la majorité des filtres asymétriques.
-L'annexe \@ref(an:equivfstlp) présente les quelques poids pour lesquels il n'y a pas équivalence.
+L'annexe \@ref(an-equivfstlp) présente les quelques poids pour lesquels il n'y a pas équivalence.
 
 
 Plus récemment @LuatiProietti2011 se sont intéressés aux cas d'équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).

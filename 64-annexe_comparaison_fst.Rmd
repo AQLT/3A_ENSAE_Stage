@@ -1,5 +1,5 @@
 \newpage
-# Comparaison avec le filtre FST {#sec:annexeFST}
+# Comparaison avec le filtre FST {#sec-annexeFST}
 
 Cette annexe synthétise les cas où il est possible de trouver un ensemble de poids tels que les filtres FST ont de meilleurs propriétés (en termes de *fidelity*, *smoothness* et *timeliness*) que les filtres polynomiaux ou RKHS, avec les mêmes contraintes sur la préservation des polynômes (ou des contraintes supérieures).
 Par simplicité, les graphiques ne sont tracés que pour les principales méthodes étudiées : le filtre *Linear-Constant* (LC) et le filtre RKHS $b_{q,\varphi}$ obtenu par minimisation de la *timeliness*.

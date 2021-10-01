@@ -1,4 +1,4 @@
-# Quelques propriétés sur les moyennes mobiles {#sec:propMM}
+# Quelques propriétés sur les moyennes mobiles {#sec-propMM}
 
 Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple @ch12HBSA pour plus de détails). 
 
@@ -151,7 +151,7 @@ $$
 \sigma^2\sum_{k=-p}^{+f} \theta_k^2.
 $$
 
-## Estimation en temps réel et moyennes mobiles asymétriques {#sec:mmasym}
+## Estimation en temps réel et moyennes mobiles asymétriques {#sec-mmasym}
 
 
 Pour les filtres symétriques, la fonction de déphasage est égale à zéro (modulo $\pi$).
@@ -217,10 +217,10 @@ C'est pourquoi il peut être nécessaire de définir des critères alternatifs p
 Dans ce rapport, nous nous concentrons sur ceux définis par @ch15HBSA et @trilemmaWMR2019 pour construire les filtres asymétriques.
 
 @ch15HBSA proposent une approche générale pour dériver des filtres linéaires, basée sur un problème d'optimisation de trois critères : *Fidelity* ($F_g$, réduction de la variance), *Smoothness* ($S_g$, lissage) et *Timeliness* ($T_g$, déphasage).
-Voir section \@ref(subsec:GuggemosEtAl) pour plus de détails.
+Voir section \@ref(subsec-GuggemosEtAl) pour plus de détails.
 
 @trilemmaWMR2019 proposent une approche basée sur la décomposition de l'erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : *Accuracy* ($A_w$, précision), *Timeliness* ($T_w$, déphasage), *Smoothness* ($S_w$, lissage) et *Residual* ($R_w$, résidus).
-Voir section \@ref(sec:WildiMcLeroy) pour plus de détails.
+Voir section \@ref(sec-WildiMcLeroy) pour plus de détails.
 
 Tous les indicateurs de qualité sont résumés dans le tableau \@ref(tab:QC) et sont calculables avec la fonction `rjdfilters::diagnostic_matrix`.
 

@@ -1,5 +1,5 @@
 \newpage
-# Coefficients, fonctions de gain et de déphasage {#an:graphs}
+# Coefficients, fonctions de gain et de déphasage {#an-graphs}
 
 ```{r, include = FALSE, cache = FALSE}
 knitr::opts_chunk$set(fig.pos = "H")

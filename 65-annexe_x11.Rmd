@@ -1,6 +1,6 @@
 \newpage
 
-# Décomposition avec X-13ARIMA {#an:x11}
+# Décomposition avec X-13ARIMA {#an-x11}
 
 
 Pour décomposer une série, l'algorithme X-13-ARIMA (et TRAMO-SEATS) fonctionnent en deux grandes étapes :

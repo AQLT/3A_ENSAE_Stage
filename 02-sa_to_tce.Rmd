@@ -1,4 +1,4 @@
-# De la désaisonnalisation à l'estimation tendance-cycle {#sec:SAtoTCE}
+# De la désaisonnalisation à l'estimation tendance-cycle {#sec-SAtoTCE}
  
 La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales.
 C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours de jours ouvrables, la *désaisonnalisation* étant le processus consistant à supprimer les effets des fluctuations saisonnières et des jours ouvrables.
@@ -27,19 +27,19 @@ Une interface `r fa_r_project`, développée au cours de ce stage, est implémen
 Les filtres linéaires (ou moyennes mobiles) sont omniprésents dans la désaisonnalisation et l'estimation des différentes composantes.
 Au centre de la série, des filtres dits symétriques sont appliqués (pour estimer une composante à la date $t$, on utilise autant de points après $t$ qu'avant $t$).
 Cependant, en raison du manque d’observations futures, les estimations en temps réel doivent s’appuyer sur des moyennes mobiles asymétriques.
-Les moyennes mobiles asymétriques classiques minimisent les erreurs de révision mais introduisent des retards dans la détection des points de retournement (appelé déphasage, voir section \@ref(sec:propMM)).
+Les moyennes mobiles asymétriques classiques minimisent les erreurs de révision mais introduisent des retards dans la détection des points de retournement (appelé déphasage, voir section \@ref(sec-propMM)).
 
 Dans la littérature, différentes approches ont été envisagées pour l'extraction de tendance-cycle en temps réel^[Voir par exemple @alexandrov2012TEreview pour une revue de la littérature sur les méthodes d'extraction de tendance.].
 Parmi les plus récentes, on peut citer :
  
 - Les *Model-Based Approach*  --- approches basées sur les modèles --- supposent la spécification d'un modèle stochastique pour la tendance (modèle ARIMA, modèle d'espace d'état, etc.) et les estimations sont obtenues en minimisant une fonction de pénalité, généralement l'erreur quadratique moyenne.
-C'est par exemple le cas du filtre de Kalman, du filtre de Wiener-Kolmogorov (utilisé dans TRAMO-SEATS) et de l'Approche par Filtre Direct de @trilemmaWMR2019 (section \@ref(sec:WildiMcLeroy)).
+C'est par exemple le cas du filtre de Kalman, du filtre de Wiener-Kolmogorov (utilisé dans TRAMO-SEATS) et de l'Approche par Filtre Direct de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)).
  
 - Les méthodes d'extraction non paramétriques ne supposent pas que la structure d'un modèle est fixe et peuvent être facilement appliquées à n'importe quelle série temporelle.
 C'est par exemple le cas des filtres @henderson1916note et @musgrave1964set (utilisés dans X-13ARIMA).
-Les méthodes classiques peuvent être vues comme des régressions polynomiales locales, approche généralisée par @proietti2008 (section \@ref(sec:lppfilters)).
+Les méthodes classiques peuvent être vues comme des régressions polynomiales locales, approche généralisée par @proietti2008 (section \@ref(sec-lppfilters)).
 Les estimateurs non paramétriques peuvent également être reproduits en exploitant la méthodologie de l'espace de Hilbert du noyau reproducteur (RKHS), comme cela est fait par
-@dagumbianconcini2008 (section \@ref(sec:rkhs)).
+@dagumbianconcini2008 (section \@ref(sec-rkhs)).
  
 Bien que ces auteurs aient proposé des approches générales pour construire des filtres linéaires, ils ne font référence qu'aux méthodes les plus classiques (Henderson, Musgrave, Hodrick-Prescott, etc.) sans faire le lien avec les autres méthodes récentes.
 Dans ce rapport, nous cherchons à proposer une approche unificatrice générale qui permettrait de reproduire l'ensemble de ces méthodes.
@@ -47,12 +47,12 @@ Cela a un double intérêt.
 D'une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l'analyse conjoncturelle.
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
  
-Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec:theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques qui permet de minimiser les effets de déphasage (section \@ref(subsec:GuggemosEtAl)).
-Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an:diag).
+Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques qui permet de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
+Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
  
 Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-12ARIMA.
 Pour maintenir la cohérence avec l'approche non paramétrique de X-12ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
-C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec:WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
-L'ensemble des filtres utilisés sont résumés dans l'annexe \@ref(an:graphs).
+C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
+L'ensemble des filtres utilisés sont résumés dans l'annexe \@ref(an-graphs).
  
 

@@ -15,9 +15,9 @@ Si ces moyennes mobiles asymétriques ont de bonnes propriétés concernant la t
 
 
 L'objectif de ce rapport est de décrire et de comparer les approches récentes permettant l’extraction de tendance-cycle : filtres polynomiaux locaux, méthodes basées sur une optimisation des propriétés des filtres et filtres basés sur les espaces de Hilbert à noyau reproduisant (RKHS).  
-En raison du lien entre la désaisonnalisation et l'extraction de tendance-cycle (section \@ref(sec:SAtoTCE)), nous nous concentrons sur les méthodes non paramétriques qui peuvent être incluses dans X-13ARIMA-SEATS.
-Après une description des propriétés générales d'un filtre linéaire (section \@ref(sec:propMM)), nous décrivons une approche générale englobant les différentes méthodes développées par @proietti2008, @GrayThomson1996, @ch15HBSA, @trilemmaWMR2019 et @dagumbianconcini2008 (sections \@ref(sec:theoriegen) à \@ref(sec:rkhs)).
-Enfin, dans la section \@ref(sec:comparison), nous comparons les différentes méthodes en les intégrant dans X-13ARIMA-SEATS et en les appliquant sur des séries réelles.
+En raison du lien entre la désaisonnalisation et l'extraction de tendance-cycle (section \@ref(sec-SAtoTCE)), nous nous concentrons sur les méthodes non paramétriques qui peuvent être incluses dans X-13ARIMA-SEATS.
+Après une description des propriétés générales d'un filtre linéaire (section \@ref(sec-propMM)), nous décrivons une approche générale englobant les différentes méthodes développées par @proietti2008, @GrayThomson1996, @ch15HBSA, @trilemmaWMR2019 et @dagumbianconcini2008 (sections \@ref(sec-theoriegen) à \@ref(sec-rkhs)).
+Enfin, dans la section \@ref(sec-comparison), nous comparons les différentes méthodes en les intégrant dans X-13ARIMA-SEATS et en les appliquant sur des séries réelles.
 
 
 

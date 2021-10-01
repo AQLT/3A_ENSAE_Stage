@@ -1,4 +1,4 @@
-# Filtres et Reproducing Kernel Hilbert Space (RKHS) {#sec:rkhs}
+# Filtres et Reproducing Kernel Hilbert Space (RKHS) {#sec-rkhs}
 
 La théorie des *Reproducing Kernel Hilbert Space* (RKHS) --- espaces de Hilbert à noyau reproduisant --- est une théorie générale dans l'apprentissage statistique non-paramétrique qui permet d'englober un grand nombre de méthodes.
 C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que la moyenne mobile d'Henderson.
@@ -10,7 +10,7 @@ $$
 \left\langle U(t),V(t)\right\rangle =\E{U(t)V(t)}=\int_{\R}U(t)V(t)f_{0}(t)\ud t\quad
 \forall U,V\in\mathbb{L}^{2}(f_{0}).
 $$
-La fonction $f_0$ pondère donc chaque valeur en fonction de sa position temporelle : il s'agit de la version continue des noyaux définis dans la partie \@ref(sec:kernels).
+La fonction $f_0$ pondère donc chaque valeur en fonction de sa position temporelle : il s'agit de la version continue des noyaux définis dans la partie \@ref(sec-kernels).
 
 Dans notre cas, on suppose que notre série initiale $y_t$ est désaisonnalisée et peut s'écrire comme la somme d'une tendance-cycle, $TC_t$ et d'une composante irrégulière, $I_t$ (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
 $$
@@ -89,7 +89,7 @@ K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 \end{equation}
 C'est cette formule qui est utilisée dans le package `rjdfilters` pour calculer les différentes moyennes mobiles.
 
-Comme discuté dans la partie \@ref(sec:proietti), le noyau d'Henderson dépend de la fenêtre utilisée.
+Comme discuté dans la partie \@ref(sec-proietti), le noyau d'Henderson dépend de la fenêtre utilisée.
 Ainsi, tous les moments de l'équation \@ref(eq:rkhskernelfun) doivent être recalculés pour chaque valeur de $h$.
 Pour éviter cela, @dagumbianconcini2008 suggèrent d'utiliser le noyau quadratique (*biweight*) pour approcher le noyau d'Henderson lorsque $h$ est petit ($h< 24$) et le noyau cubique (*triweight*) lorsque $h$ est grand $h\geq 24$.
 
@@ -106,7 +106,7 @@ b_{q,\gamma}=\underset{b_q\in[h; 3h]}{\min}
 2\int_{0}^{\pi}
 \lvert \Gamma_s(\omega)-\Gamma_\theta(\omega)\rvert^2h(\omega)\ud \omega.
 $$
-Cette erreur quadratique moyenne peut également se décomposer en plusieurs termes (voir équation \@ref(eq:msedef) de la section \@ref(sec:WildiMcLeroy)) qui peuvent également être minimisés :
+Cette erreur quadratique moyenne peut également se décomposer en plusieurs termes (voir équation \@ref(eq:msedef) de la section \@ref(sec-WildiMcLeroy)) qui peuvent également être minimisés :
 
 - l'*accuracy* qui correspond à la part de la révision liée aux différences de fonction de gain dans les fréquences liées à la tendance-cycle
 $$
@@ -159,7 +159,7 @@ où $\Omega_S=[0,2\pi/36]$ est l'intervalle de fréquences associé aux cycles d
 ::::
 
 
-Un des inconvénients de cette méthode est qu'il n'y a pas unicité de la solution et donc qu'il y a parfois plusieurs extremum (voir annexe \@ref(ann:minrkhs), graphiques \@ref(fig:rkhstimeliness4wn), \@ref(fig:rkhstimeliness6wn) et \@ref(fig:rkhstimeliness11wn) sur la *timeliness*).
+Un des inconvénients de cette méthode est qu'il n'y a pas unicité de la solution et donc qu'il y a parfois plusieurs extremum (voir annexe \@ref(an-minrkhs), graphiques \@ref(fig:rkhstimeliness4wn), \@ref(fig:rkhstimeliness6wn) et \@ref(fig:rkhstimeliness11wn) sur la *timeliness*).
 Cela affecte uniquement les filtres qui minimisent la timeliness et uniquement pour certaines valeurs de $q$ (par exemple $q=5$ pour un filtre symétrique de 13 termes).
 Comme notamment montré dans @JSM2021AQLTLQ, la valeur optimal retenue par défaut par `rjdfilters` produit des discontinuités dans l'estimation de la tendance-cycle : dans les cas où il y a plusieurs extremum, il serait donc préférable de retenir celui pour lequel $b$ est maximal. 
 C'est ce qui a été retenu dans la suite de ce rapport, c'est également cohérent avec les valeurs optimales présentés dans @dagumbianconcini2015new.
@@ -200,7 +200,7 @@ RKHS filters
 - Il peut y avoir des problèmes de minimisation (notamment en minimisant la *timeliness*).
 ::::
 
-Tous les critères utilisés la sélection optimale du paramètre $b$ pouvant s'écrire comme cas particuliers du critère $J$ défini dans l'équation \@ref(eq:theoriegen1) (voir section \@ref(sec:WildiMcLeroy)), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec:theoriegen) en imposant comme contrainte linéaire que les coefficients soient sous la forme $w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}$.
+Tous les critères utilisés la sélection optimale du paramètre $b$ pouvant s'écrire comme cas particuliers du critère $J$ défini dans l'équation \@ref(eq:theoriegen1) (voir section \@ref(sec-WildiMcLeroy)), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec-theoriegen) en imposant comme contrainte linéaire que les coefficients soient sous la forme $w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}$.
 
 ## RKHS et polynômes locaux
 

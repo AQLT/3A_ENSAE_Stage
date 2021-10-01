@@ -4,7 +4,7 @@
 knitr::opts_chunk$set(fig.pos = "H")
 ```
 
-# Équivalence entre l'approche FST et les filtres polynomiaux locaux {#an:equivfstlp}
+# Équivalence entre l'approche FST et les filtres polynomiaux locaux {#an-equivfstlp}
 
 Dans cette annexe sont tracés les rares poids pour lesquels l'approche FST **n'est pas** équivalente à l'approche polynomiale locale, pour $h=6$ (filtre symétrique de 13 termes) et $h=11$ (filtre symétrique de 23 termes).
 Lorsqu'un graphique n'est pas affiché c'est que tous les filtres FST sont équivalents une approche polynomiale locale par moindre carrés pondérés.

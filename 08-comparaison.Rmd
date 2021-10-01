@@ -1,4 +1,4 @@
-# Comparaison des différentes méthodes {#sec:comparison}
+# Comparaison des différentes méthodes {#sec-comparison}
 
 ```{r, include = FALSE}
 data_tp_ <- readRDS("data/data_tp.RDS")
@@ -48,7 +48,7 @@ Cela peut être fait en utilisant la fonction `rjdfilters::x11()`.
 ].  
 Pour contrôler l'impact des estimations des paramètres et des points atypiques dans le modèle Reg-ARIMA model, la série linéarisée utilisée ici correspond à celle calculée sur l'ensemble de la série.  
 Pour la méthode de référence (X-13ARIMA), la série linéarisée est prolongée par prévision sur un an avant la décomposition mais pour toutes les autres méthodes on n'utilise pas les prévisions dans la décomposition.  
-Une description plus détaillée de l'algorithme de décomposition est disponible en annexe \@ref(an:x11).
+Une description plus détaillée de l'algorithme de décomposition est disponible en annexe \@ref(an-x11).
 
 3. Pour chaque estimation de la tendance-cycle, on calcule les points de redressement et de ralentissement.
 
@@ -78,7 +78,7 @@ kbl(data,
     add_footnote_kable()
 ```
 
-Deux exemples sont présentés dans l'annexe \@ref(an:plotseries) : un où la méthode X-13ARIMA détecte plus rapidement le point de retournement que les autres et un ou c'est l'inverse.
+Deux exemples sont présentés dans l'annexe \@ref(an-plotseries) : un où la méthode X-13ARIMA détecte plus rapidement le point de retournement que les autres et un ou c'est l'inverse.
 On retrouve le fait que les estimations avec les méthodes QL, CQ et DAF sont fortement bruitées avec des estimations qui ne sont pas plausibles (notamment celles autour de points de retournement).
 
 Le tableau \@ref(tab:covid-rev) montre la distribution de la racine carrée de l'erreur quadratique moyenne de révision (RMSE) entre la première et la dernière estimation de la tendance-cycle.
@@ -127,7 +127,7 @@ kbl(data,
 
 Pour limiter les degrés de liberté dans le choix des poids dans l'approche FST, une approche peut être de les sélectionner comparativement à une autre moyenne mobile.
 En effet, si l'on se concentre sur les trois critères de *fidelity*, *smoothness* et *timeliness*, comparativement à une moyenne mobile fixée, un ensemble de poids peut être considéré comme optimal s'il conduit à un filtre de meilleure qualité (selon ces trois critères) avec les mêmes contraintes polynomiales (ou des contraintes polynomiales plus grandes).
-L'annexe \@ref(sec:annexeFST) trace l'ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais concentrons-nous ici sur le cas $h=6$ (filtre symétrique de 13 termes).
+L'annexe \@ref(sec-annexeFST) trace l'ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais concentrons-nous ici sur le cas $h=6$ (filtre symétrique de 13 termes).
 
 Parmi l'ensemble des poids "admissibles" (i.e. : un ensemble de poids minimisant les 3 critères par rapport à un filtre de référence), plusieurs méthodes peuvent être utilisés pour construire les moyennes mobiles asymétriques.
 Ici nous en retenons trois :
@@ -141,7 +141,7 @@ Ici nous en retenons trois :
 Parmi les approches polynomiales, le filtre LC est celui qui semble donner les meilleurs résultats : nous nous restreignant donc à la comparaison à cette méthode. 
 Pour le choix du degré de préservation, pour la première méthode, forcer, lorsque c'est possible, la moyenne mobile à préserver les polynômes de degré 1 ne change pas les poids retenus : c'est ce qui a été fait pour cette méthode. Pour les deux autres, nous nous sommes restreints aux moyennes mobiles préservant les constantes uniquement (comme le filtre LC).
 Par simplicité, le filtre FST optimal associé au filtre RKHS n'a été étudié qu'avec la première méthode.
-Ces poids sont présentés dans le tableau \@ref(tab:poidsfstsimul), les coefficients associés sont présentés dans l'annexe \@ref(an:graphs) dans les figures \@ref(fig:graphsfstlcmax) à \@ref(fig:graphsfstrkhs).
+Ces poids sont présentés dans le tableau \@ref(tab:poidsfstsimul), les coefficients associés sont présentés dans l'annexe \@ref(an-graphs) dans les figures \@ref(fig:graphsfstlcmax) à \@ref(fig:graphsfstrkhs).
 Le filtre utilisé pour l'estimation en temps-réel ($q=0$) qui minimise la timeliness par rapport au filtre LC accorde, pour l'estimation de la tendance-cycle en $t$, un poids plus important à la valeur observée en $t-1$ qu'à celle observée en $t$ (figure \@ref(fig:graphsfstlcmax)) : cela ne parait pas plausible économique et justifie de ne pas se restreindre uniquement à la première méthode de sélection des poids.
 
 
@@ -170,8 +170,8 @@ kbl(tab_format, caption = "Poids retenus pour construire des filtres avec l'appr
 ```
 
 En termes de détection des points de retournement (tableau \@ref(tab:covid-tp-fst)), le déphasage semble plus grand pour ces filtres que pour les autres méthodes. 
-Sur les deux exemples étudiés (annexe \@ref(an:plotseries)), les estimations sont bien moins volatiles que pour les méthodes polynomiales QL, CQ et DAF^[
-Cela pouvait d'ailleurs s'anticiper par l'analyse des fonctions de gains présentés en annexe \@ref(an:graphs). 
+Sur les deux exemples étudiés (annexe \@ref(an-plotseries)), les estimations sont bien moins volatiles que pour les méthodes polynomiales QL, CQ et DAF^[
+Cela pouvait d'ailleurs s'anticiper par l'analyse des fonctions de gains présentés en annexe \@ref(an-graphs). 
 En effet, pour les autres méthodes, pour les filtres asymétriques utilisés lors de l'estimation en temps réel ($q=0$), la fonction de gain est supérieure à 1 pour de nombreuses fréquences, ce qui signifie que le bruit est amplifié.
 Toutefois, pour les basses fréquences, les fonctions de gains décroissent plus vite pour les filtres issus de la méthode FST, ce qui signifie que la composante tendance-cycle est atténuée.
 ]. 
@@ -212,7 +212,7 @@ kbl(data_table_rev,
     add_footnote_kable()
 ```
 
-Notons par ailleurs que la hiérarchie entre les méthodes sur les révisions entre la première et la dernière observation, estimée empiriquement dans les tableaux \@ref(tab:covid-rev) et \@ref(tab:covid-rev-fst), se retrouve dans les indicateurs théoriques, définis dans la section \@ref(sec:WildiMcLeroy). C'est ce qui montré par le tableau \@ref(tab:tab-mse-q0), qui compare les filtres asymétriques utilisés pour l'estimation en temps-réel ($q=0$), en supposant que les séries sont des bruits blancs.
+Notons par ailleurs que la hiérarchie entre les méthodes sur les révisions entre la première et la dernière observation, estimée empiriquement dans les tableaux \@ref(tab:covid-rev) et \@ref(tab:covid-rev-fst), se retrouve dans les indicateurs théoriques, définis dans la section \@ref(sec-WildiMcLeroy). C'est ce qui montré par le tableau \@ref(tab:tab-mse-q0), qui compare les filtres asymétriques utilisés pour l'estimation en temps-réel ($q=0$), en supposant que les séries sont des bruits blancs.
 
 ```{r, inclue = FALSE}
 mse_theo <- readRDS("data/mse_theo.RDS")
@@ -243,13 +243,13 @@ Plusieurs conclusions peuvent être tirées de ces résultats :
 En effet, pour les autres (RKHS et filtres FST) il faut, dans la majorité des cas, au moins 6 mois pour détecter correctement le poids de retournement : cela signifie qu'il y a eu une révision du point de retournement au moment de l'utilisation du filtre symétrique. 
 Cela rejoint les deux points précédents : les moyennes mobiles asymétriques utilisées lorsque l'on s'approche du cas symétrique sont sûrement sous-optimales.
 
-Une piste d'amélioration pourrait donc être d'étudier les filtres LC calculés en rajoutant la *timeliness* dans le programme de minimisation, comme présenté dans la section \@ref(subsec:lptimeliness).
+Une piste d'amélioration pourrait donc être d'étudier les filtres LC calculés en rajoutant la *timeliness* dans le programme de minimisation, comme présenté dans la section \@ref(subsec-lptimeliness).
 Plus d'études devront être menées pour savoir comment calibrer le poids associé à cet indicateur.
 
 ## Impact du noyau
 
 Dans cette section, nous vérifions l'a priori que le choix du noyau n'est pas fondamental et que dans les approches polynomiales et RKHS, on peut se restreindre à l'étude d'un seul noyau.
-Pour cela, nous comparons, en utilisant uniquement la méthode *Linear-Constant* (LC), la performance des filtres asymétriques obtenus en utilisant les différents noyaux présentés dans la section \@ref(sec:kernels).
+Pour cela, nous comparons, en utilisant uniquement la méthode *Linear-Constant* (LC), la performance des filtres asymétriques obtenus en utilisant les différents noyaux présentés dans la section \@ref(sec-kernels).
 En termes de déphasage pour la détection de points de retournement (tableau \@ref(tab:covid-tp-kernels)), tous les noyaux ont des performances similaires, sauf pour le noyau uniforme (qui est sous-optimal car accorde un poids équivalent à toutes les observations).
 Les résultats sont également très proches en termes de révision (tableau \@ref(tab:covid-rev-kernels)) : le choix du noyau ne semble donc pas fondamental.
 
@@ -324,7 +324,7 @@ C'est ainsi qu'est né le *Nonlinear Dagum Filter* (NLDF) qui consiste à :
 
     a. appliquer l'algorithme de correction des points atypique de X-13ARIMA sur la série désaisonnalisée, puis de la prolonger par un modèle ARIMA ;
     
-    b. effectuer une nouvelle correction des points atypiques en utilisant un seuil bien plus strict ($\pm0,7\sigma$ et $\pm 1,0 \sigma$, voir annexe \@ref(an:x11)) et appliquer ensuite le filtre symétrique de 13 termes. 
+    b. effectuer une nouvelle correction des points atypiques en utilisant un seuil bien plus strict ($\pm0,7\sigma$ et $\pm 1,0 \sigma$, voir annexe \@ref(an-x11)) et appliquer ensuite le filtre symétrique de 13 termes. 
     En supposant une distribution normale cela revient à modifier 48 % des valeurs de l'irrégulier.   
     
 Une piste d'étude serait alors d'étudier plus précisément l'impact des points sur l'estimation de la tendance-cycle et la détection des points de retournement, mais aussi d'explorer de nouveaux types de filtres asymétriques basés sur des méthodes robustes (comme les régressions locales robustes, les médianes mobiles, etc.).

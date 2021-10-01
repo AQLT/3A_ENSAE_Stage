@@ -1,5 +1,5 @@
 \newpage
-# Exemples d'estimations de la tendance-cycle {#an:plotseries}
+# Exemples d'estimations de la tendance-cycle {#an-plotseries}
 
 ```{r, include = FALSE, cache = FALSE}
 fig_ext <- ifelse(is_latex, "pdf", "jpeg")

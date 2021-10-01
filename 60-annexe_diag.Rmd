@@ -1,7 +1,7 @@
 # (APPENDIX) Annexe {-} 
 
 \newpage
-# Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles {#an:diag}
+# Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles {#an-diag}
 
 ```{r, include=FALSE}
 notations <- c("$X = X_d = \\begin{pmatrix} x_0 \\quad\\cdots \\quad x_d \\end{pmatrix}$ avec $x_i'=\\begin{pmatrix} (-h)^i \\quad \\cdots \\quad (h)^i\\end{pmatrix}$.")

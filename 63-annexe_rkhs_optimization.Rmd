@@ -1,6 +1,6 @@
 \newpage
 
-# Critères de minimisation dans les filtres RKHS {#ann:minrkhs}
+# Critères de minimisation dans les filtres RKHS {#an-minrkhs}
 
 Cette annexe montre la fonction objectif que l'on cherche à minimiser dans la construction des filtres asymétriques par la méthode des RKHS.
 Utiliser, dans le calcul des critères, la densité spectrale d'une marche aléatoire a peu d'influence sur la valeur des critères.
