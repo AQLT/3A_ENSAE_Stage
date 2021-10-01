@@ -13,3 +13,5 @@ Plusieurs travaux ont été menés sur l’estimation de la tendance-cycle en te
 - L’approche de Grun-Rehomme, Guggemos, et Ladiray (2018) qui développent une procédure globale de construction de moyennes mobiles asymétriques basées sur l’optimisation sous contrainte de la somme pondérée de trois critères : fidélité (réduction du bruit), lissage et temporalité (mesure du déphasage).
 
 L’objectif de ce stage sera d’étudier la possibilité d’établir une théorie générale sur la construction des moyennes mobiles qui englobe les méthodes citées précédemment.
+
+Version web du rapport : https://aqlt-stage3a.netlify.app.
