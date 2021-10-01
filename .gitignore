@@ -6,4 +6,5 @@
 Stage_3A_cache
 *.aux
 *.log
-*.synctex
+*.synctex.gz
+img/bookdown
