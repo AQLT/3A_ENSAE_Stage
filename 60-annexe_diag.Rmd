@@ -10,12 +10,13 @@ if(is_latex){
     out.extra='angle=90'
     out.width <- "0.9\\textheight"
 }else{
-    out.extra <- out.width <-  NULL
+    out.extra <-  NULL
+    out.width <- '100%'
 }
 
 ```
 
-```{r diag-gen-sym, echo=FALSE, engine='tikz', out.width='90%', fig.ext=if (is_latex) 'pdf' else 'png', fig.cap="Synthèse des méthodes de construction de moyennes mobiles symétriques $\\theta=(\\theta_{-h},\\dots,\\theta_{h})$ de $2h+1$ termes.", engine.opts = list(template = "img/tikz2pdf.tex"), fig.lecture = notations, out.extra = out.extra, out.width = out.width}
+```{r diag-gen-sym, echo=FALSE, engine='tikz', fig.ext=if (is_latex) 'pdf' else 'png', fig.cap="Synthèse des méthodes de construction de moyennes mobiles symétriques $\\theta=(\\theta_{-h},\\dots,\\theta_{h})$ de $2h+1$ termes.", engine.opts = list(template = "img/tikz2pdf.tex"), fig.lecture = notations, out.extra = out.extra, out.width = out.width}
 \input{diagrams/sym.tex}
 ```
 
