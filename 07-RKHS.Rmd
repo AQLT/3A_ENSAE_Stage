@@ -1,5 +1,7 @@
 # Filtres et Reproducing Kernel Hilbert Space (RKHS) {#sec-rkhs}
 
+## Approche de Dagum et Bianconcini
+
 La théorie des *Reproducing Kernel Hilbert Space* (RKHS) --- espaces de Hilbert à noyau reproduisant --- est une théorie générale dans l'apprentissage statistique non-paramétrique qui permet d'englober un grand nombre de méthodes.
 C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que la moyenne mobile d'Henderson.
 Ainsi, @dagumbianconcini2008 utilise la théorie des RKHS pour approcher le filtre d'Henderson et en dériver des filtres asymétriques associés.
@@ -183,10 +185,10 @@ C'est ce qui a été retenu dans la suite de ce rapport, c'est également cohér
 <!--   pack_rows(index = groupement, escape = FALSE) -->
 <!-- ``` -->
 
-:::: {.summary_box data-latex="{RKHS filters}"}
+:::: {.summary_box data-latex="{RKHS filters --- Dagum et Bianconcini (2008)}"}
 `r if (is_html) '
 :::{.title #testrkhs}
-RKHS filters
+RKHS filters - @dagumbianconcini2008
 :::
 '`
 **Avantages** :

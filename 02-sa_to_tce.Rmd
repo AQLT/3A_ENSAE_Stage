@@ -27,7 +27,7 @@ Une interface `r fa_r_project`, développée au cours de ce stage, est implémen
 Les filtres linéaires (ou moyennes mobiles) sont omniprésents dans la désaisonnalisation et l'estimation des différentes composantes.
 Au centre de la série, des filtres dits symétriques sont appliqués (pour estimer une composante à la date $t$, on utilise autant de points après $t$ qu'avant $t$).
 Cependant, en raison du manque d’observations futures, les estimations en temps réel doivent s’appuyer sur des moyennes mobiles asymétriques.
-Les moyennes mobiles asymétriques classiques minimisent les erreurs de révision mais introduisent des retards dans la détection des points de retournement (appelé déphasage, voir section \@ref(sec-propMM)).
+Les moyennes mobiles asymétriques classiques minimisent les erreurs de révision mais introduisent des retards dans la détection des points de retournement (appelé déphasage, voir section \@ref(sec-propMM)).
 
 Dans la littérature, différentes approches ont été envisagées pour l'extraction de tendance-cycle en temps réel^[Voir par exemple @alexandrov2012TEreview pour une revue de la littérature sur les méthodes d'extraction de tendance.].
 Parmi les plus récentes, on peut citer :
@@ -48,7 +48,7 @@ D'une part, cela permet de faire une première revue de la littérature sur les 
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
  
 Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques qui permet de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
-Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
+Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
  
 Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-12ARIMA.
 Pour maintenir la cohérence avec l'approche non paramétrique de X-12ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.

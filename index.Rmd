@@ -64,9 +64,9 @@ Les moyennes mobiles asymétriques classiques minimisent les erreurs de révisio
 
 
 La construction de moyennes mobiles asymétriques performantes en termes de fidélité (de préservation du signal), de révision, de lissage et de déphasage est un sujet de recherche toujours ouvert. 
-Ce rapport décrit et compare différentes approches pour construire des filtres asymétriques : filtres polynomiaux locaux, méthodes basées sur une optimisation des propriétés des filtres et filtres basés sur les espaces de Hilbert à noyau reproduisant (RKHS).
+Ce rapport décrit et compare des approches récentes pour construire des filtres asymétriques : filtres polynomiaux locaux, méthodes basées sur une optimisation des propriétés des filtres et filtres basés sur les espaces de Hilbert à noyau reproduisant (RKHS).
 Il décrit également comment les filtres polynomiaux locaux peuvent être étendus pour inclure un critère de temporalité afin de minimiser le déphasage.
-Toutes ces méthodes peuvent se voir comme un cas particulier d'une théorie générale de construction des filtres et ont été comparées en les intégrant dans la méthode de désaisonnalisation X-13-ARIMA.
+Toutes ces méthodes peuvent se voir comme un cas particulier d'une théorie générale de construction des filtres et ont été comparées en les intégrant dans la méthode de désaisonnalisation X-13ARIMA.
 
 Ce rapport montre notamment que contraindre les moyennes mobiles asymétriques à ne conserver que les constantes (et pas nécessairement polynomiales) réduit à la fois l'erreur de révision et le déphasage dans la détection de points de retournement.
 Les futures études sur le sujet peuvent donc se concentrer sur ces filtres.

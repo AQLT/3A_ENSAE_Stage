@@ -81,10 +81,10 @@ S_w(\theta)&= J(\theta,f_1,\omega_1,\pi)\\
 R_w(\theta)&= J(\theta,f_2,\omega_1,\pi).
 \end{align*}
 
-:::: {.summary_box data-latex="{ATS-trilemna}"}
+:::: {.summary_box data-latex="{ATS-trilemna -- Wildi et McElroy (2019)}"}
 `r if (is_html) '
 :::{.title}
-ATS-trilemna
+ATS-trilemna - @trilemmaWMR2019
 :::
 '`
 **Avantages** :

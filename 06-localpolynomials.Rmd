@@ -108,7 +108,7 @@ $$
 \right)^s,\quad\text{avec }r>0,s\geq 0
 $$
 Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l'exception du noyau d'Henderson, trapézoïdal et gaussien. 
-Les principaux noyaux (qui sont également implémentés dans `rjdfilters`) sont :
+Les principaux noyaux (qui sont également implémentés dans `rjdfilters`) sont :
 
 
 ::::{.multicols data-latex="{2}"}
@@ -216,7 +216,7 @@ Il montre l'équivalence entre les trois problèmes suivants :
 
 1. minimiser la variance de la différence d'ordre trois de la série lissée par l'application d'une moyenne mobile ;  
 2. minimiser la somme du carré de la différence d'ordre trois des coefficients du filtre, c'est le critère de lissage (*smoothness*) : $S=\sum_j(\nabla^{3}\theta_{j})^{2}$ ;  
-3. estimer une tendance localement cubique par les moindres carrés pondérés, où les poids sont choisis de sorte à minimiser la *smoothness* (cela conduit au noyau présenté dans la section \@ref(sec-kernels).
+3. estimer une tendance localement cubique par les moindres carrés pondérés, où les poids sont choisis de sorte à minimiser la *smoothness* (cela conduit au noyau présenté dans la section \@ref(sec-kernels)).
 
 Par simplification, nous nous intéresserons uniquement aux filtres issus du noyau d'Henderson.
 
@@ -320,7 +320,7 @@ On obtient le filtre de Musgrave avec le filtre d'Henderson comme filtre symétr
 
 3. *Cubic-Quadratic* (CQ) : $y_t$ cubic ($d=3$) et $v$ préserve les tendances quadratiques ($d^*=2$).
 
-La table \@ref(tab:criteriaLp) compare les critères de qualité des différentes méthodes en utilisant le filtre d'Henderson et $h=6$ (filtre symétrique de 13 termes). 
+Le tableau \@ref(tab:criteriaLp) compare les critères de qualité des différentes méthodes en utilisant le filtre d'Henderson et $h=6$ (filtre symétrique de 13 termes). 
 Pour les filtres en temps-réel ($q=0$), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la *timeliness* est élevée et plus la *fidelity*/*smoothness* est grande : la réduction du déphasage se fait au détriment d'une augmentation de la variance. 
 Ce résultat varie lorsque $q$ augmente : pour $q=2$ le filtre QL a une plus grande *timeliness* que le filtre LC. 
 Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé par l'approche de @proietti2008.
@@ -531,6 +531,29 @@ De plus, en fin de série, cela pourrait introduire des déphasages plus importa
 Inversement, @ch15HBSA justifie de ne pas intégrer le critère de révision dans leur problème car ce critère est fortement corrélé à une combinaison fixée, donc non ajustable par l'utilisateur, des critères *fidelity* et *timeliness*.
 ::::
 
+
+
+:::: {.summary_box data-latex="{Filtres locaux polynomiaux --- Gray et Thomson (1996)}"}
+`r if (is_html) '
+:::{.title}
+Filtres locaux polynomiaux (@GrayThomson1996)
+:::
+'`
+**Avantages** :
+
+- Modèles généraux qui permettent de prendre en compte l'autocorrélation entre les observations.
+
+- Interprétation statistique des différentes méthodes.
+
+- Le filtre asymétrique est indépendant de la date d'estimation.
+Toutefois, il dépend indirectement des données si le filtre est calibré sur l'I-C ratio.
+
+**Inconvénients** :
+
+- La *timeliness* n'est pas contrôlée.
+
+- La spécification du modèle (i.e. : du paramètre $\xi_t$) peut être compliquée : si la structure d'autocorrélation est estimée à partir des données, cela rajoute de l'incertitude dans les estimations, ce qui peut avoir des effets indésirables.
+::::
 
 ## Équivalence avec l'approche FST {#subsec-equivlpfst}
 

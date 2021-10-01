@@ -8,17 +8,17 @@ Premièrement, en fin de période, il n'est pas nécessaire de chercher à conse
 Par ailleurs, dans les méthodes polynomiales, le choix du noyau ne semble pas être fondamental.
 
 Deuxièmement, dans l'estimation en temps réel, les méthodes d'extraction de tendance-cycle ne peuvent s'étudier indépendamment du processus de désaisonnalisation.
-En effet, dans le cas contraire on néglige l'effet des points atypiques sur l'estimation de la tendance-cycle, ce qui pourrait conduire à des estimations biaisées et à une détection de faux points de retournement.
+Dans le cas contraire, on néglige notamment l'effet des points atypiques sur l'estimation de la tendance-cycle, ce qui pourrait conduire à des estimations biaisées et à une détection de faux points de retournement.
 
 Enfin, sur les séries étudiées, la méthode utilisée dans X-13ARIMA semble satisfaisante avec des résultats proches en utilisant la méthode LC.
-Cependant, la moins bonne performance apparente de l'approche FST et dla méthode basée sur les RKHS semblent de provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique.
+Cependant, la moins bonne performance apparente de l'approche FST et de la méthode basée sur les RKHS semblent de provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique.
 Plus d'études devraient être faites pour savoir si, pour la construction des filtres asymétriques minimisant le déphasage, on pourrait se concentrer uniquement sur les ceux utilisés lorsque peu d'observations futures sont disponibles.
 Cela impliquerait notamment de revoir la méthodologie et les indicateurs utilisés.
 
 Cette étude pourrait être étendue de plusieurs manières.
 
 Tout d'abord, elle n'est pas exhaustive et pourrait donc être complétée.
-Parmi les approches récentes non étudiées, nous pouvons citer @vasyechko2014new qui utilisent le noyau d'Epanechnikov pour construire des filtres asymétriques de 13 termes, et @FengSchafer2021 qui proposent, en fin de période, l'utilisation de poids optimaux dans les régressions polynomiales locales basés sur l'erreur quadratique moyenne.
+Parmi les approches récentes non étudiées, nous pouvons citer @vasyechko2014new qui utilisent le noyau d'Epanechnikov pour construire des filtres asymétriques de 13 termes, et @FengSchafer2021 qui proposent, en fin de période, l'utilisation de poids optimaux (au sens de l'erreur quadratique moyenne) dans les régressions polynomiales locales.
 
 Parmi les pistes d'extension, on pourrait s'intéresser à l'impact de la longueur des filtres dans la détection des points de retournement.
 En effet, les filtres asymétriques sont calibrés avec des indicateurs calculés pour l'estimation des filtres symétriques (par exemple pour déterminer automatiquement sa longueur), alors qu'une estimation locale pourrait être préférée.
