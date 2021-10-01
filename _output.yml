@@ -4,7 +4,7 @@ bookdown::gitbook:
     toc:
       before: |
         <li><a href="./">Stage 3A AQLT</a></li>
-    download: ["pdf", "docx"]
+    download: ["pdf", "docx", "tex"]
   includes:
     before_body: preamble.html
 bookdown::pdf_document2:
