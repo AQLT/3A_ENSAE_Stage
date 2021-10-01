@@ -1,0 +1,102 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {french}{}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Résumés}{2}{section*.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}De la désaisonnalisation à l'estimation tendance-cycle}{3}{section.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Moving average and filters}{4}{section.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}Gain et fonction de déphasage}{5}{subsection.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}Propriétés souhaitables d'une moyenne mobile}{5}{subsection.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.1}Préservation de tendances}{6}{subsubsection.3.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.2}Élimination de la saisonnalité}{7}{subsubsection.3.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.2.3}Réduction du bruit}{7}{subsubsection.3.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.3}Estimation en temps réel et moyennes mobiles asymétriques}{7}{subsection.3.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.3.1}Moyennes mobiles asymétriques et prévision}{7}{subsubsection.3.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {3.3.2}Indicateurs de qualité des moyennes mobiles asymétriques}{8}{subsubsection.3.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}D'une théorie générale sur la construction des filtres asymétriques à l'approche FST}{9}{section.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1}Théorie générale de construction des filtres asymétriques}{9}{subsection.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2}Approche \emph {Fidelity-Smoothness-Timeliness} (FST)}{10}{subsection.4.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Filtres dépendant des données : trilemme ATS}{12}{section.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Regression polynomiale locale}{14}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1}Approche de Proietti et Luati}{15}{subsection.6.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.1.1}Filtres symétriques}{15}{subsubsection.6.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\numberline {6.1.1.1}Les différents noyaux}{16}{paragraph.6.1.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.1.2}Quelques filtres symétriques particuliers}{17}{subsubsection.6.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.1.3}Filtres asymétriques}{18}{subsubsection.6.1.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {paragraph}{\numberline {6.1.3.1}Direct asymmetric filters (DAF)}{18}{paragraph.6.1.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.1.4}Classe générale}{19}{subsubsection.6.1.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2}Extension avec le critère de timeliness}{21}{subsection.6.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.3}Gray et Thompson}{22}{subsection.6.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.3.1}Filtres symétriques}{22}{subsubsection.6.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.3.2}Filtres asymétriques}{23}{subsubsection.6.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.4}Équivalence avec l'approche FST}{24}{subsection.6.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.4.1}Liens entre les critères de Gray et Thomson et ceux de Guggemos \emph {et ali}}{24}{subsubsection.6.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {6.4.2}Équivalence avec les moindres carrés pondérés}{25}{subsubsection.6.4.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Filtres et Reproducing Kernel Hilbert Space (RKHS)}{25}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {7.1}RKHS et polynômes locaux}{29}{subsection.7.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {8}Comparison des différentes méthodes}{30}{section.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.1}Méthodologie}{30}{subsection.8.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.2}Comparaison des filtres polynomiaux locaux et des filtres RKHS}{31}{subsection.8.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.3}Comparaison avec l'approche FST}{31}{subsection.8.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {8.4}Illustration with an example}{31}{subsection.8.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {9}Conclusion}{33}{section.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {A}Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles}{34}{appendix.A}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {B}Coefficients, fonctions de gain et de déphasage}{35}{appendix.B}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {C}Equiv FST}{40}{appendix.C}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {D}Critères de minimisation dans les filtres RKHS}{42}{appendix.D}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {D.1}Filtre symétrique de 9 termes (\(h=4\))}{42}{subsection.D.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {D.2}Filtre symétrique de 13 termes (\(h=6\))}{46}{subsection.D.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {D.3}Filtre symétrique de 23 termes (\(h=11\))}{50}{subsection.D.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {E}Comparaison avec le filtre FST}{54}{appendix.E}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {E.1}Filtres polynomiaux locaux}{54}{subsection.E.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {E.2}Filtres RKHS}{55}{subsection.E.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {F}Décomposition avec X-13ARIMA}{61}{appendix.F}%

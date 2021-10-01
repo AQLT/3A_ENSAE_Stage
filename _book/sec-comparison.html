@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html lang="fr" xml:lang="fr">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 7 Comparaison des différentes méthodes | Détection en temps réels des points de retournement : apport de l’utilisation des filtres asymétriques dans l’analyse conjoncturelle</title>
+  <meta name="description" content="Rapport de Stage de 3ème année d’Alain Quartier-la-Tente" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 7 Comparaison des différentes méthodes | Détection en temps réels des points de retournement : apport de l’utilisation des filtres asymétriques dans l’analyse conjoncturelle" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Rapport de Stage de 3ème année d’Alain Quartier-la-Tente" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 7 Comparaison des différentes méthodes | Détection en temps réels des points de retournement : apport de l’utilisation des filtres asymétriques dans l’analyse conjoncturelle" />
+  
+  <meta name="twitter:description" content="Rapport de Stage de 3ème année d’Alain Quartier-la-Tente" />
+  
+
+<meta name="author" content="Alain Quartier-la-Tente" />
+
+
+<meta name="date" content="2021-10-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sec-rkhs.html"/>
+<link rel="next" href="conclusion.html"/>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stage 3A AQLT</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Résumés</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="sec-SAtoTCE.html"><a href="sec-SAtoTCE.html"><i class="fa fa-check"></i><b>1</b> De la désaisonnalisation à l’estimation tendance-cycle</a></li>
+<li class="chapter" data-level="2" data-path="sec-propMM.html"><a href="sec-propMM.html"><i class="fa fa-check"></i><b>2</b> Quelques propriétés sur les moyennes mobiles</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="sec-propMM.html"><a href="sec-propMM.html#gain-et-fonction-de-déphasage"><i class="fa fa-check"></i><b>2.1</b> Gain et fonction de déphasage</a></li>
+<li class="chapter" data-level="2.2" data-path="sec-propMM.html"><a href="sec-propMM.html#propriétés-souhaitables-dune-moyenne-mobile"><i class="fa fa-check"></i><b>2.2</b> Propriétés souhaitables d’une moyenne mobile</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="sec-propMM.html"><a href="sec-propMM.html#préservation-de-tendances"><i class="fa fa-check"></i><b>2.2.1</b> Préservation de tendances</a></li>
+<li class="chapter" data-level="2.2.2" data-path="sec-propMM.html"><a href="sec-propMM.html#élimination-de-la-saisonnalité"><i class="fa fa-check"></i><b>2.2.2</b> Élimination de la saisonnalité</a></li>
+<li class="chapter" data-level="2.2.3" data-path="sec-propMM.html"><a href="sec-propMM.html#réduction-du-bruit"><i class="fa fa-check"></i><b>2.2.3</b> Réduction du bruit</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="sec-propMM.html"><a href="sec-propMM.html#sec-mmasym"><i class="fa fa-check"></i><b>2.3</b> Estimation en temps réel et moyennes mobiles asymétriques</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="sec-propMM.html"><a href="sec-propMM.html#subec:mmetprev"><i class="fa fa-check"></i><b>2.3.1</b> Moyennes mobiles asymétriques et prévision</a></li>
+<li class="chapter" data-level="2.3.2" data-path="sec-propMM.html"><a href="sec-propMM.html#indicateurs-de-qualité-des-moyennes-mobiles-asymétriques"><i class="fa fa-check"></i><b>2.3.2</b> Indicateurs de qualité des moyennes mobiles asymétriques</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sec-theoriegen.html"><a href="sec-theoriegen.html"><i class="fa fa-check"></i><b>3</b> D’une théorie générale sur la construction des filtres asymétriques à l’approche FST</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="sec-theoriegen.html"><a href="sec-theoriegen.html#subsec-theoriegen"><i class="fa fa-check"></i><b>3.1</b> Théorie générale de construction des filtres asymétriques</a></li>
+<li class="chapter" data-level="3.2" data-path="sec-theoriegen.html"><a href="sec-theoriegen.html#subsec-GuggemosEtAl"><i class="fa fa-check"></i><b>3.2</b> Approche <em>Fidelity-Smoothness-Timeliness</em> (FST)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sec-WildiMcLeroy.html"><a href="sec-WildiMcLeroy.html"><i class="fa fa-check"></i><b>4</b> Filtres dépendant des données : trilemme ATS</a></li>
+<li class="chapter" data-level="5" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html"><i class="fa fa-check"></i><b>5</b> Régression polynomiale locale</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#sec-proietti"><i class="fa fa-check"></i><b>5.1</b> Approche de Proietti et Luati</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#filtres-symétriques"><i class="fa fa-check"></i><b>5.1.1</b> Filtres symétriques</a></li>
+<li class="chapter" data-level="5.1.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#sec-sympolyfilter"><i class="fa fa-check"></i><b>5.1.2</b> Quelques filtres symétriques particuliers</a></li>
+<li class="chapter" data-level="5.1.3" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#filtres-asymétriques"><i class="fa fa-check"></i><b>5.1.3</b> Filtres asymétriques</a></li>
+<li class="chapter" data-level="5.1.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-lppasymf"><i class="fa fa-check"></i><b>5.1.4</b> Classe générale</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-lptimeliness"><i class="fa fa-check"></i><b>5.2</b> Extension avec le critère de <em>timeliness</em></a></li>
+<li class="chapter" data-level="5.3" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-graythomson"><i class="fa fa-check"></i><b>5.3</b> Gray et Thomson</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#filtres-symétriques-1"><i class="fa fa-check"></i><b>5.3.1</b> Filtres symétriques</a></li>
+<li class="chapter" data-level="5.3.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#filtres-asymétriques-1"><i class="fa fa-check"></i><b>5.3.2</b> Filtres asymétriques</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="sec-rkhs.html"><a href="sec-rkhs.html"><i class="fa fa-check"></i><b>6</b> Filtres et Reproducing Kernel Hilbert Space (RKHS)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="sec-rkhs.html"><a href="sec-rkhs.html#approche-de-dagum-et-bianconcini"><i class="fa fa-check"></i><b>6.1</b> Approche de Dagum et Bianconcini</a></li>
+<li class="chapter" data-level="6.2" data-path="sec-rkhs.html"><a href="sec-rkhs.html#rkhs-et-polynômes-locaux"><i class="fa fa-check"></i><b>6.2</b> RKHS et polynômes locaux</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="sec-comparison.html"><a href="sec-comparison.html"><i class="fa fa-check"></i><b>7</b> Comparaison des différentes méthodes</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sec-comparison.html"><a href="sec-comparison.html#méthodologie"><i class="fa fa-check"></i><b>7.1</b> Méthodologie</a></li>
+<li class="chapter" data-level="7.2" data-path="sec-comparison.html"><a href="sec-comparison.html#comparaison-des-filtres-polynomiaux-locaux-et-des-filtres-rkhs"><i class="fa fa-check"></i><b>7.2</b> Comparaison des filtres polynomiaux locaux et des filtres RKHS</a></li>
+<li class="chapter" data-level="7.3" data-path="sec-comparison.html"><a href="sec-comparison.html#comparaison-avec-lapproche-fst"><i class="fa fa-check"></i><b>7.3</b> Comparaison avec l’approche FST</a></li>
+<li class="chapter" data-level="7.4" data-path="sec-comparison.html"><a href="sec-comparison.html#impact-du-noyau"><i class="fa fa-check"></i><b>7.4</b> Impact du noyau</a></li>
+<li class="chapter" data-level="7.5" data-path="sec-comparison.html"><a href="sec-comparison.html#discussion"><i class="fa fa-check"></i><b>7.5</b> Discussion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i>Conclusion</a></li>
+<li class="appendix"><span><b>Annexe</b></span></li>
+<li class="chapter" data-level="A" data-path="an-diag.html"><a href="an-diag.html"><i class="fa fa-check"></i><b>A</b> Synthèse des liens entre les différentes méthodes de construction de moyennes mobiles</a></li>
+<li class="chapter" data-level="B" data-path="an-graphs.html"><a href="an-graphs.html"><i class="fa fa-check"></i><b>B</b> Coefficients, fonctions de gain et de déphasage</a></li>
+<li class="chapter" data-level="C" data-path="an-equivfstlp.html"><a href="an-equivfstlp.html"><i class="fa fa-check"></i><b>C</b> Équivalence entre l’approche FST et les filtres polynomiaux locaux</a></li>
+<li class="chapter" data-level="D" data-path="an-minrkhs.html"><a href="an-minrkhs.html"><i class="fa fa-check"></i><b>D</b> Critères de minimisation dans les filtres RKHS</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="an-minrkhs.html"><a href="an-minrkhs.html#filtre-symétrique-de-9-termes-h4"><i class="fa fa-check"></i><b>D.1</b> Filtre symétrique de 9 termes (<span class="math inline">\(h=4\)</span>)</a></li>
+<li class="chapter" data-level="D.2" data-path="an-minrkhs.html"><a href="an-minrkhs.html#filtre-symétrique-de-13-termes-h6"><i class="fa fa-check"></i><b>D.2</b> Filtre symétrique de 13 termes (<span class="math inline">\(h=6\)</span>)</a></li>
+<li class="chapter" data-level="D.3" data-path="an-minrkhs.html"><a href="an-minrkhs.html#filtre-symétrique-de-23-termes-h11"><i class="fa fa-check"></i><b>D.3</b> Filtre symétrique de 23 termes (<span class="math inline">\(h=11\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="sec-annexeFST.html"><a href="sec-annexeFST.html"><i class="fa fa-check"></i><b>E</b> Comparaison avec le filtre FST</a>
+<ul>
+<li class="chapter" data-level="E.1" data-path="sec-annexeFST.html"><a href="sec-annexeFST.html#filtres-polynomiaux-locaux"><i class="fa fa-check"></i><b>E.1</b> Filtres polynomiaux locaux</a></li>
+<li class="chapter" data-level="E.2" data-path="sec-annexeFST.html"><a href="sec-annexeFST.html#filtres-rkhs"><i class="fa fa-check"></i><b>E.2</b> Filtres RKHS</a></li>
+</ul></li>
+<li class="chapter" data-level="F" data-path="an-x11.html"><a href="an-x11.html"><i class="fa fa-check"></i><b>F</b> Décomposition avec X-13ARIMA</a></li>
+<li class="chapter" data-level="G" data-path="an-plotseries.html"><a href="an-plotseries.html"><i class="fa fa-check"></i><b>G</b> Exemples d’estimations de la tendance-cycle</a></li>
+<li class="chapter" data-level="" data-path="références.html"><a href="références.html"><i class="fa fa-check"></i>Références</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Détection en temps réels des points de retournement : apport de l’utilisation des filtres asymétriques dans l’analyse conjoncturelle</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!-- <script type="text/x-mathjax-config"> -->
+    <!-- MathJax.Hub.Config({ -->
+            <!--   TeX: { -->
+                    <!--     Macros: { -->
+                            <!--       NN: "{\\mathbb{N}}", -->
+                            <!--       ZZ: "{\\mathbb{Z}}", -->
+                            <!--       QQ: "{\\mathbb{Q}}", -->
+                            <!--       RR: "{\\mathbb{R}}", -->
+                            <!--       shiftset: "{\\mathcal{D}}", -->
+                            <!--       dx: ["{\\mathrm{d}^{#1}\\mspace{-1mu}\\mathord{#2}}", 2, ""], -->
+                            <!--       indic: "{\\unicode{x1D7D9}}", -->
+                            <!--       prob: "\\mathop{\\mathbb{P}}", -->
+                            <!--       esp: "\\mathop{\\mathbb{E}}", -->
+                            <!--       var: "\\mathop{\\mathbb{V}\\text{ar}}", -->
+                            <!--       cov: "\\mathop{\\mathbb{C}\\text{ov}}", -->
+                            <!--       PP: ["{\\prob\\left({#1}\\right)}", 1], -->
+                            <!--       EE: ["{\\esp\\left[{#1}\\right]}", 1], -->
+                            <!--       VV: ["{\\var\\left[{#1}\\right]}", 1], -->
+                            <!--       CC: ["{\\cov\\left[{#1}\\right]}", 1], -->
+                            <!--       normal: ["{\\mathcal{N}\\left({#1},{#2}\\right)}", 2], -->
+                            <!--       ou: ["{#1}_{\\text{ou}}", 1], -->
+                            <!--       oui: ["{#1}_{\\text{ou},#2}", 2], -->
+                            <!--       pv: "{\\mathfrak{p}}", -->
+                            <!--       qv: "{\\mathfrak{q}}", -->
+                            <!--       zs: "{\\mathfrak{z}}", -->
+                            <!--       ts: "{\\mathfrak{t}}", -->
+                            <!--       sign: "{\\mathfrak{s}}", -->
+                            <!--       shifts: "{\\delta}", -->
+                            <!--       optim: "{\\beta}", -->
+                            <!--       param: "{\\theta}", -->
+                            <!--       unif: ["{\\mathcal{U}\\left({#1}\\right)}", 1], -->
+                            <!--       argmin: "\\mathop{\\mathrm{argmin}}", -->
+                            <!--       diag: "\\mathop{\\mathrm{Diag}}", -->
+                            <!--       rang: "\\mathop{\\mathrm{rang}}", -->
+                            <!--       pa: "\\mathop{\\mathrm{pa}}", -->
+                            <!--       mrca: "\\mathop{\\mathrm{mrca}}", -->
+                            <!--       desc: "\\mathop{\\mathrm{desc}}", -->
+                            <!--       warning: ["\\color{red}{{#1}}", 1] -->
+                            <!--     } -->
+                    <!--   } -->
+            <!-- }); -->
+    <!-- </script> -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    TeX: {Macros: {
+            E: "{\\mathbb{E}}"
+        },
+        Augment: {
+        Definitions: {
+          delimiter: {
+            "\\llbracket": '\u27E6',
+            '\\rrbracket': '\u27E7'
+          }}
+        }}
+    });
+</script>
+    <body>
+    <div style="display:none" aria-hidden="true">
+    \(
+        \newcommand\R{\mathbb{R}}
+        \newcommand\Z{\mathbb{Z}}
+        \newcommand\LL{\mathbb{L}}
+        \newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+        \newcommand{\V}[1]{\mathbb{V}\left[#1\right]}
+        \newcommand{\ps}[2]{\left\langle #1 \,,\, #2 \right\rangle}
+        \newcommand\1{\mathbb{1}}
+        \newcommand\N{\mathbb{N}}
+        \newcommand\Norm{\mathcal{N}}
+        \newcommand{\transp}[1]{{}^t\!#1}
+        \newcommand\ud{\,\mathrm{d}}
+        \DeclareMathOperator*{\argmax}{argmax}
+        \DeclareMathOperator*{\argmin}{argmin}
+        \DeclareMathOperator{\e}{e}
+        \DeclareMathOperator{\Cov}{Cov}
+        \DeclareMathOperator{\Determinant}{det}
+        \newcommand{\determinant}[1]{\Determinant\left(#1\right)}
+    \)
+    </div>
+    </body>
+            
+<div id="sec-comparison" class="section level1" number="7">
+<h1><span class="header-section-number">Chapitre 7</span> Comparaison des différentes méthodes</h1>
+<div id="méthodologie" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Méthodologie</h2>
+<p>Dans cette partie, on compare les différentes moyennes mobiles en termes de délai pour détecter les points de retournement.
+Dans ce rapport, on définit de la façon suivante les points de retournement, en distinguant deux cas :</p>
+<ul>
+<li><p>les redressements (<em>upturn</em>) où l’on passe d’une phase de récession à une phase d’expansion de l’économie (comme c’est généralement le cas après une crise économique).
+C’est le cas à la date <span class="math inline">\(t\)</span> lorsque <span class="math inline">\(y_{t-k}\geq\cdots\geq y_{t-1}&lt;y_t\leq y_{t+1}\leq\cdots y_{t+m}\)</span>.</p></li>
+<li><p>les ralentissements (<em>downturn</em>) où l’on passe d’une phase d’expansion à une phase de récession.
+C’est le cas à la date <span class="math inline">\(t\)</span> lorsque <span class="math inline">\(y_{t-k}\leq\cdots\leq y_{t-1}&gt;y_t\geq y_{t+1}\geq\cdots y_{t+m}\)</span>.</p></li>
+</ul>
+<p>En suivant <span class="citation">Zellner, Hong, et Min (<a href="#ref-Zellner1991" role="doc-biblioref">1991</a>)</span>, du fait du caractère relativement lisse de la tendance-cycle, on retient les paramètres <span class="math inline">\(k=3\)</span> and <span class="math inline">\(m=1\)</span>.</p>
+<p>Les différents filtres sont comparés sur la base d’Eurostat des indices de production industriels déjà corrigés des jours ouvrables (<code>sts_inpr_m</code>, 2 404 séries connues jusqu’en mars 2021).
+Les points de retournement finaux sont ceux qui sont trouvés sur la composante tendance-cycle estimée avec la méthode X-13ARIMA sur l’ensemble de la période.
+Le déphasage est défini comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future (il est donc possible que ce déphasage ne soit pas calculable si pour une méthode donnée on ne détecte pas le bon point de retournement à la dernière date d’estimation).</p>
+<p>Pour chaque série et chaque date, la méthodologie suivante est utilisée :</p>
+<ol style="list-style-type: decimal">
+<li><p>La série est désaisonnalisée avec la méthode X-13ARIMA<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a> pour extraire différents paramètres qui seront fixés entre les différentes méthodologie : la série linéarisée (i.e. : la série initiale corrigée de points atypiques par un Reg-ARIMA), la longueur des filtres saisonniers et du filtre utilisé pour extraire la tendance-cycle, le schéma de décomposition et l’I-C ratio.</p></li>
+<li><p>Une nouvelle désaisonnalisation est effectuée sur la série linéarisée en utilisant l’algorithme de décomposition de X-13ARIMA et en utilisant les mêmes paramètres que précédemment et en changement uniquement les filtres asymétriques utilisés pour extraire la tendance-cycle<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>.<br />
+Pour contrôler l’impact des estimations des paramètres et des points atypiques dans le modèle Reg-ARIMA model, la série linéarisée utilisée ici correspond à celle calculée sur l’ensemble de la série.<br />
+Pour la méthode de référence (X-13ARIMA), la série linéarisée est prolongée par prévision sur un an avant la décomposition mais pour toutes les autres méthodes on n’utilise pas les prévisions dans la décomposition.<br />
+Une description plus détaillée de l’algorithme de décomposition est disponible en annexe <a href="an-x11.html#an-x11">F</a>.</p></li>
+<li><p>Pour chaque estimation de la tendance-cycle, on calcule les points de redressement et de ralentissement.</p></li>
+</ol>
+<p>Dans les différents résultats, on se restreint aux séries pour lesquelles le filtre symétrique optimal utilisé pour extraire la tendance-cycle est de longueur 13 (valeur majoritairement retenue).
+Il n’y a pas d’impact du schéma de décomposition sur les résultats.</p>
+</div>
+<div id="comparaison-des-filtres-polynomiaux-locaux-et-des-filtres-rkhs" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Comparaison des filtres polynomiaux locaux et des filtres RKHS</h2>
+<p>Du fait du fort degré de liberté de l’approche FST (dans le choix des différents paramètres), dans cette section, on ne compare la méthode X-13ARIMA qu’à l’approche polynomiale locale et aux filtres RKHS.
+Pour les filtres RKHS on ne retient que ceux qui minimisent la <em>timeliness</em> puisque dans notre cas on souhaite minimiser le délai dans la détection de point de retournement.</p>
+<p>Le tableau <a href="sec-comparison.html#tab:covid-quantile">7.1</a> compare les différentes méthodes pour la détection des points de retournement durant la crise du COVID-19 (i.e. : durant l’année 2020).
+La méthode LC (i.e. : les filtres de Musgrave) semble être, en distribution, plus performante que les autres méthodes (avec des performances similaires à X-13ARIMA) et la méthode la moins performante semble être les filtres RKHS obtenus en minimisant la <em>timeliness</em>.
+La moins bonne performance des filtres QL, CQ et DAF par rapport au filtre LC pourrait être expliquée par la plus grande volatilité des estimations du fait des contraintes plus fortes sur la préservation des tendances polynomiales.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-quantile">Table 7.1 : </span>Déciles du nombre de mois nécessaires pour détecter correctement un point de retournement de l’année 2020 (771 observations).
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+X13-ARIMA
+</th>
+<th style="text-align:center;">
+RKHS (<span class="math inline">\(b_{q,\varphi}\)</span>)
+</th>
+<th style="text-align:center;">
+LC
+</th>
+<th style="text-align:center;">
+QL
+</th>
+<th style="text-align:center;">
+CQ
+</th>
+<th style="text-align:center;">
+DAF
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D1
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D2
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D3
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D4
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D6
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D7
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D8
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+8,0
+</td>
+<td style="text-align:center;">
+8,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D9
+</td>
+<td style="text-align:center;">
+9,0
+</td>
+<td style="text-align:center;">
+8,0
+</td>
+<td style="text-align:center;">
+8,0
+</td>
+<td style="text-align:center;">
+9,0
+</td>
+<td style="text-align:center;">
+9,0
+</td>
+<td style="text-align:center;">
+9,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+4,4
+</td>
+<td style="text-align:center;">
+6,6
+</td>
+<td style="text-align:center;">
+4,7
+</td>
+<td style="text-align:center;">
+5,1
+</td>
+<td style="text-align:center;">
+5,4
+</td>
+<td style="text-align:center;">
+5,5
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+<p>Deux exemples sont présentés dans l’annexe <a href="an-plotseries.html#an-plotseries">G</a> : un où la méthode X-13ARIMA détecte plus rapidement le point de retournement que les autres et un ou c’est l’inverse.
+On retrouve le fait que les estimations avec les méthodes QL, CQ et DAF sont fortement bruitées avec des estimations qui ne sont pas plausibles (notamment celles autour de points de retournement).</p>
+<p>Le tableau <a href="sec-comparison.html#tab:covid-rev">7.2</a> montre la distribution de la racine carrée de l’erreur quadratique moyenne de révision (RMSE) entre la première et la dernière estimation de la tendance-cycle.
+La meilleure méthode est cette fois-ci la méthode actuelle (X-13ARIMA), suivie du filtre RKHS et ensuite la même hiérarchie que précédemment se retrouve entre les différentes méthodes polynomiales locales.
+Toutefois, comme souligné dans la partie <a href="sec-propMM.html#subec:mmetprev">2.3.1</a>, la méthode X-13ARIMA revient à utiliser un filtre asymétrique dont les poids sont optimisés pour minimiser la révision entre la première et la dernière estimation.
+Par construction, l’indicateur de révision retenu privilégie donc la méthode X-13ARIMA : il faudrait utiliser un indicateur qui prennent également en compte les révisions entre les autres horizons de prévision (par exemple entre la première et la deuxième estimation, deuxième et dernière estimation, etc.).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-rev">Table 7.2 : </span>Déciles de la racine carrée de l’erreur quadratique moyenne entre la première et la dernière estimation sur l’année 2020 (771 observations).
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+X13-ARIMA
+</th>
+<th style="text-align:center;">
+RKHS (<span class="math inline">\(b_{q,\varphi}\)</span>)
+</th>
+<th style="text-align:center;">
+LC
+</th>
+<th style="text-align:center;">
+QL
+</th>
+<th style="text-align:center;">
+CQ
+</th>
+<th style="text-align:center;">
+DAF
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,2
+</td>
+<td style="text-align:center;">
+0,2
+</td>
+<td style="text-align:center;">
+0,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D1
+</td>
+<td style="text-align:center;">
+0,3
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D2
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,8
+</td>
+<td style="text-align:center;">
+0,9
+</td>
+<td style="text-align:center;">
+0,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D3
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,8
+</td>
+<td style="text-align:center;">
+0,8
+</td>
+<td style="text-align:center;">
+1,1
+</td>
+<td style="text-align:center;">
+1,3
+</td>
+<td style="text-align:center;">
+1,3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D4
+</td>
+<td style="text-align:center;">
+0,8
+</td>
+<td style="text-align:center;">
+1,0
+</td>
+<td style="text-align:center;">
+1,1
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,6
+</td>
+<td style="text-align:center;">
+1,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+1,1
+</td>
+<td style="text-align:center;">
+1,4
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+2,1
+</td>
+<td style="text-align:center;">
+2,3
+</td>
+<td style="text-align:center;">
+2,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D6
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,9
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+3,1
+</td>
+<td style="text-align:center;">
+3,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D7
+</td>
+<td style="text-align:center;">
+2,1
+</td>
+<td style="text-align:center;">
+2,6
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+3,8
+</td>
+<td style="text-align:center;">
+4,1
+</td>
+<td style="text-align:center;">
+4,2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D8
+</td>
+<td style="text-align:center;">
+3,1
+</td>
+<td style="text-align:center;">
+3,7
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+5,1
+</td>
+<td style="text-align:center;">
+5,7
+</td>
+<td style="text-align:center;">
+5,8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D9
+</td>
+<td style="text-align:center;">
+4,6
+</td>
+<td style="text-align:center;">
+5,8
+</td>
+<td style="text-align:center;">
+6,2
+</td>
+<td style="text-align:center;">
+8,3
+</td>
+<td style="text-align:center;">
+9,7
+</td>
+<td style="text-align:center;">
+9,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+25,0
+</td>
+<td style="text-align:center;">
+36,6
+</td>
+<td style="text-align:center;">
+41,0
+</td>
+<td style="text-align:center;">
+54,8
+</td>
+<td style="text-align:center;">
+55,2
+</td>
+<td style="text-align:center;">
+52,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+2,1
+</td>
+<td style="text-align:center;">
+2,7
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+3,9
+</td>
+<td style="text-align:center;">
+4,2
+</td>
+<td style="text-align:center;">
+4,3
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+<p>Le même exercice peut être fait en analysant le déphasage dans la détection des points de retournement pendant la crise financière de 2008.
+En revanche, contrairement à la crise du COVID-19, toutes les séries n’ont pas été impactées au même mois : une analyse plus approfondie devrait être faite pour vérifier si les points détectés sont réellement des points de retournement.
+Même les résultats du tableau <a href="sec-comparison.html#tab:covid-quantile-crisis">7.3</a> doivent être étudiés avec précaution, on observe la même hiérarchie entre les méthodes que celle trouvée pendant l’étude de la crise du COVID-19.
+Par ailleurs, pour plus de 80 % des séries et pour toutes les méthodes, le déphasage dans la détection des points de retournement est plus grand que 6 mois.
+C’est-à-dire que dans la majorité des cas, la détection des points de retournement n’est pas stable, même si l’on utilise un filtre symétrique pour l’estimation de la tendance-cycle.
+Cela vient notamment de l’algorithme de désaisonnalisation qui, pour estimer les coefficients saisonniers utilisés pour corriger la série où l’on applique les filtres pour extraire la tendance-cycle, a besoin de bien plus que 6 mois dans le futur.
+Par exemple, en utilisant les paramètres les plus souvent utilisés dans X-13ARIMA, le filtre final symétrique utilisé pour extraire la tendance-cycle a 169 termes !</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-quantile-crisis">Table 7.3 : </span>Déciles du nombre de mois nécessaires pour détecter correctement un point de retournement entre 2007 et 2008 (2412 observations).
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+X13-ARIMA
+</th>
+<th style="text-align:center;">
+RKHS (<span class="math inline">\(b_{q,\varphi}\)</span>)
+</th>
+<th style="text-align:center;">
+LC
+</th>
+<th style="text-align:center;">
+QL
+</th>
+<th style="text-align:center;">
+CQ
+</th>
+<th style="text-align:center;">
+DAF
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D1
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+8,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D2
+</td>
+<td style="text-align:center;">
+15,0
+</td>
+<td style="text-align:center;">
+15,0
+</td>
+<td style="text-align:center;">
+14,2
+</td>
+<td style="text-align:center;">
+15,0
+</td>
+<td style="text-align:center;">
+16,0
+</td>
+<td style="text-align:center;">
+16,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D3
+</td>
+<td style="text-align:center;">
+21,0
+</td>
+<td style="text-align:center;">
+21,0
+</td>
+<td style="text-align:center;">
+21,0
+</td>
+<td style="text-align:center;">
+21,0
+</td>
+<td style="text-align:center;">
+22,0
+</td>
+<td style="text-align:center;">
+22,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D4
+</td>
+<td style="text-align:center;">
+26,0
+</td>
+<td style="text-align:center;">
+27,0
+</td>
+<td style="text-align:center;">
+26,0
+</td>
+<td style="text-align:center;">
+27,0
+</td>
+<td style="text-align:center;">
+27,0
+</td>
+<td style="text-align:center;">
+28,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+31,0
+</td>
+<td style="text-align:center;">
+33,0
+</td>
+<td style="text-align:center;">
+32,0
+</td>
+<td style="text-align:center;">
+33,0
+</td>
+<td style="text-align:center;">
+33,0
+</td>
+<td style="text-align:center;">
+33,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D6
+</td>
+<td style="text-align:center;">
+38,0
+</td>
+<td style="text-align:center;">
+41,0
+</td>
+<td style="text-align:center;">
+39,0
+</td>
+<td style="text-align:center;">
+40,0
+</td>
+<td style="text-align:center;">
+40,0
+</td>
+<td style="text-align:center;">
+40,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D7
+</td>
+<td style="text-align:center;">
+49,0
+</td>
+<td style="text-align:center;">
+51,7
+</td>
+<td style="text-align:center;">
+50,0
+</td>
+<td style="text-align:center;">
+50,0
+</td>
+<td style="text-align:center;">
+50,7
+</td>
+<td style="text-align:center;">
+51,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D8
+</td>
+<td style="text-align:center;">
+67,8
+</td>
+<td style="text-align:center;">
+71,0
+</td>
+<td style="text-align:center;">
+68,0
+</td>
+<td style="text-align:center;">
+68,0
+</td>
+<td style="text-align:center;">
+68,0
+</td>
+<td style="text-align:center;">
+68,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D9
+</td>
+<td style="text-align:center;">
+125,0
+</td>
+<td style="text-align:center;">
+129,0
+</td>
+<td style="text-align:center;">
+127,0
+</td>
+<td style="text-align:center;">
+127,0
+</td>
+<td style="text-align:center;">
+127,0
+</td>
+<td style="text-align:center;">
+127,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+169,0
+</td>
+<td style="text-align:center;">
+169,0
+</td>
+<td style="text-align:center;">
+169,0
+</td>
+<td style="text-align:center;">
+169,0
+</td>
+<td style="text-align:center;">
+169,0
+</td>
+<td style="text-align:center;">
+169,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+45,7
+</td>
+<td style="text-align:center;">
+47,7
+</td>
+<td style="text-align:center;">
+45,9
+</td>
+<td style="text-align:center;">
+46,5
+</td>
+<td style="text-align:center;">
+47,0
+</td>
+<td style="text-align:center;">
+47,2
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+</div>
+<div id="comparaison-avec-lapproche-fst" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Comparaison avec l’approche FST</h2>
+<p>Pour limiter les degrés de liberté dans le choix des poids dans l’approche FST, une approche peut être de les sélectionner comparativement à une autre moyenne mobile.
+En effet, si l’on se concentre sur les trois critères de <em>fidelity</em>, <em>smoothness</em> et <em>timeliness</em>, comparativement à une moyenne mobile fixée, un ensemble de poids peut être considéré comme optimal s’il conduit à un filtre de meilleure qualité (selon ces trois critères) avec les mêmes contraintes polynomiales (ou des contraintes polynomiales plus grandes).
+L’annexe <a href="sec-annexeFST.html#sec-annexeFST">E</a> trace l’ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais concentrons-nous ici sur le cas <span class="math inline">\(h=6\)</span> (filtre symétrique de 13 termes).</p>
+<p>Parmi l’ensemble des poids “admissibles” (i.e. : un ensemble de poids minimisant les 3 critères par rapport à un filtre de référence), plusieurs méthodes peuvent être utilisés pour construire les moyennes mobiles asymétriques.
+Ici nous en retenons trois :</p>
+<ol style="list-style-type: decimal">
+<li><p>on retient la moyenne mobile qui minimise la <em>timeliness</em> pour limiter au mieux le déphasage (i.e. : celle dont le poids associé à ce critère est le plus fort) ;</p></li>
+<li><p>pour éviter d’introduire trop de variance dans les estimations, on retient la moyenne mobile dont le poids associé à la <em>timeliness</em> est la plus faible ;</p></li>
+<li><p>on adopte une position médiane en retenant la moyenne mobile dont le poids associé à la <em>timeliness</em> est médian parmi l’ensemble des poids admissibles.</p></li>
+</ol>
+<p>Parmi les approches polynomiales, le filtre LC est celui qui semble donner les meilleurs résultats : nous nous restreignant donc à la comparaison à cette méthode.
+Pour le choix du degré de préservation, pour la première méthode, forcer, lorsque c’est possible, la moyenne mobile à préserver les polynômes de degré 1 ne change pas les poids retenus : c’est ce qui a été fait pour cette méthode. Pour les deux autres, nous nous sommes restreints aux moyennes mobiles préservant les constantes uniquement (comme le filtre LC).
+Par simplicité, le filtre FST optimal associé au filtre RKHS n’a été étudié qu’avec la première méthode.
+Ces poids sont présentés dans le tableau <a href="sec-comparison.html#tab:poidsfstsimul">7.4</a>, les coefficients associés sont présentés dans l’annexe <a href="an-graphs.html#an-graphs">B</a> dans les figures <a href="an-graphs.html#fig:graphsfstlcmax">B.6</a> à <a href="an-graphs.html#fig:graphsfstrkhs">B.9</a>.
+Le filtre utilisé pour l’estimation en temps-réel (<span class="math inline">\(q=0\)</span>) qui minimise la timeliness par rapport au filtre LC accorde, pour l’estimation de la tendance-cycle en <span class="math inline">\(t\)</span>, un poids plus important à la valeur observée en <span class="math inline">\(t-1\)</span> qu’à celle observée en <span class="math inline">\(t\)</span> (figure <a href="an-graphs.html#fig:graphsfstlcmax">B.6</a>) : cela ne parait pas plausible économique et justifie de ne pas se restreindre uniquement à la première méthode de sélection des poids.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:poidsfstsimul">Table 7.4 : </span>Poids retenus pour construire des filtres avec l’approche FST
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(q=0\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(q=1\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(q=2\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(q=3\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(q=4\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(q=5\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="3">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>LC min. timeliness</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Smoothness
+</td>
+<td style="text-align:center;">
+0,010
+</td>
+<td style="text-align:center;">
+0,010
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,020
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Timeliness
+</td>
+<td style="text-align:center;">
+0,870
+</td>
+<td style="text-align:center;">
+0,910
+</td>
+<td style="text-align:center;">
+0,985
+</td>
+<td style="text-align:center;">
+0,975
+</td>
+<td style="text-align:center;">
+0,990
+</td>
+<td style="text-align:center;">
+0,990
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Fidelity
+</td>
+<td style="text-align:center;">
+0,120
+</td>
+<td style="text-align:center;">
+0,080
+</td>
+<td style="text-align:center;">
+0,010
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>LC max. timeliness</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Smoothness
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,010
+</td>
+<td style="text-align:center;">
+0,050
+</td>
+<td style="text-align:center;">
+0,265
+</td>
+<td style="text-align:center;">
+0,550
+</td>
+<td style="text-align:center;">
+0,715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Timeliness
+</td>
+<td style="text-align:center;">
+0,845
+</td>
+<td style="text-align:center;">
+0,880
+</td>
+<td style="text-align:center;">
+0,915
+</td>
+<td style="text-align:center;">
+0,730
+</td>
+<td style="text-align:center;">
+0,445
+</td>
+<td style="text-align:center;">
+0,280
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Fidelity
+</td>
+<td style="text-align:center;">
+0,150
+</td>
+<td style="text-align:center;">
+0,110
+</td>
+<td style="text-align:center;">
+0,035
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>LC timeliness médiane</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Smoothness
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,010
+</td>
+<td style="text-align:center;">
+0,015
+</td>
+<td style="text-align:center;">
+0,125
+</td>
+<td style="text-align:center;">
+0,205
+</td>
+<td style="text-align:center;">
+0,305
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Timeliness
+</td>
+<td style="text-align:center;">
+0,860
+</td>
+<td style="text-align:center;">
+0,890
+</td>
+<td style="text-align:center;">
+0,945
+</td>
+<td style="text-align:center;">
+0,845
+</td>
+<td style="text-align:center;">
+0,750
+</td>
+<td style="text-align:center;">
+0,660
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Fidelity
+</td>
+<td style="text-align:center;">
+0,135
+</td>
+<td style="text-align:center;">
+0,100
+</td>
+<td style="text-align:center;">
+0,040
+</td>
+<td style="text-align:center;">
+0,030
+</td>
+<td style="text-align:center;">
+0,045
+</td>
+<td style="text-align:center;">
+0,035
+</td>
+</tr>
+<tr grouplength="3">
+<td colspan="7" style="border-bottom: 1px solid;">
+<strong>RKHS min. timeliness</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Smoothness
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,010
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Timeliness
+</td>
+<td style="text-align:center;">
+0,885
+</td>
+<td style="text-align:center;">
+0,925
+</td>
+<td style="text-align:center;">
+0,990
+</td>
+<td style="text-align:center;">
+0,990
+</td>
+<td style="text-align:center;">
+0,990
+</td>
+<td style="text-align:center;">
+0,975
+</td>
+</tr>
+<tr>
+<td style="text-align:left;padding-left: 2em;" indentlevel="1">
+Fidelity
+</td>
+<td style="text-align:center;">
+0,110
+</td>
+<td style="text-align:center;">
+0,065
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+<td style="text-align:center;">
+0,005
+</td>
+</tr>
+</tbody>
+</table>
+<p>En termes de détection des points de retournement (tableau <a href="sec-comparison.html#tab:covid-tp-fst">7.5</a>), le déphasage semble plus grand pour ces filtres que pour les autres méthodes.
+Sur les deux exemples étudiés (annexe <a href="an-plotseries.html#an-plotseries">G</a>), les estimations sont bien moins volatiles que pour les méthodes polynomiales QL, CQ et DAF<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>.
+En revanche les estimations intermédiaires (<span class="math inline">\(q=4\)</span> ou <span class="math inline">\(q=5\)</span>) semblent assez erratiques.
+Cela pourrait provenir du fait les coefficients associés à ces moyennes mobiles donne un poids relativement faible à l’estimation courante (les coefficients associés aux observations en <span class="math inline">\(t-1\)</span>, <span class="math inline">\(t\)</span> et <span class="math inline">\(t+1\)</span> sont très proches).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-tp-fst">Table 7.5 : </span>Quartiles du nombre de mois nécessaires pour détecter correctement un point de retournement de l’année 2020 (771 observations).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="2">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+FST - LC
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+FTS - RKHS
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+X13-ARIMA
+</th>
+<th style="text-align:center;">
+Min.
+</th>
+<th style="text-align:center;">
+Max.
+</th>
+<th style="text-align:center;">
+Méd.
+</th>
+<th style="text-align:center;">
+Min.
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q1
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q3
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+4,4
+</td>
+<td style="text-align:center;">
+7,0
+</td>
+<td style="text-align:center;">
+6,5
+</td>
+<td style="text-align:center;">
+6,6
+</td>
+<td style="text-align:center;">
+6,7
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+<p>En revanche, en termes de révisions entre la première et la dernière estimation (tableau <a href="sec-comparison.html#tab:covid-rev-fst">7.6</a>), ces filtres asymétriques sont plus performants que les méthodes polynomiales locales et les filtres RKHS.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-rev-fst">Table 7.6 : </span>Quartiles de la racine carrée de l’erreur quadratique moyenne entre la première et la dernière estimation sur l’année 2020 (771 observations).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="2">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+FST - LC
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+FTS - RKHS
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+X13-ARIMA
+</th>
+<th style="text-align:center;">
+Min.
+</th>
+<th style="text-align:center;">
+Max.
+</th>
+<th style="text-align:center;">
+Méd.
+</th>
+<th style="text-align:center;">
+Min.
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q1
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+1,1
+</td>
+<td style="text-align:center;">
+1,3
+</td>
+<td style="text-align:center;">
+1,2
+</td>
+<td style="text-align:center;">
+1,3
+</td>
+<td style="text-align:center;">
+1,3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q3
+</td>
+<td style="text-align:center;">
+2,5
+</td>
+<td style="text-align:center;">
+2,9
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+25,0
+</td>
+<td style="text-align:center;">
+31,5
+</td>
+<td style="text-align:center;">
+30,2
+</td>
+<td style="text-align:center;">
+29,8
+</td>
+<td style="text-align:center;">
+31,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+2,1
+</td>
+<td style="text-align:center;">
+2,5
+</td>
+<td style="text-align:center;">
+2,3
+</td>
+<td style="text-align:center;">
+2,4
+</td>
+<td style="text-align:center;">
+2,5
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+<p>Notons par ailleurs que la hiérarchie entre les méthodes sur les révisions entre la première et la dernière observation, estimée empiriquement dans les tableaux <a href="sec-comparison.html#tab:covid-rev">7.2</a> et <a href="sec-comparison.html#tab:covid-rev-fst">7.6</a>, se retrouve dans les indicateurs théoriques, définis dans la section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>. C’est ce qui montré par le tableau <a href="sec-comparison.html#tab:tab-mse-q0">7.7</a>, qui compare les filtres asymétriques utilisés pour l’estimation en temps-réel (<span class="math inline">\(q=0\)</span>), en supposant que les séries sont des bruits blancs.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:tab-mse-q0">Table 7.7 : </span>Décomposition de l’erreur quadratique moyenne des filtres asymétriques utilisés en temps-réel (<span class="math inline">\(q=0\)</span>).
+</caption>
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="6">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+FST - LC
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+FTS - RKHS
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+LC
+</th>
+<th style="text-align:center;">
+QL
+</th>
+<th style="text-align:center;">
+CQ
+</th>
+<th style="text-align:center;">
+DAF
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(b_{q,\varphi}\)</span>
+</th>
+<th style="text-align:center;">
+Min.
+</th>
+<th style="text-align:center;">
+Max.
+</th>
+<th style="text-align:center;">
+Méd.
+</th>
+<th style="text-align:center;">
+Min.
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Accuracy
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+<td style="text-align:center;">
+0,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Smoothness
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+2,2
+</td>
+<td style="text-align:center;">
+3,8
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+<td style="text-align:center;">
+0,8
+</td>
+<td style="text-align:center;">
+0,9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Timeliness
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Residual
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+<td style="text-align:center;">
+0,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RMSE
+</td>
+<td style="text-align:center;">
+2,2
+</td>
+<td style="text-align:center;">
+3,7
+</td>
+<td style="text-align:center;">
+5,2
+</td>
+<td style="text-align:center;">
+5,5
+</td>
+<td style="text-align:center;">
+2,2
+</td>
+<td style="text-align:center;">
+2,2
+</td>
+<td style="text-align:center;">
+2,1
+</td>
+<td style="text-align:center;">
+2,2
+</td>
+<td style="text-align:center;">
+2,3
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Indicateurs calculés en supposant que la série initiale est un bruit blanc (<span class="math inline">\(h(\omega)=1\)</span>).
+</p>
+</div>
+<p>Plusieurs conclusions peuvent être tirées de ces résultats :</p>
+<ul>
+<li><p>Minimiser la <em>timeliness</em> a surtout du sens lorsque peu de données dans le futur sont connues : dès lors que l’on s’approche du cas symétrique, cela ne parait plus pertinent et peut conduire à des résultats indésirables (estimations erratiques).</p></li>
+<li><p>Il n’est pas forcément pertinent d’utiliser la même méthode de construction pour les filtres utilisée en temps réel (<span class="math inline">\(q=0\)</span>) et pour ceux utilisés lorsque l’on s’approche du cas symétrique.</p></li>
+<li><p>La méthode utilisée pour mesurer le déphasage privilégie les filtres qui minimisent la révision au filtre symétrique (filtres polynomiaux locaux).
+En effet, pour les autres (RKHS et filtres FST) il faut, dans la majorité des cas, au moins 6 mois pour détecter correctement le poids de retournement : cela signifie qu’il y a eu une révision du point de retournement au moment de l’utilisation du filtre symétrique.
+Cela rejoint les deux points précédents : les moyennes mobiles asymétriques utilisées lorsque l’on s’approche du cas symétrique sont sûrement sous-optimales.</p></li>
+</ul>
+<p>Une piste d’amélioration pourrait donc être d’étudier les filtres LC calculés en rajoutant la <em>timeliness</em> dans le programme de minimisation, comme présenté dans la section <a href="sec-lppfilters.html#subsec-lptimeliness">5.2</a>.
+Plus d’études devront être menées pour savoir comment calibrer le poids associé à cet indicateur.</p>
+</div>
+<div id="impact-du-noyau" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Impact du noyau</h2>
+<p>Dans cette section, nous vérifions l’a priori que le choix du noyau n’est pas fondamental et que dans les approches polynomiales et RKHS, on peut se restreindre à l’étude d’un seul noyau.
+Pour cela, nous comparons, en utilisant uniquement la méthode <em>Linear-Constant</em> (LC), la performance des filtres asymétriques obtenus en utilisant les différents noyaux présentés dans la section <a href="sec-lppfilters.html#sec-kernels">5.1.1.1</a>.
+En termes de déphasage pour la détection de points de retournement (tableau <a href="sec-comparison.html#tab:covid-tp-kernels">7.8</a>), tous les noyaux ont des performances similaires, sauf pour le noyau uniforme (qui est sous-optimal car accorde un poids équivalent à toutes les observations).
+Les résultats sont également très proches en termes de révision (tableau <a href="sec-comparison.html#tab:covid-rev-kernels">7.9</a>) : le choix du noyau ne semble donc pas fondamental.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-tp-kernels">Table 7.8 : </span>Quartiles du nombre de mois nécessaires pour détecter correctement un point de retournement de l’année 2020 (399 observations).
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Henderson
+</th>
+<th style="text-align:center;">
+Biweight
+</th>
+<th style="text-align:center;">
+Epanechnikov
+</th>
+<th style="text-align:center;">
+Triangular
+</th>
+<th style="text-align:center;">
+Tricube
+</th>
+<th style="text-align:center;">
+Triweight
+</th>
+<th style="text-align:center;">
+Uniform
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+<td style="text-align:center;">
+2,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q1
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+3,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+4,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q3
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+5,0
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+12,0
+</td>
+<td style="text-align:center;">
+12,0
+</td>
+<td style="text-align:center;">
+11,0
+</td>
+<td style="text-align:center;">
+11,0
+</td>
+<td style="text-align:center;">
+12,0
+</td>
+<td style="text-align:center;">
+14,0
+</td>
+<td style="text-align:center;">
+13,0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+4,3
+</td>
+<td style="text-align:center;">
+4,4
+</td>
+<td style="text-align:center;">
+4,9
+</td>
+<td style="text-align:center;">
+4,6
+</td>
+<td style="text-align:center;">
+4,5
+</td>
+<td style="text-align:center;">
+4,5
+</td>
+<td style="text-align:center;">
+6,0
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:covid-rev-kernels">Table 7.9 : </span>Quartiles de la racine carrée de l’erreur quadratique moyenne entre la première et la dernière estimation sur l’année 2020 (399 observations).
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Henderson
+</th>
+<th style="text-align:center;">
+Biweight
+</th>
+<th style="text-align:center;">
+Epanechnikov
+</th>
+<th style="text-align:center;">
+Triangular
+</th>
+<th style="text-align:center;">
+Tricube
+</th>
+<th style="text-align:center;">
+Triweight
+</th>
+<th style="text-align:center;">
+Uniform
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Min
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+<td style="text-align:center;">
+0,1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q1
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,6
+</td>
+<td style="text-align:center;">
+0,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Méd.
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,6
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+<td style="text-align:center;">
+1,5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Q3
+</td>
+<td style="text-align:center;">
+3,2
+</td>
+<td style="text-align:center;">
+3,2
+</td>
+<td style="text-align:center;">
+3,3
+</td>
+<td style="text-align:center;">
+3,2
+</td>
+<td style="text-align:center;">
+3,3
+</td>
+<td style="text-align:center;">
+3,1
+</td>
+<td style="text-align:center;">
+3,4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Max
+</td>
+<td style="text-align:center;">
+41,0
+</td>
+<td style="text-align:center;">
+41,1
+</td>
+<td style="text-align:center;">
+39,4
+</td>
+<td style="text-align:center;">
+40,3
+</td>
+<td style="text-align:center;">
+41,3
+</td>
+<td style="text-align:center;">
+39,5
+</td>
+<td style="text-align:center;">
+39,7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Moy
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+2,9
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+2,8
+</td>
+<td style="text-align:center;">
+2,9
+</td>
+</tr>
+</tbody>
+</table>
+<div id="note" class="caption">
+<p id="note" class="title caption">
+Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.
+</p>
+</div>
+</div>
+<div id="discussion" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Discussion</h2>
+<p>Comme nous l’avons vu dans les sections précédentes, la méthodologie et les indicateurs utilisés pour comparer les différentes méthodes sont perfectibles.
+Toutefois, les différents résultats montrent que, pour la construction des moyennes mobiles asymétriques, on peut se restreindre à celles qui conserve les constantes : chercher à imposer des contraintes polynomiales plus élevées augmente la variance des estimations et le délai pour détecter des points de retournement.
+Ainsi, dans les méthodes polynomiales locales, on peut restreindre les prochaines études à la méthode <em>Linear-Constant</em> (LC).
+Par ailleurs, l’estimation en temps-réel des méthodes utilisant les filtres asymétriques direct (DAF) peut être facilement améliorée, comme c’est par exemple le cas de la méthode de désaisonnalisation STL (<em>Seasonal-Trend decomposition based on Loess</em>) proposée par <span class="citation">R. B. Cleveland et al. (<a href="#ref-cleveland90" role="doc-biblioref">1990</a>)</span>.</p>
+<p>Sur les méthodes ici étudiées, il serait intéressant de continuer l’exploration pour essayer de comprendre quand une méthode est plus performante qu’une autre, ce qui permettrait de donner des recommandations sur la méthode à utilisée.
+Il faudrait également veiller à comparer les méthodes sur d’autres types de bases de données pour vérifier si les résultats ne dépendent pas du type de série en entrée.</p>
+<p>Toutes les méthodes de construction des filtres asymétriques sont calibrées en utilisant des paramètres estimés sur l’ensemble de la période.
+Par exemple, on utilise autant de points dans le passé que le filtre symétrique alors que rien ne suggère que c’est la longueur optimale.
+Ainsi, le ratio <span class="math inline">\(I/C\)</span> utilisé pour choisir la longueur du filtre de la tendance-cycle et pour calibrer les méthodes locales polynomiales, est calculé sur l’ensemble de la série en excluant les 6 premiers et 6 derniers mois, qui sont justement ceux étudiés !
+Pour la construction des filtres utilisés pour l’estimation en temps réel, il pourrait donc être préférable d’utiliser d’autres paramètres, par exemple des estimations locales de <span class="math inline">\(I/C\)</span> (c’était d’ailleurs une des pistes de recherche suggérées par <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span>).
+De manière alternative, <span class="citation">Vasyechko et Grun-Rehomme (<a href="#ref-vasyechko2014new" role="doc-biblioref">2014</a>)</span> proposent de toujours utiliser un filtre de 13 termes : pour l’estimation en temps-réel (<span class="math inline">\(q=0\)</span>) le filtre utilise l’observation courante et les 12 observations précédentes, lorsqu’on connait un point dans le futur (<span class="math inline">\(q=1\)</span>) on utilise les 11 observations précédant la date courante, etc.</p>
+<p>Les indicateurs utilisés dans cette partie semblent avantager, par construction, la méthode actuelle X-13ARIMA.
+Cela pourrait également être le cas de la méthode d’estimation utilisée.
+En effet, dans les simulations, nous utilisons une série corrigée des points atypiques par un modèle Reg-ARIMA estimée sur l’ensemble de la période.
+Pour les simulations avec la méthode X-13ARIMA, pour chaque date, la série est ensuite prolongée sur un an par un modèle ARIMA.
+Toutefois, de cette façon les prévisions sont toujours réalisées dans des cas “simples” puisqu’on ne prend pas en compte l’impact, sur la prévision, de la détection et de l’estimation des temps réel des points atypiques.
+Il serait donc intéressant de comparer les différentes méthodes en réestimant à chaque date la série linéarisée et donc en se plaçant réellement en estimation en temps-réel.</p>
+<p>Enfin, dans les articles associés aux méthodes étudiées dans ce rapport, les filtres asymétriques sont appliqués et comparés sur des séries déjà désaisonnalisées.
+Le déphasage dans la détection des points de retournement est donc d’au plus 5 mois (lorsque le filtre symétrique est de 13 termes).
+Cette méthode, beaucoup simple que celle utilisée dans ce rapport, peut néanmoins conduire à deux écueils :</p>
+<ol style="list-style-type: decimal">
+<li><p>D’une part, l’estimation de la série désaisonnalisée dépend de la méthode utilisée pour extraire la tendance-cycle et comme nous l’avons vu dans l’analyse des points de retournement entre 2007 et 2008, le choix de la méthode utilisée pour l’estimation de la tendance-cycle a un impact bien au-delà de 13 mois.
+Les exemples devraient toutefois être approfondis pour comprendre si les points en question correspondent à de vrais points de retournement.</p></li>
+<li><p>D’autre part, les moyennes mobiles étant des opérateurs linéaires, ils sont sensibles à la présence de points atypiques.
+L’application directe des méthodes peut donc conduire donc à des estimations biaisées du fait la présence de points atypiques, alors que la méthode X-13ARIMA a un module de correction des points atypiques.
+Par ailleurs, comme notamment montré par <span class="citation">Dagum (<a href="#ref-dagum1996new" role="doc-biblioref">1996</a>)</span>, le filtre symétrique final utilisé par X-13ARIMA pour extraire la tendance-cycle (et donc celui indirectement utilisé lorsque l’on applique les méthodes sur les séries désaisonnalisées) laisse passer environ 72 % des cycles de 9 ou 10 mois.
+Les filtres asymétriques finaux amplifient même les cycles de 9 ou 10 mois.
+Cela peut avoir pour conséquence l’introduction d’ondulations indésirables, c’est-à-dire la détection de faux points de retournement.
+Ce problème est réduit par la correction des points atypiques (ces cycles étant considérés comme de l’irrégulier).
+C’est ainsi qu’est né le <em>Nonlinear Dagum Filter</em> (NLDF) qui consiste à :</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>appliquer l’algorithme de correction des points atypique de X-13ARIMA sur la série désaisonnalisée, puis de la prolonger par un modèle ARIMA ;</p></li>
+<li><p>effectuer une nouvelle correction des points atypiques en utilisant un seuil bien plus strict (<span class="math inline">\(\pm0,7\sigma\)</span> et <span class="math inline">\(\pm 1,0 \sigma\)</span>, voir annexe <a href="an-x11.html#an-x11">F</a>) et appliquer ensuite le filtre symétrique de 13 termes.
+En supposant une distribution normale cela revient à modifier 48 % des valeurs de l’irrégulier.</p></li>
+</ol></li>
+</ol>
+<p>Une piste d’étude serait alors d’étudier plus précisément l’impact des points sur l’estimation de la tendance-cycle et la détection des points de retournement, mais aussi d’explorer de nouveaux types de filtres asymétriques basés sur des méthodes robustes (comme les régressions locales robustes, les médianes mobiles, etc.).</p>
+<div style="page-break-after: always;"></div>
+
+</div>
+</div>
+<h3>Références</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cleveland90" class="csl-entry">
+Cleveland, Robert B., William S. Cleveland, Jean E. McRae, et Irma Terpenning. 1990. <span>« STL: A Seasonal-Trend Decomposition Procedure Based on Loess (with Discussion) »</span>. <em>Journal of Official Statistics</em> 6: 3‑73.
+</div>
+<div id="ref-dagum1996new" class="csl-entry">
+Dagum, Estela Bee. 1996. <span>« A new method to reduce unwanted ripples and revisions in trend-cycle estimates from X-11-ARIMA »</span>. <em>Survey Methodology</em> 22: 77‑84. <a href="https://www150.statcan.gc.ca/n1/fr/pub/12-001-x/1996001/article/14383-fra.pdf?st=zUxzBC0K">https://www150.statcan.gc.ca/n1/fr/pub/12-001-x/1996001/article/14383-fra.pdf?st=zUxzBC0K</a>.
+</div>
+<div id="ref-GrayThomson1996" class="csl-entry">
+Gray, Alistair, et Peter Thomson. 1996. <span>« Design of Moving-Average Trend Filters using Fidelity and Smoothness Criteria »</span>. In <em>Athens Conference on Applied Probability and Time Series Analysis</em>, édité par P. M. Robinson et Murray Rosenblatt, 205‑19. New York, NY: Springer New York.
+</div>
+<div id="ref-vasyechko2014new" class="csl-entry">
+Vasyechko, Olga, et Michel Grun-Rehomme. 2014. <span>« A new smoothing technique for univariate time series: the endpoint problem »</span>. <em>Economics Bulletin</em> 34 (3): 1419‑30. <a href="https://EconPapers.repec.org/RePEc:ebl:ecbull:eb-13-00344">https://EconPapers.repec.org/RePEc:ebl:ecbull:eb-13-00344</a>.
+</div>
+<div id="ref-Zellner1991" class="csl-entry">
+Zellner, Arnold, Chansik Hong, et Chung-ki Min. 1991. <span>« Forecasting turning points in international output growth rates using Bayesian exponentially weighted autoregression, time-varying parameter, and pooling techniques »</span>. <em>Journal of Econometrics</em> 49 (1-2): 275‑304. <a href="https://EconPapers.repec.org/RePEc:eee:econom:v:49:y:1991:i:1-2:p:275-304">https://EconPapers.repec.org/RePEc:eee:econom:v:49:y:1991:i:1-2:p:275-304</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="21">
+<li id="fn21"><p>
+On utilise pour cela la fonction <code>x13()</code> du package <code>RJDemetra</code> avec le paramètre <code>spec = "RSA3"</code> (détection automatique des différents paramètres sans correction des jours ouvrables).<a href="sec-comparison.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>
+Cela peut être fait en utilisant la fonction <code>rjdfilters::x11()</code>.<a href="sec-comparison.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>
+Cela pouvait d’ailleurs s’anticiper par l’analyse des fonctions de gains présentés en annexe <a href="an-graphs.html#an-graphs">B</a>.
+En effet, pour les autres méthodes, pour les filtres asymétriques utilisés lors de l’estimation en temps réel (<span class="math inline">\(q=0\)</span>), la fonction de gain est supérieure à 1 pour de nombreuses fréquences, ce qui signifie que le bruit est amplifié.
+Toutefois, pour les basses fréquences, les fonctions de gains décroissent plus vite pour les filtres issus de la méthode FST, ce qui signifie que la composante tendance-cycle est atténuée.<a href="sec-comparison.html#fnref23" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sec-rkhs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Stage_3A.pdf", "Stage_3A.docx"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
