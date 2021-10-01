@@ -138,14 +138,14 @@ Théorème d'Henderson (1916)%
 %%%%%% Theorie gen
 
 %% gray thomson
-\draw[edgegeneral] (theoriegen.150)--(graythompson.south) node[midway, right]{
+\draw[edgegeneral] (graythompson.south |- 52, 52 |- theoriegen.north)--(graythompson.south) node[midway, right]{
 $F_{GT}(\theta)=I(\theta,0,y_t,M_\theta y_t)$
 
 $S_{GT}(\theta)=I(\theta,d+1,y_t,0)$
 };
 
 %% guggemos
-\draw[edgegeneral] (theoriegen.208)--(guggemostitle.north) node[near start, right]{
+\draw[edgegeneral] (guggemostitle.north |- 52,  52|-  theoriegen.south)--(guggemostitle.north) node[near start, right]{
 $F_g(\theta)=I(\theta,0,y_t,\E{M_\theta y_t})$
 
 $S_g(\theta)=I(\theta,q,y_t,\E{M_\theta y_t})$
