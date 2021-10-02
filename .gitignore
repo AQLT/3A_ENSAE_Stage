@@ -8,3 +8,21 @@ Stage_3A_cache
 *.log
 *.synctex.gz
 img/bookdown
+
+exercise/data_x11
+exercise/lp
+exercise/rkhs
+exercise/train
+exercise/*.RDS
+exercise/fst
+exercise/revisions
+exercise/turning_points
+
+comparaison_fst/data
+IC_ratio/data*
+graphiques coefs/filters_used
+*.toc
+*.log
+*.aux
+*.bcf
+*.run*
