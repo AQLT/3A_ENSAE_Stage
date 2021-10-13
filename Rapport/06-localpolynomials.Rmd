@@ -11,7 +11,7 @@ $$
 où $R_d$ est un terme résiduel négligeable au voisinage de $x_0$. 
 Dans un voisinage $\left[x_0-h(x_0),x_0-h(x_0)\right]$ de $x_0$, $\mu$ peut être approchée par un polynôme de degré $d$. 
 La quantité $h(x_0)$ est appelée *fenêtre* (*bandwidth*).
-Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par moindre carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0-h(x_0)\right]$.
+Si $\varepsilon_i$ est un bruit blanc, on peut donc estimer par les moindres carrés $\mu(x_0)$ en utilisant les observations qui sont dans $\left[x_0-h(x_0),x_0-h(x_0)\right]$.
 
 ## Approche de Proietti et Luati {#sec-proietti}
 
@@ -22,7 +22,7 @@ $$
 y_t=\mu_t+\varepsilon_t,
 $$
 où $\mu_t$ est la tendance et $\varepsilon_{t}\overset{i.i.d}{\sim}\mathcal{N}(0,\sigma^{2})$ est le bruit^[La série est donc désaisonnalisée.]. 
-La tendance $\mu_t$ est localement approché par un polynôme de degré $d$, de sorte que dans un voisinage $h$ de $t$ $\mu_t\simeq m_{t}$ avec :
+La tendance $\mu_t$ est localement approchée par un polynôme de degré $d$, de sorte que dans un voisinage $h$ de $t$ $\mu_t\simeq m_{t}$ avec :
 $$
 \forall j\in\left\llbracket -h,h\right\rrbracket :\:
 y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}.
@@ -61,7 +61,7 @@ y_{t+h}
 \end{pmatrix}}_{\varepsilon}
 $$
 
-Pour estimer $\beta$ il faut $H\geq d+1$ et l'estimation est faite par moindres carrés pondérés --- *weighted least squares* (WLS) ---, ce qui à minimiser la fonction objectif suivante :
+Pour estimer $\beta$ il faut $H\geq d+1$ et l'estimation est faite par moindres carrés pondérés --- *weighted least squares* (WLS) ---, ce qui revient à minimiser la fonction objectif suivante :
 $$
 S(\hat{\beta}_{0},\dots,\hat{\beta}_{d})=\sum_{j=-h}^{h}\kappa_{j}(y_{t+j}-\hat{\beta}_{0}-\hat{\beta}_{1}j-\dots-\hat{\beta}_{d}j^{d})^{2}
 $$
@@ -82,7 +82,7 @@ Ainsi, la moyenne mobile $\theta$ préserve les polynômes de degré $d$.
 
 Concernant le choix des paramètres, l'idée générale qui prévaut est que la forme du noyau est secondaire^[
 Voir par exemple @cleveland1996smoothing ou @Loader1999.
-Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à la l'estimation centrale ($\kappa_0$) et qu'il décroit vers 0 lorsque l'on s'éloigne de l'estimation centrale.
+Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à l'estimation centrale ($\kappa_0$) et qu'il décroit vers 0 lorsque l'on s'éloigne de l'estimation centrale.
 ] et qu'il vaut mieux se concentrer sur deux autres paramètres :
 
 - le degré du polynôme $d$ : s'il est trop petit on risque d'avoir des estimations biaisées de la tendance-cycle et s'il est trop grand on risque d'avoir une trop grande variance dans les estimations (du fait d'un sur-ajustement) ;
@@ -91,7 +91,7 @@ Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus 
 
 #### Les différents noyaux {#sec-kernels}
 
-Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date $t$ : pour estimer la tendance-cycle à la date $t$, les observations celles qui sont proches de $t$.
+Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date $t$ : pour estimer la tendance-cycle à la date $t$, on accorde généralement plus d'importance aux observations qui sont proches de $t$.
 
 Dans le cas continu, un noyau $K$ est une fonction positive, paire et intégrable telle que $\int_{-\infty}^{+\infty}\kappa(u) \ud u=1$ et $\kappa(u)=\kappa(-u)$.
 
@@ -107,7 +107,7 @@ $$
   \right\lvert^r
 \right)^s,\quad\text{avec }r>0,s\geq 0
 $$
-Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l'exception du noyau d'Henderson, trapézoïdal et gaussien. 
+Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l'exception des noyaux d'Henderson, trapézoïdal et gaussien. 
 Les principaux noyaux (qui sont également implémentés dans `rjdfilters`) sont :
 
 
@@ -208,7 +208,7 @@ Lorsque $p=0$ ou $p=1$, on retrouve la moyenne arithmétique : $w_j=w=\frac{1}{2
 
 Le noyau d'**Epanechnikov** est souvent recommandé comme le noyau optimal car il minimise l'erreur quadratique moyenne de l'estimation par polynômes locaux.
 
-Le **Loess** est une régression locale pondérée qui utilise le noyau tricube.
+Le **Loess**, *locally estimated scatterplot smoothing* (utilisé dans la méthode STL), est une régression locale pondérée qui utilise le noyau tricube.
 
 Le  **filtre d'Henderson** est un cas particulier de l'approximation locale cubique ($p=3$), couramment utilisée pour l'extraction de la tendance-cycle (c'est par exemple le filtre utilisé dans le logiciel de désaisonnalisation X-13ARIMA).
 Pour une fenêtre fixée, Henderson a trouvé le noyau qui donnait l'estimation la plus lisse de la tendance. 
@@ -233,7 +233,7 @@ Comme mentionné dans la partie \@ref(subec:mmetprev), pour l'estimation en temp
 3. Construire des filtres asymétriques qui minimisent l'erreur quadratique moyenne de révision sous des contraintes de reproduction de tendances polynomiales.
 
 @proietti2008 montrent que les deux premières approches sont équivalentes lorsque les prévisions sont faites par extrapolation polynomiale de degré $d$ (prévisions générées en utilisant les mêmes contraintes polynomiales que les filtres symétriques).
-Elles sont également équivalentes à la troisième approche sous mêmes contraintes que le filtre symétrique.
+Elles sont également équivalentes à la troisième approche sous les mêmes contraintes que celles du filtre symétrique.
 Cette méthode est appelée *direct asymmetric filter* (DAF).
 
 Notons $q$ le nombre d'observations futures disponibles : $q$ varie entre 0 (filtre en temps réel) et $h$ (filtre symétrique).
@@ -269,8 +269,8 @@ Ainsi, même si les estimations sont sans biais, c'est au coût d'une plus grand
 
 ### Classe générale  {#subsec-lppasymf}
 
-Pour résoudre le problème de la variance des estimations des filtres temps réel, @proietti2008 propose une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
-Il s'agit d'une généralisation des filtres asymétriques @musgrave1964set (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
+Pour résoudre le problème de la variance des estimations des filtres temps réel, @proietti2008 proposent une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
+Il s'agit d'une généralisation des filtres asymétriques de @musgrave1964set (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
 
 On modélise ici la série en entrée par :
 \begin{equation}
@@ -278,7 +278,7 @@ y=U\gamma+Z\delta+\varepsilon,\quad
 \varepsilon\sim\mathcal{N}(0,D)
 (\#eq:lpgeneralmodel)
 \end{equation}
-où $[U,Z]$ est de plein rang et forme un sous-ensemble des colonnes de $X$.
+où $[U,Z]$ est de rang plein et forme un sous-ensemble des colonnes de $X$.
 L'objectif est de trouver un filtre $v$ qui minimisent l'erreur quadratique moyenne de révision (au filtre symétrique $\theta$) sous certaines contraintes.
 Ces contraintes sont représentées par la matrice $U=\begin{pmatrix}U_{p}'&U_{f}'\end{pmatrix}'$ : $U_p'v=U'\theta$ (avec $U_p$ la matrice $(h+q+1)\times (d+1)$ qui contient les observations de la matrice $U$ connues lors de l'estimation par le filtre asymétrique).
 Le problème est équivalent à trouver $v$ qui minimise :
@@ -294,10 +294,10 @@ Le problème est équivalent à trouver $v$ qui minimise :
 \end{equation}
 où $l$ est le vecteur des multiplicateurs de Lagrange.
 
-Lorsque $U=X$, la contrainte équivaut à préserver les polynômes de degré $d$ : on retrouve les filtres directs asymétriques lorsque $D=K^{-1}$.
+Lorsque $U=X$, la contrainte équivaut à préserver les polynômes de degré $d$ : on retrouve les filtres directs asymétriques (DAF) lorsque $D=K^{-1}$.
 
 Lorsque $U=\begin{pmatrix}1&\cdots&1\end{pmatrix}'$, $Z=\begin{pmatrix}-h&\cdots&+h\end{pmatrix}'$, $\delta=\delta_1$, $D=\sigma^2I$ et lorsque le filtre symétrique est le filtre d'Henderson, on retrouve les filtres asymétriques de Musgrave.
-Ce filtre suppose, que pour l'estimation en temps-réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes ($\sum v_i=\sum \theta_i=1$).
+Ce filtre suppose, que pour l'estimation en temps réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes ($\sum v_i=\sum \theta_i=1$).
 Ces filtres asymétriques dépendent du rapport $\delta_1/\sigma$, qui est lié à l'I-C ratio $R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}$ ($\delta_1/\sigma=2/(R\sqrt{\pi})$).
 Dans l'algorithme X-13ARIMA, l'I-C ratio est utilisé pour déterminer la longueur du filtre d'Henderson^[
 Pour calculer l'I-C ratio, une première décomposition de la série désaisonnalisée est faite en utilisant un filtre d'Henderson de 13 termes.
@@ -321,7 +321,7 @@ On obtient le filtre de Musgrave avec le filtre d'Henderson comme filtre symétr
 3. *Cubic-Quadratic* (CQ) : $y_t$ cubic ($d=3$) et $v$ préserve les tendances quadratiques ($d^*=2$).
 
 Le tableau \@ref(tab:criteriaLp) compare les critères de qualité des différentes méthodes en utilisant le filtre d'Henderson et $h=6$ (filtre symétrique de 13 termes). 
-Pour les filtres en temps-réel ($q=0$), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la *timeliness* est élevée et plus la *fidelity*/*smoothness* est grande : la réduction du déphasage se fait au détriment d'une augmentation de la variance. 
+Pour les filtres en temps réel ($q=0$), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la *timeliness* est élevée et plus la *fidelity*/*smoothness* est grande : la réduction du déphasage se fait au détriment d'une augmentation de la variance. 
 Ce résultat varie lorsque $q$ augmente : pour $q=2$ le filtre QL a une plus grande *timeliness* que le filtre LC. 
 Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé par l'approche de @proietti2008.
 
@@ -365,7 +365,7 @@ Toutefois, il dépend indirectement des données si le filtre est calibré sur l
 
 ## Extension avec le critère de *timeliness* {#subsec-lptimeliness}
 
-La méthode précédente peut être facilement étendue pour ajouter le critère de *timeliness* définit par @ch15HBSA^[Cela a été codé en Java par Jean Palate dans in https://github.com/palatej/jdemetra-core.].
+La méthode précédente peut être facilement étendue pour ajouter le critère de *timeliness* définit par @ch15HBSA^[Cela a été codé en Java par Jean Palate dans https://github.com/palatej/jdemetra-core.].
 En utilisant les mêmes notations que dans \@ref(subsec-lppasymf), $\theta$ le filtre symétrique et $v$ le filtre asymétrique. 
 Notons également $\theta=\begin{pmatrix}\theta_p\\\theta_f\end{pmatrix}$ avec $\theta_p$ de même longueur que $v$, et $g=v-\theta_p$. 
 Le critère de *timeliness* s'écrit :
@@ -445,7 +445,7 @@ sous une contrainte linéaire.
 
 ### Filtres symétriques
 
-L'approche de @GrayThomson1996 est proche de celles @proietti2008 et @ch15HBSA.
+L'approche de @GrayThomson1996 est proche de celles de @proietti2008 et de @ch15HBSA.
 De la même façon que pour les autres méthodes, ils considèrent que la série initiale $y_t$ peut se décomposer entre une somme entre la tendance-cycle $g_t$ et d'un bruit blanc $\varepsilon_t$ de variance $\sigma^2$ : 
 $$y_t = g_t+\varepsilon_t.$$
 Toutefois, plutôt que de directement remplacer $g_t$ par un polynôme local de degré $d$, ils prennent en compte l'erreur d'approximation de la tendance :
@@ -485,7 +485,7 @@ S_{GT}(\theta)&=I(\theta,d+1,y_t,0).
 La théorie générale définie dans la section \@ref(subsec-theoriegen) permet donc de retrouver les filtres de @GrayThomson1996.
 
 En ne minimisant que la *smoothness* et avec $\xi_t=0$ on retrouve le filtre d'Henderson.
-En ne minimisant que la *fidelity*, cette méthode est équivalente à l'estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de @proietti2008 avec $\sigma^2=0$ et $\Omega =K^{-1}$, ainsi que le filtre de Macalauy.
+En ne minimisant que la *fidelity*, cette méthode est équivalente à l'estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de @proietti2008 avec $\sigma^2=0$ et $\Omega =K^{-1}$, ainsi que le filtre de Macaulay.
 
 L'avantage de la modélisation de Gray et Thomson est que le paramètre $\xi_t$ permet une spécification plus précise du modèle en prenant notamment en compte la corrélation entre les observations.
 Par exemple, @mclaren2001rotation ont étudié le lien entre le plan de sondage et l'estimation de la composante tendance-cycle et de la composante saisonnière.
@@ -503,7 +503,7 @@ $$
 $$
 Les auteurs étudient deux cas :
 
-1. Dans le premier cas ils cherchent un estimateur sans biais : cela implique que $v$ conserve les mêmes tendances polynomiales que $\theta^s$. 
+1. Dans le premier cas, ils cherchent un estimateur sans biais : cela implique que $v$ conserve les mêmes tendances polynomiales que $\theta^s$. 
 $\hat Y$  est alors le meilleur prédicteur linéaire sans biais --- *best linear unbiased predictor* (BLUP) --- de $Y$. 
 
 2. Dans le second cas, ils autorisent l'estimateur à être biaisé mais imposent que ce biais soit constant dans le temps : si l'on modélise localement la tendance par un polynôme de degré $d$, cela implique que $v$ conserve les tendances polynomiales de degré $d-1$.
@@ -552,12 +552,12 @@ Toutefois, il dépend indirectement des données si le filtre est calibré sur l
 
 - La *timeliness* n'est pas contrôlée.
 
-- La spécification du modèle (i.e. : du paramètre $\xi_t$) peut être compliquée : si la structure d'autocorrélation est estimée à partir des données, cela rajoute de l'incertitude dans les estimations, ce qui peut avoir des effets indésirables.
+- La spécification du modèle (i.e., du paramètre $\xi_t$) peut être compliquée : si la structure d'autocorrélation est estimée à partir des données, cela rajoute de l'incertitude dans les estimations, ce qui peut avoir des effets indésirables.
 ::::
 
 ## Équivalence avec l'approche FST {#subsec-equivlpfst}
 
-### Liens entre les critères de Gray et Thomson et ceux de Guggemos *et alii*
+### Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme *et alii*
 
 Les critères $F_g$ et $S_g$ peuvent se déduire de $F_{GT}$ et $S_{GT}$.
 Les approches de @GrayThomson1996 et @ch15HBSA sont donc équivalentes pour la construction de filtres symétriques.
@@ -589,7 +589,7 @@ Avec $\xi_t=0$ on trouve donc que $S_{GT}(\theta)=\sigma^2S_g(\theta)$.
 ### Équivalence avec les moindres carrés pondérés
 
 Du fait de la forme des filtres obtenus par la méthode de @ch15HBSA, lorsque les contraintes imposées sont la préservation des tendances de degré $d$, celle-ci est équivalente à une estimation locale d'une tendance polynomiale de degré $d$ par moindres carrés généralisés.
-En effet, dans ce cas la solution est $\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1$ avec $\Sigma=\alpha F+\beta S+ \gamma T$, et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est $\Sigma$.
+En effet, dans ce cas, la solution est $\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1$ avec $\Sigma=\alpha F+\beta S+ \gamma T$, et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est $\Sigma$.
 L'équivalence entre les deux méthodes peut donc se voir comme un cas particulier de l'équivalence entre les moindres carrés pondérés et les moindres carrés généralisés.
 C'est par exemple le cas des filtres symétriques d'Henderson qui peuvent s'obtenir par les deux méthodes.
 
@@ -597,17 +597,17 @@ Dans ce sens, @henderson1916note a montré que les poids $w=(w_{-p},\dots w_{f})
 $$
 w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
 $$
-Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\dots, \theta_{f})$ qui préserve les tendances de degré $d$ et dont le diagramme des coefficients change au plus $d$ fois de signes peut être obtenu par une régression polynomiale locale de degré $p$ estimée par moindres carrés pondérés. 
+Il a également montré l'inverse : toute moyenne mobile $\theta=(\theta_{-p},\dots, \theta_{f})$ qui préserve les tendances de degré $d$ et dont le diagramme des coefficients change au plus $d$ fois de signes peut être obtenue par une régression polynomiale locale de degré $p$ estimée par moindres carrés pondérés. 
 Pour cela il suffit de trouver un polynôme $P\left(\frac{X}{p+f+1}\right)$ de degré inférieur ou égal à $d$ et dont les changements de signes coïncident avec les changements de signes de $\theta$. 
 Le noyau associé est alors $\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}$.
 C'est le cas de tous les filtres symétriques issues de l'approche FST et de la majorité des filtres asymétriques.
 L'annexe \@ref(an-equivfstlp) présente les quelques poids pour lesquels il n'y a pas équivalence.
 
 
-Plus récemment @LuatiProietti2011 se sont intéressés aux cas d'équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
-Ils montrent que le noyau d'Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, $\varepsilon_t$, est un processus moyenne mobile (MA) non inversible d'ordre 1 (i.e. : $\varepsilon_t=(1-B)\xi_t$ avec $\xi_t$ un bruit blanc). 
+Plus récemment, @LuatiProietti2011 se sont intéressés aux cas d'équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
+Ils montrent que le noyau d'Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, $\varepsilon_t$, est un processus moyenne mobile (MA) non inversible d'ordre 1 (i.e., $\varepsilon_t=(1-B)\xi_t$, avec $\xi_t$ un bruit blanc). 
 Dans ce cas, la matrice $\Sigma$ de variance-covariance correspond à la matrice obtenue par le critère de *smoothness* avec le paramètre $q=2$ ($\sum_{j}(\nabla^{2}\theta_{j})^{2} = \theta'\Sigma\theta$) : il y a donc équivalence avec l'approche FST.
-De même, le noyau d'Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d'ordre 2 (i.e. : $\varepsilon_t=(1-B)^2\xi_t$ avec $\xi_t$ un bruit blanc).
+De même, le noyau d'Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d'ordre 2 (i.e., $\varepsilon_t=(1-B)^2\xi_t$, avec $\xi_t$ un bruit blanc).
 
 
 

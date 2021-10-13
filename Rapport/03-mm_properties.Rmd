@@ -18,7 +18,7 @@ Dans ce cas, la quantité $h=p=f$ est appelée *fenêtre* (*bandwidth*).
 
 ## Gain et fonction de déphasage
 
-Soit $X_t=\e^{-i\omega t}$. La moyenne mobile $M_\theta$ transforme $X_t$ en :
+Soit $X_t=\e^{-i\omega t}$ avec $\omega\in[0,\pi]$. La moyenne mobile $M_\theta$ transforme $X_t$ en :
 $$
 Y_t = M_{\theta}X_t = \sum_{k=-p}^{+f} \theta_k \e^{-i \omega (t+k)}
 = \left(\sum_{k=-p}^{+f} \theta_k \e^{-i \omega k}\right)\cdot X_t.
@@ -33,7 +33,7 @@ $$
 où $G_\theta(\omega)=\lvert\Gamma_\theta(\omega)\rvert$ est la fonction de *gain* ou *d'amplitude* et $\Phi_\theta(\omega)$ est le *déphasage* (*phase shift* ou *time shift*)^[
 Cette fonction est parfois définie comme  $\phi_\theta(\omega)=\frac{\Phi_\theta(\omega)}{\omega}$ pour mesurer le déphasage en termes de période.
 ]. 
-Pour tous les filtres symétriques on a $\Phi_\theta(\omega)\equiv 0 \pmod{\pi}$.
+Pour tous les filtres symétriques on a $\Phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})$.
 
 En somme, appliquer une moyenne mobile à une série harmonique la modifie de deux façons :
 
@@ -48,7 +48,7 @@ $$
 \Gamma_{\theta_0}(\omega)=\frac{1}{2}+\frac{1}{2}\e^{-i\omega}
 =\lvert\cos(\omega/2)\rvert\e^{-i\frac{\omega}{2}}.
 $$
-La figure \@ref(fig:exgainPhase) montre l'impact gain et du déphasage pour $\omega=\pi/2$ and $X_t=\sin(\omega t)$.
+La figure \@ref(fig:exgainPhase) montre l'impact du gain et du déphasage pour $\omega=\pi/2$ and $X_t=\sin(\omega t)$.
 
 \begin{figure}[!ht]
 \pgfplotsset{width=\textwidth,height=6cm,every axis legend/.append style={font=\footnotesize,
@@ -207,7 +207,7 @@ $$
 C'est ce qui implémenté dans la fonction `rjdfilters::implicit_forecast`.
 
 Comme notamment souligné par @wildischis2004, étendre la série par prévision d'un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d'avance --- *one-step ahead forecasting*. 
-C'est-à-dire que l'on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
+Autrement dit, on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
 Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s'intéresser à la performance des prévisions avec plusieurs longueurs d'avance --- *multi-step ahead forecasting*.
 Par ailleurs, le déphasage induit par les filtres asymétriques n'est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.
 C'est pourquoi il peut être nécessaire de définir des critères alternatifs pour juger la qualité des moyennes mobiles asymétriques.

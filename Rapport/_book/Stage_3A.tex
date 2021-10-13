@@ -129,7 +129,7 @@
 \begin{minipage}{0.6\textwidth}
     \begin{flushleft} \large 
     \textbf{Université de Nantes\\
-        Laboratoire d’économie et de management Nantes atlantique (LEMNA)
+        Laboratoire d’économie et de Management Nantes Atlantique (LEMNA)
     }
   \end{flushleft}
 \end{minipage} 
@@ -240,6 +240,9 @@ frametitle={%
 
 \pagenumbering{roman}
 
+\usepackage[style=authoryear,uniquename=false, uniquelist=false]{biblatex}
+\DefineBibliographyStrings{french}{andothers={et\addabbrvspace alii}}
+
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -272,7 +275,7 @@ frametitle={%
 
 \title{Détection en temps réels des points de retournement : apport de l'utilisation des filtres asymétriques dans l'analyse conjoncturelle}
 \author{Alain Quartier-la-Tente}
-\date{2021-10-01}
+\date{2021-10-13}
 
 \begin{document}
 \maketitle
@@ -363,7 +366,7 @@ Enfin, dans la section \ref{sec-comparison}, nous comparons les différentes mé
 \section{De la désaisonnalisation à l'estimation tendance-cycle}\label{sec-SAtoTCE}}
 
 La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales.
-C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours de jours ouvrables, la \emph{désaisonnalisation} étant le processus consistant à supprimer les effets des fluctuations saisonnières et des jours ouvrables.
+C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours ouvrables, la \emph{désaisonnalisation} étant le processus consistant à supprimer leurs effets.
 Un effet saisonnier est un phénomène qui se répète chaque année autour de la période, avec une ampleur et une direction similaire d'une année à l'autre.
 Par exemple, la production automobile est généralement plus faible en été, en raison des vacances, et les ventes de chocolat sont généralement plus élevées en décembre, en raison de Noël.
 L'effet jours ouvrables apparaît lorsqu'une série temporelle est affectée par la composition journalière du mois.
@@ -416,11 +419,11 @@ Cela a un double intérêt.
 D'une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l'analyse conjoncturelle.
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
 
-Pour cela nous utiliserons l'approche générale de \textcite{ch15HBSA} (section \ref{subsec-theoriegen}) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques qui permet de minimiser les effets de déphasage (section \ref{subsec-GuggemosEtAl}).
+Pour cela nous utiliserons l'approche générale de \textcite{ch15HBSA} (section \ref{subsec-theoriegen}) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \ref{subsec-GuggemosEtAl}).
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe~\ref{an-diag}.
 
-Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-12ARIMA.
-Pour maintenir la cohérence avec l'approche non paramétrique de X-12ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
+Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-13ARIMA.
+Pour maintenir la cohérence avec l'approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
 C'est pourquoi ni les filtres de l'approche de \textcite{trilemmaWMR2019} (section \ref{sec-WildiMcLeroy}), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
 L'ensemble des filtres utilisés sont résumés dans l'annexe \ref{an-graphs}.
 
@@ -448,7 +451,7 @@ On a les définitions suivantes :
 \hypertarget{gain-et-fonction-de-duxe9phasage}{%
 \subsection{Gain et fonction de déphasage}\label{gain-et-fonction-de-duxe9phasage}}
 
-Soit \(X_t=\e^{-i\omega t}\). La moyenne mobile \(M_\theta\) transforme \(X_t\) en :
+Soit \(X_t=\e^{-i\omega t}\) avec \(\omega\in[0,\pi]\). La moyenne mobile \(M_\theta\) transforme \(X_t\) en :
 \[
 Y_t = M_{\theta}X_t = \sum_{k=-p}^{+f} \theta_k \e^{-i \omega (t+k)}
 = \left(\sum_{k=-p}^{+f} \theta_k \e^{-i \omega k}\right)\cdot X_t.
@@ -461,7 +464,7 @@ Elle peut être réécrite en :
 \]
 où \(G_\theta(\omega)=\lvert\Gamma_\theta(\omega)\rvert\) est la fonction de \emph{gain} ou \emph{d'amplitude} et \(\Phi_\theta(\omega)\) est le \emph{déphasage} (\emph{phase shift} ou \emph{time shift})\footnote{
   Cette fonction est parfois définie comme \(\phi_\theta(\omega)=\frac{\Phi_\theta(\omega)}{\omega}\) pour mesurer le déphasage en termes de période.}.
-Pour tous les filtres symétriques on a \(\Phi_\theta(\omega)\equiv 0 \pmod{\pi}\).
+Pour tous les filtres symétriques on a \(\Phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})\).
 
 En somme, appliquer une moyenne mobile à une série harmonique la modifie de deux façons :
 
@@ -478,7 +481,7 @@ Par exemple, avec \(M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}\) on a:
 \Gamma_{\theta_0}(\omega)=\frac{1}{2}+\frac{1}{2}\e^{-i\omega}
 =\lvert\cos(\omega/2)\rvert\e^{-i\frac{\omega}{2}}.
 \]
-La figure \ref{fig:exgainPhase} montre l'impact gain et du déphasage pour \(\omega=\pi/2\) and \(X_t=\sin(\omega t)\).
+La figure \ref{fig:exgainPhase} montre l'impact du gain et du déphasage pour \(\omega=\pi/2\) and \(X_t=\sin(\omega t)\).
 
 \begin{figure}[!ht]
 \pgfplotsset{width=\textwidth,height=6cm,every axis legend/.append style={font=\footnotesize,
@@ -641,7 +644,7 @@ En somme, matriciellement, cela revient donc à résoudre :
 C'est ce qui implémenté dans la fonction \texttt{rjdfilters::implicit\_forecast}.
 
 Comme notamment souligné par \textcite{wildischis2004}, étendre la série par prévision d'un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d'avance --- \emph{one-step ahead forecasting}.
-C'est-à-dire que l'on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
+Autrement dit, on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
 Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s'intéresser à la performance des prévisions avec plusieurs longueurs d'avance --- \emph{multi-step ahead forecasting}.
 Par ailleurs, le déphasage induit par les filtres asymétriques n'est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.
 C'est pourquoi il peut être nécessaire de définir des critères alternatifs pour juger la qualité des moyennes mobiles asymétriques.
@@ -704,7 +707,7 @@ I(\theta,q,y_t,u_t)&=\E{(\Delta^{q}M_\theta y_t-u_t)^{2}} \label{eq:theoriegen1}
 J(\theta,f, \omega_1,\omega_2)&=\int_{\omega_1}^{\omega_2} f\left[\phi_\theta(\omega), \varphi_\theta (\omega), \omega\right] \ud \omega \label{eq:theoriegen2}
 \end{align}
 où \(y_t\) est la série étudiée, \(u_t\) une série de référence et \(\Delta\) est l'opérateur différence (\(\Delta y_t=y_t-y_{t-1}\) et \(\Delta^q=\underbrace{\Delta \circ \dots \circ \Delta}_{q\text{ fois}}\) pour \(q\in\N\)).
-Dans la majorité des cas, la fonction \(f\) ne dépendra que de la fonction de de gain, \(\phi_\theta\), et de la fonction de déphasage, \(\varphi_\theta\).
+Dans la majorité des cas, la fonction \(f\) ne dépendra que de la fonction de gain, \(\phi_\theta\), et de la fonction de déphasage, \(\varphi_\theta\).
 Dans ce cas, par simplification on écrira \(f\left[\phi_\theta(\omega), \varphi_\theta (\omega), \omega\right] ) = f\left[\phi_\theta(\omega), \varphi_\theta (\omega)\right]\).
 
 Comme nous le montrerons dans ce rapport, la majorité des filtres linéaires peut s'obtenir par une minimisation d'une somme pondérée de ces critères, sous contrainte linéaire sur les coefficients :
@@ -747,9 +750,9 @@ Les trois critères utilisés sont les suivants :
 \item
   \emph{Timeliness} (temporalité), \(T_g\) : il mesure le déphasage entre le signal d'entrée et le signal de sortie à des fréquences spécifiques.
   Lorsqu'un filtre linéaire est appliqué, le niveau du signal d'entrée est également modifié par la fonction de gain : il est donc intuitif de considérer que plus le gain est élevé, plus l'impact du déphasage le sera.\\
-  C'est pourquoi le critère de déphasage dépend des fonctions de gain et de déphasage (\(\rho_\theta\) et \(\varphi_{\theta}\)), le lien entre les deux fonctions étant faite à partir d'une fonction de pénalité \(f\)\footnote{
+  C'est pourquoi le critère de déphasage dépend des fonctions de gain et de déphasage (\(\rho_\theta\) et \(\varphi_{\theta}\)), le lien entre les deux fonctions étant fait à partir d'une fonction de pénalité \(f\)\footnote{
     \textcite{ch15HBSA} suggèrent 6 conditions de régularité à la fonction de pénalité afin qu'elle soit adaptée au problème de déphasage.
-    Dans leur article la fonction \(f\) ne dépend que du gain et du déphasage de \(\theta\) et les 6 conditions sont : \(f \geq 0\), \(f\left(\rho,0\right)=0\), \(f\left(0,\varphi\right)=0\), \(f\left(\rho,\varphi\right)=f\left(\rho,-\varphi\right)\), \(\frac{\partial f}{\partial \rho} \geq 0\) et
+    Dans leur article, la fonction \(f\) ne dépend que du gain et du déphasage de \(\theta\) et les 6 conditions sont : \(f \geq 0\), \(f\left(\rho,0\right)=0\), \(f\left(0,\varphi\right)=0\), \(f\left(\rho,\varphi\right)=f\left(\rho,-\varphi\right)\), \(\frac{\partial f}{\partial \rho} \geq 0\) et
     \(\varphi \cdot \frac{\partial f}{\partial \varphi} \geq 0\).} :
   \[
   \int_{\omega_{1}}^{\omega_{2}}f(\rho_{\theta}(\omega),\varphi_{\theta}(\omega))\ud\omega.
@@ -759,7 +762,7 @@ Les trois critères utilisés sont les suivants :
   Dans cet article nous utilisons \(\omega_1=0\) et \(\omega_2=2\pi/12\) : on ne s'intéresse qu'à des séries mensuelles et au déphasage qui impactent les cycles d'au minimum 12 mois.
 \end{itemize}
 
-En somme, dans l'approche FST consiste à minimiser une somme pondérée de ces trois critères sous certaines contraintes (généralement préservation polynomiales).
+En somme, l'approche FST consiste à minimiser une somme pondérée de ces trois critères sous certaines contraintes (généralement préservation polynomiale).
 
 \begin{equation}
 \begin{cases}
@@ -769,7 +772,7 @@ s.t. & C\theta=a
 \end{cases}. \label{eq:gugemmos}
 \end{equation}
 
-Les conditions \(0\leq\alpha,\beta,\gamma\leq 1\) et \(\alpha+\beta\ne0\) garantissent que \(\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)\) soit strictement convexe et garantissent donc l'unicité de la solution.
+Les conditions \(0\leq\alpha,\beta,\gamma\leq 1\) et \(\alpha+\beta\ne0\) garantissent que \(\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)\) soit strictement convexe et donc l'unicité de la solution.
 Dans ce cas, la solution s'écrit \(\hat \theta = [\alpha F+\beta S+ \gamma T]^{-1}C'\left(C[\alpha F+\beta S+ \gamma T]^{-1}C'\right)^{-1}a\).
 
 Un autre avantage de cette approche est que les filtres asymétriques construits sont totalement indépendants des données, de la date d'estimation et du filtre symétrique choisis.
@@ -786,8 +789,8 @@ a=\begin{pmatrix}
 \alpha=\gamma=0,\quad
 \beta=1,\quad d=3.\]
 
-Un des inconvénients de cette approche est les différents critères ne sont pas normalisés : leurs valeurs ne peuvent pas être comparés et n'ont donc pas de sens.
-Il n'y a par exemple pas d'interprétation à donner un poids deux fois plus important à la \emph{timeliness} qu'à la \emph{fidelity}.
+Un des inconvénients de cette approche est que les différents critères ne sont pas normalisés : leurs valeurs ne peuvent pas être comparées et n'ont donc pas de sens.
+Il n'y a, par exemple, pas d'interprétation à donner un poids deux fois plus important à la \emph{timeliness} qu'à la \emph{fidelity}.
 
 Les trois critères utilisés dans le programme de minimisation \eqref{eq:gugemmos} sont des cas particuliers de ceux définis dans la section \ref{subsec-theoriegen}.
 En effet, en notant \(y_t=TC_t+\varepsilon_t,\quad\varepsilon_t\sim\Norm(0,\sigma^2)\) avec \(TC_t\) une tendance déterministe, on a :
@@ -797,7 +800,7 @@ S_g(\theta) & = I(\theta,\,q,\,y_t,\,\E{M_\theta y_t})\\
 T_g(\theta) & = J(f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2,\,\omega_1, \,\omega_2).
 \end{align*}
 
-\begin{summary_box}{Filtres FST --- Guggemos et alii (2018)}
+\begin{summary_box}{Filtres FST --- Grun-Rehomme et alii (2018)}
 \textbf{Avantages} :
 
 \begin{itemize}
@@ -848,7 +851,7 @@ Si l'on suppose que la série \(\left\{ y_{t}\right\}\) est faiblement stationna
 \E{(TC_{t}-\widehat{TC}_{t})^{2}}=\frac{1}{2\pi}\int_{-\pi}^{\pi}\left|\Gamma_s(\omega)-{\Gamma_\theta}(\omega)\right|^{2}h(\omega)\ud\omega=\frac{1}{2\pi}\times2\times\int_{0}^{\pi}\left|\Gamma_s(\omega)-{\Gamma_\theta}(\omega)\right|^{2}h(\omega)\ud\omega
 \label{eq:msedef}
 \end{equation}
-Cette égalité peut également se généraliser aux processus intégrés non-stationnaire (par exemple en imposant une cointégration entre les deux signaux et en utilisant le pseudo-spectre, voir \textcite{optimrtfWMR2013}).
+Cette égalité peut également se généraliser aux processus intégrés non-stationnaires (par exemple en imposant une cointégration entre les deux signaux et en utilisant le pseudo-spectre, voir \textcite{optimrtfWMR2013}).
 
 On a :
 \begin{align}
@@ -890,7 +893,7 @@ C'est pourquoi, pour la construction de filtres linéaires les auteurs suggèren
 Comme le montrent \textcite{tuckerwildi2020}, cette méthode peut également être étendue au cas multivarié, ce qui permet de prendre en compte les corrélations entre les composantes de différentes séries.
 
 Un des inconvénients de cette méthode est qu'il n'y a pas de garantie d'unicité de la solution.
-En revanche, son avantage par rapport à la méthode de \ref{subsec-GuggemosEtAl} est que la décomposition de l'erreur quadratique moyenne permet de normaliser les différents indicateurs et les coefficients \(\vartheta_{1}\), \(\vartheta_{2}\) et \(1-\vartheta_{1}-\vartheta_{2}\) peuvent être comparés entre eux.
+En revanche, son avantage par rapport à la méthode FST (section \ref{subsec-GuggemosEtAl}) est que la décomposition de l'erreur quadratique moyenne permet de normaliser les différents indicateurs, et les coefficients \(\vartheta_{1}\), \(\vartheta_{2}\) et \(1-\vartheta_{1}-\vartheta_{2}\) peuvent être comparés entre eux.
 
 Les quatre critères \(A_w\), \(T_w\), \(S_w\) et \(R_w\) étant des cas particuliers du critère \(J\) défini dans l'équation \eqref{eq:theoriegen1}, cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \ref{subsec-theoriegen}.
 En effet, en notant :
@@ -950,7 +953,7 @@ D'après le théorème de Taylor, pour tout point \(x_0\), si \(\mu\) est diffé
 où \(R_d\) est un terme résiduel négligeable au voisinage de \(x_0\).
 Dans un voisinage \(\left[x_0-h(x_0),x_0-h(x_0)\right]\) de \(x_0\), \(\mu\) peut être approchée par un polynôme de degré \(d\).
 La quantité \(h(x_0)\) est appelée \emph{fenêtre} (\emph{bandwidth}).
-Si \(\varepsilon_i\) est un bruit blanc, on peut donc estimer par moindre carrés \(\mu(x_0)\) en utilisant les observations qui sont dans \(\left[x_0-h(x_0),x_0-h(x_0)\right]\).
+Si \(\varepsilon_i\) est un bruit blanc, on peut donc estimer par les moindres carrés \(\mu(x_0)\) en utilisant les observations qui sont dans \(\left[x_0-h(x_0),x_0-h(x_0)\right]\).
 
 \hypertarget{sec-proietti}{%
 \subsection{Approche de Proietti et Luati}\label{sec-proietti}}
@@ -963,7 +966,7 @@ Reprenons maintenant les notations de \textcite{proietti2008} : supposons que no
 y_t=\mu_t+\varepsilon_t,
 \]
 où \(\mu_t\) est la tendance et \(\varepsilon_{t}\overset{i.i.d}{\sim}\mathcal{N}(0,\sigma^{2})\) est le bruit\footnote{La série est donc désaisonnalisée.}.
-La tendance \(\mu_t\) est localement approché par un polynôme de degré \(d\), de sorte que dans un voisinage \(h\) de \(t\) \(\mu_t\simeq m_{t}\) avec :
+La tendance \(\mu_t\) est localement approchée par un polynôme de degré \(d\), de sorte que dans un voisinage \(h\) de \(t\) \(\mu_t\simeq m_{t}\) avec :
 \[
 \forall j\in\left\llbracket -h,h\right\rrbracket :\:
 y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}.
@@ -1002,7 +1005,7 @@ y_{t+h}
 \end{pmatrix}}_{\varepsilon}
 \]
 
-Pour estimer \(\beta\) il faut \(H\geq d+1\) et l'estimation est faite par moindres carrés pondérés --- \emph{weighted least squares} (WLS) ---, ce qui à minimiser la fonction objectif suivante :
+Pour estimer \(\beta\) il faut \(H\geq d+1\) et l'estimation est faite par moindres carrés pondérés --- \emph{weighted least squares} (WLS) ---, ce qui revient à minimiser la fonction objectif suivante :
 \[
 S(\hat{\beta}_{0},\dots,\hat{\beta}_{d})=\sum_{j=-h}^{h}\kappa_{j}(y_{t+j}-\hat{\beta}_{0}-\hat{\beta}_{1}j-\dots-\hat{\beta}_{d}j^{d})^{2}
 \]
@@ -1022,7 +1025,7 @@ Ainsi, la moyenne mobile \(\theta\) préserve les polynômes de degré \(d\).
 
 Concernant le choix des paramètres, l'idée générale qui prévaut est que la forme du noyau est secondaire\footnote{
   Voir par exemple \textcite{cleveland1996smoothing} ou \textcite{Loader1999}.
-  Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à la l'estimation centrale (\(\kappa_0\)) et qu'il décroit vers 0 lorsque l'on s'éloigne de l'estimation centrale.} et qu'il vaut mieux se concentrer sur deux autres paramètres :
+  Les seules contraintes souhaitées sur le noyau est qu'il accorde un poids plus important à l'estimation centrale (\(\kappa_0\)) et qu'il décroit vers 0 lorsque l'on s'éloigne de l'estimation centrale.} et qu'il vaut mieux se concentrer sur deux autres paramètres :
 
 \begin{itemize}
 \item
@@ -1034,7 +1037,7 @@ Concernant le choix des paramètres, l'idée générale qui prévaut est que la 
 \hypertarget{sec-kernels}{%
 \paragraph{Les différents noyaux}\label{sec-kernels}}
 
-Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date \(t\) : pour estimer la tendance-cycle à la date \(t\), les observations celles qui sont proches de \(t\).
+Dans les problèmes d'extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date \(t\) : pour estimer la tendance-cycle à la date \(t\), on accorde généralement plus d'importance aux observations qui sont proches de \(t\).
 
 Dans le cas continu, un noyau \(K\) est une fonction positive, paire et intégrable telle que \(\int_{-\infty}^{+\infty}\kappa(u) \ud u=1\) et \(\kappa(u)=\kappa(-u)\).
 
@@ -1050,7 +1053,7 @@ Dans le cas discret, à un factor multiplicatif près (de sorte que \(\sum_{j=-h
   \right\lvert^r
 \right)^s,\quad\text{avec }r>0,s\geq 0
 \]
-Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l'exception du noyau d'Henderson, trapézoïdal et gaussien.
+Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l'exception des noyaux d'Henderson, trapézoïdal et gaussien.
 Les principaux noyaux (qui sont également implémentés dans \texttt{rjdfilters}) sont~:
 
 \begin{multicols}{2}
@@ -1153,7 +1156,7 @@ Lorsque \(p=0\) ou \(p=1\), on retrouve la moyenne arithmétique : \(w_j=w=\frac
 
 Le noyau d'\textbf{Epanechnikov} est souvent recommandé comme le noyau optimal car il minimise l'erreur quadratique moyenne de l'estimation par polynômes locaux.
 
-Le \textbf{Loess} est une régression locale pondérée qui utilise le noyau tricube.
+Le \textbf{Loess}, \emph{locally estimated scatterplot smoothing} (utilisé dans la méthode STL), est une régression locale pondérée qui utilise le noyau tricube.
 
 Le \textbf{filtre d'Henderson} est un cas particulier de l'approximation locale cubique (\(p=3\)), couramment utilisée pour l'extraction de la tendance-cycle (c'est par exemple le filtre utilisé dans le logiciel de désaisonnalisation X-13ARIMA).
 Pour une fenêtre fixée, Henderson a trouvé le noyau qui donnait l'estimation la plus lisse de la tendance.
@@ -1191,7 +1194,7 @@ Comme mentionné dans la partie \ref{subec:mmetprev}, pour l'estimation en temps
 \end{enumerate}
 
 \textcite{proietti2008} montrent que les deux premières approches sont équivalentes lorsque les prévisions sont faites par extrapolation polynomiale de degré \(d\) (prévisions générées en utilisant les mêmes contraintes polynomiales que les filtres symétriques).
-Elles sont également équivalentes à la troisième approche sous mêmes contraintes que le filtre symétrique.
+Elles sont également équivalentes à la troisième approche sous les mêmes contraintes que celles du filtre symétrique.
 Cette méthode est appelée \emph{direct asymmetric filter} (DAF).
 
 Notons \(q\) le nombre d'observations futures disponibles : \(q\) varie entre 0 (filtre en temps réel) et \(h\) (filtre symétrique).
@@ -1230,8 +1233,8 @@ Ainsi, même si les estimations sont sans biais, c'est au coût d'une plus grand
 \hypertarget{subsec-lppasymf}{%
 \subsubsection{Classe générale}\label{subsec-lppasymf}}
 
-Pour résoudre le problème de la variance des estimations des filtres temps réel, \textcite{proietti2008} propose une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
-Il s'agit d'une généralisation des filtres asymétriques \textcite{musgrave1964set} (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
+Pour résoudre le problème de la variance des estimations des filtres temps réel, \textcite{proietti2008} proposent une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
+Il s'agit d'une généralisation des filtres asymétriques de \textcite{musgrave1964set} (utilisés dans l'algorithme de désaisonnalisation X-13ARIMA).
 
 On modélise ici la série en entrée par :
 \begin{equation}
@@ -1239,7 +1242,7 @@ y=U\gamma+Z\delta+\varepsilon,\quad
 \varepsilon\sim\mathcal{N}(0,D)
 \label{eq:lpgeneralmodel}
 \end{equation}
-où \([U,Z]\) est de plein rang et forme un sous-ensemble des colonnes de \(X\).
+où \([U,Z]\) est de rang plein et forme un sous-ensemble des colonnes de \(X\).
 L'objectif est de trouver un filtre \(v\) qui minimisent l'erreur quadratique moyenne de révision (au filtre symétrique \(\theta\)) sous certaines contraintes.
 Ces contraintes sont représentées par la matrice \(U=\begin{pmatrix}U_{p}'&U_{f}'\end{pmatrix}'\) : \(U_p'v=U'\theta\) (avec \(U_p\) la matrice \((h+q+1)\times (d+1)\) qui contient les observations de la matrice \(U\) connues lors de l'estimation par le filtre asymétrique).
 Le problème est équivalent à trouver \(v\) qui minimise~:
@@ -1255,10 +1258,10 @@ Le problème est équivalent à trouver \(v\) qui minimise~:
 \end{equation}
 où \(l\) est le vecteur des multiplicateurs de Lagrange.
 
-Lorsque \(U=X\), la contrainte équivaut à préserver les polynômes de degré \(d\) : on retrouve les filtres directs asymétriques lorsque \(D=K^{-1}\).
+Lorsque \(U=X\), la contrainte équivaut à préserver les polynômes de degré \(d\) : on retrouve les filtres directs asymétriques (DAF) lorsque \(D=K^{-1}\).
 
 Lorsque \(U=\begin{pmatrix}1&\cdots&1\end{pmatrix}'\), \(Z=\begin{pmatrix}-h&\cdots&+h\end{pmatrix}'\), \(\delta=\delta_1\), \(D=\sigma^2I\) et lorsque le filtre symétrique est le filtre d'Henderson, on retrouve les filtres asymétriques de Musgrave.
-Ce filtre suppose, que pour l'estimation en temps-réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes (\(\sum v_i=\sum \theta_i=1\)).
+Ce filtre suppose, que pour l'estimation en temps réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes (\(\sum v_i=\sum \theta_i=1\)).
 Ces filtres asymétriques dépendent du rapport \(\delta_1/\sigma\), qui est lié à l'I-C ratio \(R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}\) (\(\delta_1/\sigma=2/(R\sqrt{\pi})\)).
 Dans l'algorithme X-13ARIMA, l'I-C ratio est utilisé pour déterminer la longueur du filtre d'Henderson\footnote{
   Pour calculer l'I-C ratio, une première décomposition de la série désaisonnalisée est faite en utilisant un filtre d'Henderson de 13 termes.}.
@@ -1288,7 +1291,7 @@ Cela introduit du bais mais réduit la variance, c'est l'idée suivie par \textc
 \end{enumerate}
 
 Le tableau \ref{tab:criteriaLp} compare les critères de qualité des différentes méthodes en utilisant le filtre d'Henderson et \(h=6\) (filtre symétrique de 13 termes).
-Pour les filtres en temps-réel (\(q=0\)), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la \emph{timeliness} est élevée et plus la \emph{fidelity}/\emph{smoothness} est grande : la réduction du déphasage se fait au détriment d'une augmentation de la variance.
+Pour les filtres en temps réel (\(q=0\)), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la \emph{timeliness} est élevée et plus la \emph{fidelity}/\emph{smoothness} est grande : la réduction du déphasage se fait au détriment d'une augmentation de la variance.
 Ce résultat varie lorsque \(q\) augmente : pour \(q=2\) le filtre QL a une plus grande \emph{timeliness} que le filtre LC.
 Ce résultat étonnant souligne le fait que le déphasage n'est pas contrôlé par l'approche de \textcite{proietti2008}.
 
@@ -1352,7 +1355,7 @@ Une application en ligne, disponible à l'adresse \url{https://aqlt.shinyapps.io
 \hypertarget{subsec-lptimeliness}{%
 \subsection{\texorpdfstring{Extension avec le critère de \emph{timeliness}}{Extension avec le critère de timeliness}}\label{subsec-lptimeliness}}
 
-La méthode précédente peut être facilement étendue pour ajouter le critère de \emph{timeliness} définit par \textcite{ch15HBSA}\footnote{Cela a été codé en Java par Jean Palate dans in \url{https://github.com/palatej/jdemetra-core}.}.
+La méthode précédente peut être facilement étendue pour ajouter le critère de \emph{timeliness} définit par \textcite{ch15HBSA}\footnote{Cela a été codé en Java par Jean Palate dans \url{https://github.com/palatej/jdemetra-core}.}.
 En utilisant les mêmes notations que dans \ref{subsec-lppasymf}, \(\theta\) le filtre symétrique et \(v\) le filtre asymétrique.
 Notons également \(\theta=\begin{pmatrix}\theta_p\\\theta_f\end{pmatrix}\) avec \(\theta_p\) de même longueur que \(v\), et \(g=v-\theta_p\).
 Le critère de \emph{timeliness} s'écrit :
@@ -1407,7 +1410,7 @@ sous une contrainte linéaire.
 \hypertarget{filtres-symuxe9triques-1}{%
 \subsubsection{Filtres symétriques}\label{filtres-symuxe9triques-1}}
 
-L'approche de \textcite{GrayThomson1996} est proche de celles \textcite{proietti2008} et \textcite{ch15HBSA}.
+L'approche de \textcite{GrayThomson1996} est proche de celles de \textcite{proietti2008} et de \textcite{ch15HBSA}.
 De la même façon que pour les autres méthodes, ils considèrent que la série initiale \(y_t\) peut se décomposer entre une somme entre la tendance-cycle \(g_t\) et d'un bruit blanc \(\varepsilon_t\) de variance \(\sigma^2\) :
 \[y_t = g_t+\varepsilon_t.\]
 Toutefois, plutôt que de directement remplacer \(g_t\) par un polynôme local de degré \(d\), ils prennent en compte l'erreur d'approximation de la tendance :
@@ -1447,7 +1450,7 @@ S_{GT}(\theta)&=I(\theta,d+1,y_t,0).
 La théorie générale définie dans la section \ref{subsec-theoriegen} permet donc de retrouver les filtres de \textcite{GrayThomson1996}.
 
 En ne minimisant que la \emph{smoothness} et avec \(\xi_t=0\) on retrouve le filtre d'Henderson.
-En ne minimisant que la \emph{fidelity}, cette méthode est équivalente à l'estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de \textcite{proietti2008} avec \(\sigma^2=0\) et \(\Omega =K^{-1}\), ainsi que le filtre de Macalauy.
+En ne minimisant que la \emph{fidelity}, cette méthode est équivalente à l'estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de \textcite{proietti2008} avec \(\sigma^2=0\) et \(\Omega =K^{-1}\), ainsi que le filtre de Macaulay.
 
 L'avantage de la modélisation de Gray et Thomson est que le paramètre \(\xi_t\) permet une spécification plus précise du modèle en prenant notamment en compte la corrélation entre les observations.
 Par exemple, \textcite{mclaren2001rotation} ont étudié le lien entre le plan de sondage et l'estimation de la composante tendance-cycle et de la composante saisonnière.
@@ -1469,7 +1472,7 @@ Les auteurs étudient deux cas :
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Dans le premier cas ils cherchent un estimateur sans biais : cela implique que \(v\) conserve les mêmes tendances polynomiales que \(\theta^s\).
+  Dans le premier cas, ils cherchent un estimateur sans biais : cela implique que \(v\) conserve les mêmes tendances polynomiales que \(\theta^s\).
   \(\hat Y\) est alors le meilleur prédicteur linéaire sans biais --- \emph{best linear unbiased predictor} (BLUP) --- de \(Y\).
 \item
   Dans le second cas, ils autorisent l'estimateur à être biaisé mais imposent que ce biais soit constant dans le temps : si l'on modélise localement la tendance par un polynôme de degré \(d\), cela implique que \(v\) conserve les tendances polynomiales de degré \(d-1\).
@@ -1521,7 +1524,7 @@ Inversement, \textcite{ch15HBSA} justifie de ne pas intégrer le critère de ré
 \item
   La \emph{timeliness} n'est pas contrôlée.
 \item
-  La spécification du modèle (i.e.~: du paramètre \(\xi_t\)) peut être compliquée : si la structure d'autocorrélation est estimée à partir des données, cela rajoute de l'incertitude dans les estimations, ce qui peut avoir des effets indésirables.
+  La spécification du modèle (i.e., du paramètre \(\xi_t\)) peut être compliquée : si la structure d'autocorrélation est estimée à partir des données, cela rajoute de l'incertitude dans les estimations, ce qui peut avoir des effets indésirables.
 \end{itemize}
 
 \end{summary_box}
@@ -1529,8 +1532,8 @@ Inversement, \textcite{ch15HBSA} justifie de ne pas intégrer le critère de ré
 \hypertarget{subsec-equivlpfst}{%
 \subsection{Équivalence avec l'approche FST}\label{subsec-equivlpfst}}
 
-\hypertarget{liens-entre-les-crituxe8res-de-gray-et-thomson-et-ceux-de-guggemos-et-alii}{%
-\subsubsection{\texorpdfstring{Liens entre les critères de Gray et Thomson et ceux de Guggemos \emph{et alii}}{Liens entre les critères de Gray et Thomson et ceux de Guggemos et alii}}\label{liens-entre-les-crituxe8res-de-gray-et-thomson-et-ceux-de-guggemos-et-alii}}
+\hypertarget{liens-entre-les-crituxe8res-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii}{%
+\subsubsection{\texorpdfstring{Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme \emph{et alii}}{Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme et alii}}\label{liens-entre-les-crituxe8res-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii}}
 
 Les critères \(F_g\) et \(S_g\) peuvent se déduire de \(F_{GT}\) et \(S_{GT}\).
 Les approches de \textcite{GrayThomson1996} et \textcite{ch15HBSA} sont donc équivalentes pour la construction de filtres symétriques.
@@ -1563,7 +1566,7 @@ Avec \(\xi_t=0\) on trouve donc que \(S_{GT}(\theta)=\sigma^2S_g(\theta)\).
 \subsubsection{Équivalence avec les moindres carrés pondérés}\label{uxe9quivalence-avec-les-moindres-carruxe9s-ponduxe9ruxe9s}}
 
 Du fait de la forme des filtres obtenus par la méthode de \textcite{ch15HBSA}, lorsque les contraintes imposées sont la préservation des tendances de degré \(d\), celle-ci est équivalente à une estimation locale d'une tendance polynomiale de degré \(d\) par moindres carrés généralisés.
-En effet, dans ce cas la solution est \(\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1\) avec \(\Sigma=\alpha F+\beta S+ \gamma T\), et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est \(\Sigma\).
+En effet, dans ce cas, la solution est \(\hat \theta = \Sigma^{-1}X_p'\left(X_p\Sigma^{-1}X_p'\right)^{-1}e_1\) avec \(\Sigma=\alpha F+\beta S+ \gamma T\), et c'est l'estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est \(\Sigma\).
 L'équivalence entre les deux méthodes peut donc se voir comme un cas particulier de l'équivalence entre les moindres carrés pondérés et les moindres carrés généralisés.
 C'est par exemple le cas des filtres symétriques d'Henderson qui peuvent s'obtenir par les deux méthodes.
 
@@ -1571,16 +1574,16 @@ Dans ce sens, \textcite{henderson1916note} a montré que les poids \(w=(w_{-p},\
 \[
 w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
 \]
-Il a également montré l'inverse : toute moyenne mobile \(\theta=(\theta_{-p},\dots, \theta_{f})\) qui préserve les tendances de degré \(d\) et dont le diagramme des coefficients change au plus \(d\) fois de signes peut être obtenu par une régression polynomiale locale de degré \(p\) estimée par moindres carrés pondérés.
+Il a également montré l'inverse : toute moyenne mobile \(\theta=(\theta_{-p},\dots, \theta_{f})\) qui préserve les tendances de degré \(d\) et dont le diagramme des coefficients change au plus \(d\) fois de signes peut être obtenue par une régression polynomiale locale de degré \(p\) estimée par moindres carrés pondérés.
 Pour cela il suffit de trouver un polynôme \(P\left(\frac{X}{p+f+1}\right)\) de degré inférieur ou égal à \(d\) et dont les changements de signes coïncident avec les changements de signes de \(\theta\).
 Le noyau associé est alors \(\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}\).
 C'est le cas de tous les filtres symétriques issues de l'approche FST et de la majorité des filtres asymétriques.
 L'annexe \ref{an-equivfstlp} présente les quelques poids pour lesquels il n'y a pas équivalence.
 
-Plus récemment \textcite{LuatiProietti2011} se sont intéressés aux cas d'équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
-Ils montrent que le noyau d'Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, \(\varepsilon_t\), est un processus moyenne mobile (MA) non inversible d'ordre 1 (i.e.~: \(\varepsilon_t=(1-B)\xi_t\) avec \(\xi_t\) un bruit blanc).
+Plus récemment, \textcite{LuatiProietti2011} se sont intéressés aux cas d'équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
+Ils montrent que le noyau d'Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, \(\varepsilon_t\), est un processus moyenne mobile (MA) non inversible d'ordre 1 (i.e., \(\varepsilon_t=(1-B)\xi_t\), avec \(\xi_t\) un bruit blanc).
 Dans ce cas, la matrice \(\Sigma\) de variance-covariance correspond à la matrice obtenue par le critère de \emph{smoothness} avec le paramètre \(q=2\) (\(\sum_{j}(\nabla^{2}\theta_{j})^{2} = \theta'\Sigma\theta\)) : il y a donc équivalence avec l'approche FST.
-De même, le noyau d'Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d'ordre 2 (i.e.~: \(\varepsilon_t=(1-B)^2\xi_t\) avec \(\xi_t\) un bruit blanc).
+De même, le noyau d'Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d'ordre 2 (i.e., \(\varepsilon_t=(1-B)^2\xi_t\), avec \(\xi_t\) un bruit blanc).
 
 \hypertarget{sec-rkhs}{%
 \section{Filtres et Reproducing Kernel Hilbert Space (RKHS)}\label{sec-rkhs}}
@@ -1589,7 +1592,7 @@ De même, le noyau d'Henderson est le noyau optimal associé à la régression p
 \subsection{Approche de Dagum et Bianconcini}\label{approche-de-dagum-et-bianconcini}}
 
 La théorie des \emph{Reproducing Kernel Hilbert Space} (RKHS) --- espaces de Hilbert à noyau reproduisant --- est une théorie générale dans l'apprentissage statistique non-paramétrique qui permet d'englober un grand nombre de méthodes.
-C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que la moyenne mobile d'Henderson.
+C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que celle d'Henderson.
 Ainsi, \textcite{dagumbianconcini2008} utilise la théorie des RKHS pour approcher le filtre d'Henderson et en dériver des filtres asymétriques associés.
 
 Un RKHS \(\mathbb{L}^{2}(f_{0})\) est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
@@ -1600,7 +1603,7 @@ Il est caractérisé par une fonction de densité \(f_0\) et un produit scalaire
 \]
 La fonction \(f_0\) pondère donc chaque valeur en fonction de sa position temporelle : il s'agit de la version continue des noyaux définis dans la partie \ref{sec-kernels}.
 
-Dans notre cas, on suppose que notre série initiale \(y_t\) est désaisonnalisée et peut s'écrire comme la somme d'une tendance-cycle, \(TC_t\) et d'une composante irrégulière, \(I_t\) (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
+Dans notre cas, on suppose que notre série initiale \(y_t\) est désaisonnalisée et peut s'écrire comme la somme d'une tendance-cycle, \(TC_t\), et d'une composante irrégulière, \(I_t\) (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
 \[
 y_t=TC_t+I_t.
 \]
@@ -1611,21 +1614,21 @@ j\in\llbracket-h,h\rrbracket,
 \]
 où \(\varepsilon_t\) est un bruit blanc non corrélé à \(I_t\).
 
-Les coefficients \(a_0,\dots,a_d\) peuvent être estimés par projection des observations du voisinage de \(y_t\) sur le sous-espace \(\mathbb P_d\) des polynômes de degré \(d\), ou, de manière équivalente, par minimisation de la distance entre \(y_t\) et \(TC_t(j)\) :
+Les coefficients \(a_0,\dots,a_d\) peuvent être estimés par projection des observations au voisinage de \(y_t\) sur le sous-espace \(\mathbb P_d\) des polynômes de degré \(d\), ou, de manière équivalente, par minimisation de la distance entre \(y_t\) et \(TC_t(j)\) :
 \begin{equation}
 \underset{TC\in\mathbb P_d}{\min}\lVert y -TC \rVert^2 = 
 \underset{TC\in\mathbb P_d}{\min}\int_\R (y(t+s)-TC_t(s))^2f_0(s)\ud s.
 \label{eq:mintcrkhs}
 \end{equation}
-L'espace \(\mathbb P_d\) étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir par exemple \textcite{berlinet2004}).
-C'est-à-dire qu'il existe une fonction \(R_d(\cdot,\cdot)\) telle que :
+L'espace \(\mathbb P_d\) étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir, par exemple, \textcite{berlinet2004}).
+Il existe ainsi une fonction \(R_d(\cdot,\cdot)\) telle que :
 \[
 \forall P\in \mathbb P_d: \forall t:
 R_d(t,\cdot)\in\mathbb P_d\quad\text{et}\quad
 P(t)=\ps{R_d(t,\cdot)}{P(\cdot)}.
 \]
 
-Le problème \eqref{eq:mintcrkhs} admet une solution unique qui dépend d'une fonction \(K_{d+1}\) appelée \emph{fonction de noyau} (\emph{kernel function}).
+Le problème \eqref{eq:mintcrkhs} admet une solution unique qui dépend d'une fonction \(K_{d+1}\), appelée \emph{fonction de noyau} (\emph{kernel function}).
 Cette fonction est dite d'ordre \(d+1\) car elle conserve les polynômes de degré \(d\)\footnote{
   C'est-à-dire \(\int_\R K_{d+1}(s)\ud s = 1\) et \(\int_\R K_{d+1}(s) s^i\ud s = 1\) pour \(i\in \llbracket 1, d\rrbracket\).}.
 Cette solution s'écrit :
@@ -1639,12 +1642,12 @@ Cette solution s'écrit alors :
 \widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 \label{eq:rkhssoltc2}
 \end{equation}
-On peut par ailleurs montrer que \(K_{d+1}\) s'écrit en fonction \(f_0\) et du noyau reproduisant \(K(\cdot,\cdot)\) et que ce dernier peut s'écrire en fonction de polynômes \((P_i)_{i\in \llbracket 0, d-1 \rrbracket}\) qui forme une base orthonormée de \(\mathbb L^2(f_0)\) (voir par exemple \textcite{berlinet1993}) :
+On peut, par ailleurs, montrer que \(K_{d+1}\) s'écrit en fonction \(f_0\) et du noyau reproduisant \(K(\cdot,\cdot)\) et que ce dernier peut s'écrire en fonction de polynômes \((P_i)_{i\in \llbracket 0, d-1 \rrbracket}\) qui forme une base orthonormée de \(\mathbb L^2(f_0)\) (voir par exemple \textcite{berlinet1993}) :
 \[
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 \]
 
-Par ailleurs, dans le cas discret, la solution \eqref{eq:rkhssoltc2} s'écrit comme une somme pondérée du voisinage de \(y_t\) :
+De plus, dans le cas discret, la solution \eqref{eq:rkhssoltc2} s'écrit comme une somme pondérée au voisinage de \(y_t\) :
 \begin{equation}
 \widehat{TC}_t=\sum_{j=-h}^h w_j y_{t+j}\quad
 \text{où} \quad
@@ -1710,7 +1713,7 @@ Cette erreur quadratique moyenne peut également se décomposer en plusieurs ter
   \left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2} h(\omega)\ud \omega
   \]
 \item
-  la \emph{timeliness} qui correspond à la part de la révision liée aux au déphasage
+  la \emph{timeliness} qui correspond à la part de la révision liée au déphasage
   \[
   b_{q,\varphi}=\underset{b_q\in[h; 3h]}{\min}
   8\int_{0}^{\omega_1}
@@ -1732,7 +1735,7 @@ Pour assurer une cohérence dans les définitions entre les différentes section
   \left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}\ud \omega}
   \]
 \item
-  \(b_{q,s}\) n'est pas considéré et \(b{q,G}\) est défini par \(\omega_1=\pi\) et :
+  \(b_{q,s}\) n'est pas considéré et \(b_{q,G}\) est défini par \(\omega_1=\pi\) et :
   \[
   b_{q,G}=\underset{b_q\in[h; 3h]}{\min}
   \sqrt{2\int_{0}^{\pi}
@@ -1745,7 +1748,7 @@ Pour assurer une cohérence dans les définitions entre les différentes section
   \sqrt{2\int_{\Omega_S}
   \rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)\ud \omega}
   \]
-  où \(\Omega_S=[0,2\pi/36]\) est l'intervalle de fréquences associé aux cycles d'au moins 16 mois.
+  où \(\Omega_S=[0,2\pi/36]\) est l'intervalle de fréquences associées aux cycles d'au moins 16 mois.
 \item
   une formule différente est utilisée pour la fonction de réponse (\(\Gamma_\theta(\omega)=\sum_{k=-p}^{+f} \theta_k e^{2\pi i \omega k}\)), ce qui conduit à des bornes d'intégrales légèrement différentes, sans effet sur le résultat.
 \end{itemize}
@@ -1778,14 +1781,14 @@ C'est ce qui a été retenu dans la suite de ce rapport, c'est également cohér
 
 \end{summary_box}
 
-Tous les critères utilisés la sélection optimale du paramètre \(b\) pouvant s'écrire comme cas particuliers du critère \(J\) défini dans l'équation \eqref{eq:theoriegen1} (voir section \ref{sec-WildiMcLeroy}), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \ref{subsec-theoriegen} en imposant comme contrainte linéaire que les coefficients soient sous la forme \(w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}\).
+Tous les critères utilisés de la sélection optimale du paramètre \(b\) pouvant s'écrire comme cas particuliers du critère \(J\) défini dans l'équation \eqref{eq:theoriegen1} (voir section \ref{sec-WildiMcLeroy}), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \ref{subsec-theoriegen} en imposant comme contrainte linéaire que les coefficients soient sous la forme \(w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}\).
 
 \hypertarget{rkhs-et-polynuxf4mes-locaux}{%
 \subsection{RKHS et polynômes locaux}\label{rkhs-et-polynuxf4mes-locaux}}
 
 Comme montré dans la section précédente, la théorie des espaces de Hilbert à noyau reproduisant permet de reproduire les filtres symétriques par approximation polynomiale locale.
 Comme le montrent \textcite{LuatiProietti2011}, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l'approximation polynomiale locale mais en utilisant une fenêtre d'estimation asymétrique.
-Cependant, ils ne peuvent pas être obtenues par la formalisation de \textcite{dagumbianconcini2008} mais par une discrétisation différente de la formule \eqref{eq:rkhskernelfun} :
+Cependant, ils ne peuvent pas être obtenus par la formalisation de \textcite{dagumbianconcini2008} mais par une discrétisation différente de la formule \eqref{eq:rkhskernelfun} :
 \[
 K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 \]
@@ -1843,12 +1846,12 @@ Pour chaque série et chaque date, la méthodologie suivante est utilisée :
 \def\labelenumi{\arabic{enumi}.}
 \item
   La série est désaisonnalisée avec la méthode X-13ARIMA\footnote{
-    On utilise pour cela la fonction \texttt{x13()} du package \texttt{RJDemetra} avec le paramètre \texttt{spec\ =\ "RSA3"} (détection automatique des différents paramètres sans correction des jours ouvrables).} pour extraire différents paramètres qui seront fixés entre les différentes méthodologie : la série linéarisée (i.e.~: la série initiale corrigée de points atypiques par un Reg-ARIMA), la longueur des filtres saisonniers et du filtre utilisé pour extraire la tendance-cycle, le schéma de décomposition et l'I-C ratio.
+    On utilise pour cela la fonction \texttt{x13()} du package \texttt{RJDemetra} avec le paramètre \texttt{spec\ =\ "RSA3"} (détection automatique des différents paramètres sans correction des jours ouvrables).} pour extraire différents paramètres qui seront fixés entre les différentes méthodologies : la série linéarisée (i.e.; la série initiale corrigée de points atypiques par un Reg-ARIMA), la longueur des filtres saisonniers et du filtre utilisé pour extraire la tendance-cycle, le schéma de décomposition et l'I-C ratio.
 \item
-  Une nouvelle désaisonnalisation est effectuée sur la série linéarisée en utilisant l'algorithme de décomposition de X-13ARIMA et en utilisant les mêmes paramètres que précédemment et en changement uniquement les filtres asymétriques utilisés pour extraire la tendance-cycle\footnote{
+  Une nouvelle désaisonnalisation est effectuée sur la série linéarisée en utilisant l'algorithme de décomposition de X-13ARIMA et en utilisant les mêmes paramètres que précédemment et en changeant uniquement les filtres asymétriques utilisés pour extraire la tendance-cycle\footnote{
     Cela peut être fait en utilisant la fonction \texttt{rjdfilters::x11()}.}.\\
-  Pour contrôler l'impact des estimations des paramètres et des points atypiques dans le modèle Reg-ARIMA model, la série linéarisée utilisée ici correspond à celle calculée sur l'ensemble de la série.\\
-  Pour la méthode de référence (X-13ARIMA), la série linéarisée est prolongée par prévision sur un an avant la décomposition mais pour toutes les autres méthodes on n'utilise pas les prévisions dans la décomposition.\\
+  Pour contrôler l'impact des estimations des paramètres et des points atypiques dans le modèle Reg-ARIMA, la série linéarisée utilisée ici correspond à celle calculée sur l'ensemble de la série.\\
+  Pour la méthode de référence (X-13ARIMA), la série linéarisée est prolongée par prévision via un modèle ARIMA sur un an avant la décomposition mais pour toutes les autres méthodes on n'utilise pas les prévisions dans la décomposition.\\
   Une description plus détaillée de l'algorithme de décomposition est disponible en annexe \ref{an-x11}.
 \item
   Pour chaque estimation de la tendance-cycle, on calcule les points de redressement et de ralentissement.
@@ -1860,11 +1863,11 @@ Il n'y a pas d'impact du schéma de décomposition sur les résultats.
 \hypertarget{comparaison-des-filtres-polynomiaux-locaux-et-des-filtres-rkhs}{%
 \subsection{Comparaison des filtres polynomiaux locaux et des filtres RKHS}\label{comparaison-des-filtres-polynomiaux-locaux-et-des-filtres-rkhs}}
 
-Du fait du fort degré de liberté de l'approche FST (dans le choix des différents paramètres), dans cette section, on ne compare la méthode X-13ARIMA qu'à l'approche polynomiale locale et aux filtres RKHS.
-Pour les filtres RKHS on ne retient que ceux qui minimisent la \emph{timeliness} puisque dans notre cas on souhaite minimiser le délai dans la détection de point de retournement.
+Du fait du fort degré de liberté de l'approche FST (dans le choix des différents paramètres), dans cette section, on ne compare la méthode X-13ARIMA unique à l'approche polynomiale locale et aux filtres RKHS.
+Pour les filtres RKHS on ne retient que ceux qui minimisent la \emph{timeliness} puisque dans notre cas on souhaite minimiser le délai dans la détection de points de retournement.
 
-Le tableau \ref{tab:covid-quantile} compare les différentes méthodes pour la détection des points de retournement durant la crise du COVID-19 (i.e.~: durant l'année 2020).
-La méthode LC (i.e.~: les filtres de Musgrave) semble être, en distribution, plus performante que les autres méthodes (avec des performances similaires à X-13ARIMA) et la méthode la moins performante semble être les filtres RKHS obtenus en minimisant la \emph{timeliness}.
+Le tableau \ref{tab:covid-quantile} compare les différentes méthodes pour la détection des points de retournement durant la crise du COVID-19 (i.e., durant l'année 2020).
+La méthode LC (i.e., les filtres de Musgrave) semble être, en distribution, plus performante que les autres méthodes (avec des performances similaires à X-13ARIMA) et la méthode la moins performante semble être les filtres RKHS obtenus en minimisant la \emph{timeliness}.
 La moins bonne performance des filtres QL, CQ et DAF par rapport au filtre LC pourrait être expliquée par la plus grande volatilité des estimations du fait des contraintes plus fortes sur la préservation des tendances polynomiales.
 
 \begin{table}[!h]
@@ -1938,7 +1941,7 @@ Moy & 2,1 & 2,7 & 2,8 & 3,9 & 4,2 & 4,3\\
 Le même exercice peut être fait en analysant le déphasage dans la détection des points de retournement pendant la crise financière de 2008.
 En revanche, contrairement à la crise du COVID-19, toutes les séries n'ont pas été impactées au même mois : une analyse plus approfondie devrait être faite pour vérifier si les points détectés sont réellement des points de retournement.
 Même les résultats du tableau \ref{tab:covid-quantile-crisis} doivent être étudiés avec précaution, on observe la même hiérarchie entre les méthodes que celle trouvée pendant l'étude de la crise du COVID-19.
-Par ailleurs, pour plus de 80 \% des séries et pour toutes les méthodes, le déphasage dans la détection des points de retournement est plus grand que 6 mois.
+Par ailleurs, pour plus de 80 \% des séries et pour toutes les méthodes, le déphasage dans la détection des points de retournement est supérieur à 6 mois.
 C'est-à-dire que dans la majorité des cas, la détection des points de retournement n'est pas stable, même si l'on utilise un filtre symétrique pour l'estimation de la tendance-cycle.
 Cela vient notamment de l'algorithme de désaisonnalisation qui, pour estimer les coefficients saisonniers utilisés pour corriger la série où l'on applique les filtres pour extraire la tendance-cycle, a besoin de bien plus que 6 mois dans le futur.
 Par exemple, en utilisant les paramètres les plus souvent utilisés dans X-13ARIMA, le filtre final symétrique utilisé pour extraire la tendance-cycle a 169 termes !
@@ -1980,24 +1983,24 @@ Pour limiter les degrés de liberté dans le choix des poids dans l'approche FST
 En effet, si l'on se concentre sur les trois critères de \emph{fidelity}, \emph{smoothness} et \emph{timeliness}, comparativement à une moyenne mobile fixée, un ensemble de poids peut être considéré comme optimal s'il conduit à un filtre de meilleure qualité (selon ces trois critères) avec les mêmes contraintes polynomiales (ou des contraintes polynomiales plus grandes).
 L'annexe \ref{sec-annexeFST} trace l'ensemble de ces poids pour les filtres locaux polynomiaux et les filtres RKHS mais concentrons-nous ici sur le cas \(h=6\) (filtre symétrique de 13 termes).
 
-Parmi l'ensemble des poids ``admissibles'' (i.e.~: un ensemble de poids minimisant les 3 critères par rapport à un filtre de référence), plusieurs méthodes peuvent être utilisés pour construire les moyennes mobiles asymétriques.
+Parmi l'ensemble des poids ``admissibles'' (i.e.; un ensemble de poids minimisant les 3 critères par rapport à un filtre de référence), plusieurs méthodes peuvent être utilisées pour construire les moyennes mobiles asymétriques.
 Ici nous en retenons trois :
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  on retient la moyenne mobile qui minimise la \emph{timeliness} pour limiter au mieux le déphasage (i.e.~: celle dont le poids associé à ce critère est le plus fort) ;
+  on retient la moyenne mobile qui minimise la \emph{timeliness} pour limiter au mieux le déphasage (i.e.; celle dont le poids associé à ce critère est le plus fort) ;
 \item
   pour éviter d'introduire trop de variance dans les estimations, on retient la moyenne mobile dont le poids associé à la \emph{timeliness} est la plus faible ;
 \item
   on adopte une position médiane en retenant la moyenne mobile dont le poids associé à la \emph{timeliness} est médian parmi l'ensemble des poids admissibles.
 \end{enumerate}
 
-Parmi les approches polynomiales, le filtre LC est celui qui semble donner les meilleurs résultats : nous nous restreignant donc à la comparaison à cette méthode.
+Parmi les approches polynomiales, le filtre LC est celui qui semble donner les meilleurs résultats : nous nous restreignons donc à la comparaison avec cette méthode.
 Pour le choix du degré de préservation, pour la première méthode, forcer, lorsque c'est possible, la moyenne mobile à préserver les polynômes de degré 1 ne change pas les poids retenus : c'est ce qui a été fait pour cette méthode. Pour les deux autres, nous nous sommes restreints aux moyennes mobiles préservant les constantes uniquement (comme le filtre LC).
 Par simplicité, le filtre FST optimal associé au filtre RKHS n'a été étudié qu'avec la première méthode.
-Ces poids sont présentés dans le tableau \ref{tab:poidsfstsimul}, les coefficients associés sont présentés dans l'annexe \ref{an-graphs} dans les figures \ref{fig:graphsfstlcmax} à \ref{fig:graphsfstrkhs}.
-Le filtre utilisé pour l'estimation en temps-réel (\(q=0\)) qui minimise la timeliness par rapport au filtre LC accorde, pour l'estimation de la tendance-cycle en \(t\), un poids plus important à la valeur observée en \(t-1\) qu'à celle observée en \(t\) (figure \ref{fig:graphsfstlcmax}) : cela ne parait pas plausible économique et justifie de ne pas se restreindre uniquement à la première méthode de sélection des poids.
+Ces poids sont présentés dans le tableau \ref{tab:poidsfstsimul}, et les coefficients associés sont présentés dans l'annexe \ref{an-graphs} dans les figures \ref{fig:graphsfstlcmax} à \ref{fig:graphsfstrkhs}.
+Le filtre utilisé pour l'estimation en temps réel (\(q=0\)) qui minimise la timeliness par rapport au filtre LC accorde, pour l'estimation de la tendance-cycle en \(t\), un poids plus important à la valeur observée en \(t-1\) qu'à celle observée en \(t\) (figure \ref{fig:graphsfstlcmax}) : cela ne parait pas plausible économiquement et justifie de ne pas se restreindre uniquement à la première méthode de sélection des poids.
 
 \begin{table}[!h]
 
@@ -2036,8 +2039,8 @@ Sur les deux exemples étudiés (annexe \ref{an-plotseries}), les estimations so
   Cela pouvait d'ailleurs s'anticiper par l'analyse des fonctions de gains présentés en annexe \ref{an-graphs}.
   En effet, pour les autres méthodes, pour les filtres asymétriques utilisés lors de l'estimation en temps réel (\(q=0\)), la fonction de gain est supérieure à 1 pour de nombreuses fréquences, ce qui signifie que le bruit est amplifié.
   Toutefois, pour les basses fréquences, les fonctions de gains décroissent plus vite pour les filtres issus de la méthode FST, ce qui signifie que la composante tendance-cycle est atténuée.}.
-En revanche les estimations intermédiaires (\(q=4\) ou \(q=5\)) semblent assez erratiques.
-Cela pourrait provenir du fait les coefficients associés à ces moyennes mobiles donne un poids relativement faible à l'estimation courante (les coefficients associés aux observations en \(t-1\), \(t\) et \(t+1\) sont très proches).
+En revanche, les estimations intermédiaires (\(q=4\) ou \(q=5\)) semblent assez erratiques.
+Cela pourrait provenir du fait que les coefficients associés à ces moyennes mobiles donnent un poids relativement faible à l'estimation courante (les coefficients associés aux observations en \(t-1\), \(t\) et \(t+1\) sont très proches).
 
 \begin{table}[!h]
 
@@ -2091,11 +2094,11 @@ Moy & 2,1 & 2,5 & 2,3 & 2,4 & 2,5\\
 \emph{Note} : \emph{Les statistiques ne sont calculés que pour les séries dont le filtre tendance-cycle optimal est de longueur 13.}
 \normalsize\end{table}
 
-Notons par ailleurs que la hiérarchie entre les méthodes sur les révisions entre la première et la dernière observation, estimée empiriquement dans les tableaux \ref{tab:covid-rev} et \ref{tab:covid-rev-fst}, se retrouve dans les indicateurs théoriques, définis dans la section \ref{sec-WildiMcLeroy}. C'est ce qui montré par le tableau \ref{tab:tab-mse-q0}, qui compare les filtres asymétriques utilisés pour l'estimation en temps-réel (\(q=0\)), en supposant que les séries sont des bruits blancs.
+Notons par ailleurs que la hiérarchie entre les méthodes sur les révisions entre la première et la dernière observation, estimée empiriquement dans les tableaux \ref{tab:covid-rev} et \ref{tab:covid-rev-fst}, se retrouve dans les indicateurs théoriques, définis dans la section \ref{sec-WildiMcLeroy}. C'est ce qui est montré par le tableau \ref{tab:tab-mse-q0}, qui compare les filtres asymétriques utilisés pour l'estimation en temps réel (\(q=0\)), en supposant que les séries sont des bruits blancs.
 
 \begin{table}[!h]
 
-\caption{\label{tab:tab-mse-q0}Décomposition de l'erreur quadratique moyenne des filtres asymétriques utilisés en temps-réel ($q=0$).}
+\caption{\label{tab:tab-mse-q0}Décomposition de l'erreur quadratique moyenne des filtres asymétriques utilisés en temps réel ($q=0$).}
 \centering
 \begin{tabular}[t]{lccccccccc}
 \toprule
@@ -2122,10 +2125,10 @@ Plusieurs conclusions peuvent être tirées de ces résultats :
 \item
   Minimiser la \emph{timeliness} a surtout du sens lorsque peu de données dans le futur sont connues : dès lors que l'on s'approche du cas symétrique, cela ne parait plus pertinent et peut conduire à des résultats indésirables (estimations erratiques).
 \item
-  Il n'est pas forcément pertinent d'utiliser la même méthode de construction pour les filtres utilisée en temps réel (\(q=0\)) et pour ceux utilisés lorsque l'on s'approche du cas symétrique.
+  Il n'est pas forcément pertinent d'utiliser la même méthode de construction pour les filtres utilisés en temps réel (\(q=0\)) et pour ceux utilisés lorsque l'on s'approche du cas symétrique.
 \item
   La méthode utilisée pour mesurer le déphasage privilégie les filtres qui minimisent la révision au filtre symétrique (filtres polynomiaux locaux).
-  En effet, pour les autres (RKHS et filtres FST) il faut, dans la majorité des cas, au moins 6 mois pour détecter correctement le poids de retournement~: cela signifie qu'il y a eu une révision du point de retournement au moment de l'utilisation du filtre symétrique.
+  En effet, pour les autres (RKHS et filtres FST) il faut, dans la majorité des cas, au moins 6 mois pour détecter correctement le point de retournement~: cela signifie qu'il y a eu une révision du point de retournement au moment de l'utilisation du filtre symétrique.
   Cela rejoint les deux points précédents~: les moyennes mobiles asymétriques utilisées lorsque l'on s'approche du cas symétrique sont sûrement sous-optimales.
 \end{itemize}
 
@@ -2192,27 +2195,27 @@ Moy & 2,8 & 2,8 & 2,9 & 2,8 & 2,8 & 2,8 & 2,9\\
 Comme nous l'avons vu dans les sections précédentes, la méthodologie et les indicateurs utilisés pour comparer les différentes méthodes sont perfectibles.
 Toutefois, les différents résultats montrent que, pour la construction des moyennes mobiles asymétriques, on peut se restreindre à celles qui conserve les constantes : chercher à imposer des contraintes polynomiales plus élevées augmente la variance des estimations et le délai pour détecter des points de retournement.
 Ainsi, dans les méthodes polynomiales locales, on peut restreindre les prochaines études à la méthode \emph{Linear-Constant} (LC).
-Par ailleurs, l'estimation en temps-réel des méthodes utilisant les filtres asymétriques direct (DAF) peut être facilement améliorée, comme c'est par exemple le cas de la méthode de désaisonnalisation STL (\emph{Seasonal-Trend decomposition based on Loess}) proposée par \textcite{cleveland90}.
+Par ailleurs, l'estimation en temps réel des méthodes utilisant les filtres asymétriques direct (DAF) peut être facilement améliorée, comme c'est par exemple le cas de la méthode de désaisonnalisation STL (\emph{Seasonal-Trend decomposition based on Loess}) proposée par \textcite{cleveland90}.
 
-Sur les méthodes ici étudiées, il serait intéressant de continuer l'exploration pour essayer de comprendre quand une méthode est plus performante qu'une autre, ce qui permettrait de donner des recommandations sur la méthode à utilisée.
+Sur les méthodes ici étudiées, il serait intéressant de continuer l'exploration pour essayer de comprendre quand une méthode est plus performante qu'une autre, ce qui permettrait de donner des recommandations sur la méthode à utiliser.
 Il faudrait également veiller à comparer les méthodes sur d'autres types de bases de données pour vérifier si les résultats ne dépendent pas du type de série en entrée.
 
 Toutes les méthodes de construction des filtres asymétriques sont calibrées en utilisant des paramètres estimés sur l'ensemble de la période.
 Par exemple, on utilise autant de points dans le passé que le filtre symétrique alors que rien ne suggère que c'est la longueur optimale.
 Ainsi, le ratio \(I/C\) utilisé pour choisir la longueur du filtre de la tendance-cycle et pour calibrer les méthodes locales polynomiales, est calculé sur l'ensemble de la série en excluant les 6 premiers et 6 derniers mois, qui sont justement ceux étudiés !
 Pour la construction des filtres utilisés pour l'estimation en temps réel, il pourrait donc être préférable d'utiliser d'autres paramètres, par exemple des estimations locales de \(I/C\) (c'était d'ailleurs une des pistes de recherche suggérées par \textcite{GrayThomson1996}).
-De manière alternative, \textcite{vasyechko2014new} proposent de toujours utiliser un filtre de 13 termes : pour l'estimation en temps-réel (\(q=0\)) le filtre utilise l'observation courante et les 12 observations précédentes, lorsqu'on connait un point dans le futur (\(q=1\)) on utilise les 11 observations précédant la date courante, etc.
+De manière alternative, \textcite{vasyechko2014new} proposent de toujours utiliser un filtre de 13 termes : pour l'estimation en temps réel (\(q=0\)) le filtre utilise l'observation courante et les 12 observations précédentes, lorsqu'on connait un point dans le futur (\(q=1\)) on utilise les 11 observations précédant la date courante, etc.
 
 Les indicateurs utilisés dans cette partie semblent avantager, par construction, la méthode actuelle X-13ARIMA.
 Cela pourrait également être le cas de la méthode d'estimation utilisée.
 En effet, dans les simulations, nous utilisons une série corrigée des points atypiques par un modèle Reg-ARIMA estimée sur l'ensemble de la période.
 Pour les simulations avec la méthode X-13ARIMA, pour chaque date, la série est ensuite prolongée sur un an par un modèle ARIMA.
-Toutefois, de cette façon les prévisions sont toujours réalisées dans des cas ``simples'' puisqu'on ne prend pas en compte l'impact, sur la prévision, de la détection et de l'estimation des temps réel des points atypiques.
-Il serait donc intéressant de comparer les différentes méthodes en réestimant à chaque date la série linéarisée et donc en se plaçant réellement en estimation en temps-réel.
+Toutefois, de cette façon les prévisions sont toujours réalisées dans des cas ``simples'' puisqu'on ne prend pas en compte l'impact, sur la prévision, de la détection et de l'estimation en temps réel des points atypiques.
+Il serait donc intéressant de comparer les différentes méthodes en réestimant à chaque date la série linéarisée et donc en se plaçant réellement en estimation en temps réel.
 
 Enfin, dans les articles associés aux méthodes étudiées dans ce rapport, les filtres asymétriques sont appliqués et comparés sur des séries déjà désaisonnalisées.
 Le déphasage dans la détection des points de retournement est donc d'au plus 5 mois (lorsque le filtre symétrique est de 13 termes).
-Cette méthode, beaucoup simple que celle utilisée dans ce rapport, peut néanmoins conduire à deux écueils :
+Cette méthode, beaucoup plus simple que celle utilisée dans ce rapport, peut néanmoins conduire à deux écueils :
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2226,7 +2229,7 @@ Cette méthode, beaucoup simple que celle utilisée dans ce rapport, peut néanm
   Les filtres asymétriques finaux amplifient même les cycles de 9 ou 10 mois.
   Cela peut avoir pour conséquence l'introduction d'ondulations indésirables, c'est-à-dire la détection de faux points de retournement.
   Ce problème est réduit par la correction des points atypiques (ces cycles étant considérés comme de l'irrégulier).
-  C'est ainsi qu'est né le \emph{Nonlinear Dagum Filter} (NLDF) qui consiste à :
+  C'est ainsi que le \emph{Nonlinear Dagum Filter} (NLDF) a été développé et consiste à :
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
@@ -2256,8 +2259,8 @@ Par ailleurs, dans les méthodes polynomiales, le choix du noyau ne semble pas �
 Deuxièmement, dans l'estimation en temps réel, les méthodes d'extraction de tendance-cycle ne peuvent s'étudier indépendamment du processus de désaisonnalisation.
 Dans le cas contraire, on néglige notamment l'effet des points atypiques sur l'estimation de la tendance-cycle, ce qui pourrait conduire à des estimations biaisées et à une détection de faux points de retournement.
 
-Enfin, sur les séries étudiées, la méthode utilisée dans X-13ARIMA semble satisfaisante avec des résultats proches en utilisant la méthode LC.
-Cependant, la moins bonne performance apparente de l'approche FST et de la méthode basée sur les RKHS semblent de provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique.
+Enfin, sur les séries étudiées, la méthode utilisée dans X-13ARIMA semble satisfaisante avec des résultats proches de ceux obtenus en utilisant la méthode LC.
+Cependant, la moins bonne performance apparente de l'approche FST et de la méthode basée sur les RKHS semblent provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique.
 Plus d'études devraient être faites pour savoir si, pour la construction des filtres asymétriques minimisant le déphasage, on pourrait se concentrer uniquement sur les ceux utilisés lorsque peu d'observations futures sont disponibles.
 Cela impliquerait notamment de revoir la méthodologie et les indicateurs utilisés.
 
@@ -2424,7 +2427,7 @@ Cela amène donc à étudier l'impact de ces points sur l'estimation de la tenda
 Dans cette annexe sont tracés les rares poids pour lesquels l'approche FST \textbf{n'est pas} équivalente à l'approche polynomiale locale, pour \(h=6\) (filtre symétrique de 13 termes) et \(h=11\) (filtre symétrique de 23 termes).
 Lorsqu'un graphique n'est pas affiché c'est que tous les filtres FST sont équivalents une approche polynomiale locale par moindre carrés pondérés.
 Par exemple pour les filtres associés au filtre symétrique de 13 termes (\(h=6\), figure \ref{fig:thhendersonh6}) il n'y a des graphiques que pour les filtres utilisés en temps réel (\(q=0\)) et lorsque ce filtre conserve les constantes (\(d=0\)), les droites (\(d=1\)) et les polynômes de degré 2 (\(d=2\)).
-Dans tous les autres cas (i.e.~: dès que l'on connait au moins un point dans le futur, \(q\geq 1\)), il y a équivalence pour tous les poids testés\footnote{
+Dans tous les autres cas (i.e.; dès que l'on connait au moins un point dans le futur, \(q\geq 1\)), il y a équivalence pour tous les poids testés\footnote{
   Un quadrillage de 200 points de l'intervalle \([0,1]\) a été effectuée et on ne garde que l'ensemble des poids tels que leur somme fasse 1.}.
 
 La \emph{smoothness} est calculée avec le paramètre \(q=3\) (\(S_g(\theta) = \sum_{j}(\nabla^{3}\theta_{j})^{2}\)), comme pour le filtre symétrique d'Henderson.
@@ -2917,7 +2920,7 @@ Les moyennes mobiles étant très sensibles à la présence de points atypiques,
 
   \begin{itemize}
   \item
-    si \(\lvert I_t\rvert\leq 1,5 \sigma\) un poids de 1 est affecté à la date \(t\) (i.e.~: le point n'est pas considéré comme atypique) ;
+    si \(\lvert I_t\rvert\leq 1,5 \sigma\) un poids de 1 est affecté à la date \(t\) (i.e.; le point n'est pas considéré comme atypique) ;
   \item
     si \(\lvert I_t\rvert\geq 2,5 \sigma\), un poids de 0 est affecté à la date \(t\) ;
   \item

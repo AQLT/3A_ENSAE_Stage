@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-01" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="sec-annexeFST.html"/>
 <link rel="next" href="an-plotseries.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
 <li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
 </ul></li>
 </ul></li>
@@ -282,7 +282,7 @@ La série corrigée et prolongée est appelée série <em>linéarisée</em>.</p>
 <li><p>Dans une seconde étape, cette série linéarisée, notée <span class="math inline">\(X_t\)</span> est décomposée en trois composantes saisonnalité <span class="math inline">\(S_t\)</span>, tendance-cycle <span class="math inline">\(TC_t\)</span> et irrégulier <span class="math inline">\(I_t\)</span>.</p></li>
 </ol>
 <p>Dans ce rapport nous nous intéressons essentiellement à cette seconde étape, où la méthode utilisée pour extraire la composante tendance-cycle en fin de période sera modifiée.
-La méthode de décomposition utilisée dans X-13ARIMA, similaire à celle de X-11, est détaillée de manière très précise dans <span class="citation">Dominique Ladiray et Quenneville (<a href="#ref-ladiray1999comprendre" role="doc-biblioref">1999</a>)</span>.
+La méthode de décomposition utilisée dans X-13ARIMA, similaire à celle de X-11, est détaillée de manière très précise dans <span class="citation">Ladiray et Quenneville (<a href="#ref-ladiray1999comprendre" role="doc-biblioref">1999</a>)</span>.
 Cette annexe reprend de manière synthétique la description faite dans cet article.</p>
 <p>Pour la décomposition l’algorithme estime itérativement les différentes composantes en appliquant des moyennes mobiles.
 Cette algorithme peut se décomposer en l’application de deux blocs successifs.
@@ -349,7 +349,7 @@ Xsa_t^{(2)}= (TC_t+I_t)^{(2)} = X_t - Snorm_t^{(2)}
 <li><p>Ensuite, pour chaque année, un écart-type mobile de l’irrégulier, noté <span class="math inline">\(\sigma\)</span>, est calculé sur 5 ans, l’année étudiée étant l’année centrale (pour les deux dernières années, l’écart-type de l’antépénultième année est considérée).</p></li>
 <li><p>On affecte, à chaque valeur de <span class="math inline">\(I_t\)</span>, un poids <span class="math inline">\(p_t\)</span> en fonction de son écart à l’écart-type associé (voir graphique <a href="an-x11.html#fig:correctionautox11">F.1</a>) :</p>
 <ul>
-<li><p>si <span class="math inline">\(\lvert I_t\rvert\leq 1,5 \sigma\)</span> un poids de 1 est affecté à la date <span class="math inline">\(t\)</span> (i.e. : le point n’est pas considéré comme atypique) ;</p></li>
+<li><p>si <span class="math inline">\(\lvert I_t\rvert\leq 1,5 \sigma\)</span> un poids de 1 est affecté à la date <span class="math inline">\(t\)</span> (i.e.; le point n’est pas considéré comme atypique) ;</p></li>
 <li><p>si <span class="math inline">\(\lvert I_t\rvert\geq 2,5 \sigma\)</span>, un poids de 0 est affecté à la date <span class="math inline">\(t\)</span> ;</p></li>
 <li><p>si <span class="math inline">\(1,5 \sigma&lt;\lvert I_t\rvert&lt; 2,5 \sigma\)</span>, un poids variant linéairement entre 0 et 1 est affecté à la date <span class="math inline">\(t\)</span>.</p></li>
 </ul></li>

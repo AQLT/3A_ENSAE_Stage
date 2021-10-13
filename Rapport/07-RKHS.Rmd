@@ -3,7 +3,7 @@
 ## Approche de Dagum et Bianconcini
 
 La théorie des *Reproducing Kernel Hilbert Space* (RKHS) --- espaces de Hilbert à noyau reproduisant --- est une théorie générale dans l'apprentissage statistique non-paramétrique qui permet d'englober un grand nombre de méthodes.
-C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que la moyenne mobile d'Henderson.
+C'est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d'Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que celle d'Henderson.
 Ainsi, @dagumbianconcini2008 utilise la théorie des RKHS pour approcher le filtre d'Henderson et en dériver des filtres asymétriques associés.
 
 Un RKHS $\mathbb{L}^{2}(f_{0})$ est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
@@ -14,7 +14,7 @@ $$
 $$
 La fonction $f_0$ pondère donc chaque valeur en fonction de sa position temporelle : il s'agit de la version continue des noyaux définis dans la partie \@ref(sec-kernels).
 
-Dans notre cas, on suppose que notre série initiale $y_t$ est désaisonnalisée et peut s'écrire comme la somme d'une tendance-cycle, $TC_t$ et d'une composante irrégulière, $I_t$ (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
+Dans notre cas, on suppose que notre série initiale $y_t$ est désaisonnalisée et peut s'écrire comme la somme d'une tendance-cycle, $TC_t$, et d'une composante irrégulière, $I_t$ (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
 $$
 y_t=TC_t+I_t.
 $$
@@ -25,21 +25,21 @@ j\in\llbracket-h,h\rrbracket,
 $$
 où $\varepsilon_t$ est un bruit blanc non corrélé à $I_t$.
 
-Les coefficients $a_0,\dots,a_d$ peuvent être estimés par projection des observations du voisinage de $y_t$ sur le sous-espace $\mathbb P_d$ des polynômes de degré $d$, ou, de manière équivalente, par minimisation de la distance entre $y_t$ et $TC_t(j)$ :
+Les coefficients $a_0,\dots,a_d$ peuvent être estimés par projection des observations au voisinage de $y_t$ sur le sous-espace $\mathbb P_d$ des polynômes de degré $d$, ou, de manière équivalente, par minimisation de la distance entre $y_t$ et $TC_t(j)$ :
 \begin{equation}
 \underset{TC\in\mathbb P_d}{\min}\lVert y -TC \rVert^2 = 
 \underset{TC\in\mathbb P_d}{\min}\int_\R (y(t+s)-TC_t(s))^2f_0(s)\ud s.
 (\#eq:mintcrkhs)
 \end{equation}
-L'espace $\mathbb P_d$ étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir par exemple @berlinet2004). 
-C'est-à-dire qu'il existe une fonction $R_d(\cdot,\cdot)$ telle que :
+L'espace $\mathbb P_d$ étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir, par exemple, @berlinet2004). 
+Il existe ainsi une fonction $R_d(\cdot,\cdot)$ telle que :
 $$
 \forall P\in \mathbb P_d: \forall t:
 R_d(t,\cdot)\in\mathbb P_d\quad\text{et}\quad
 P(t)=\ps{R_d(t,\cdot)}{P(\cdot)}.
 $$
 
-Le problème \@ref(eq:mintcrkhs) admet une solution unique qui dépend d'une fonction $K_{d+1}$ appelée *fonction de noyau* (*kernel function*). 
+Le problème \@ref(eq:mintcrkhs) admet une solution unique qui dépend d'une fonction $K_{d+1}$, appelée *fonction de noyau* (*kernel function*). 
 Cette fonction est dite d'ordre $d+1$ car elle conserve les polynômes de degré $d$^[
 C'est-à-dire $\int_\R K_{d+1}(s)\ud s = 1$ et $\int_\R K_{d+1}(s) s^i\ud s = 1$ pour $i\in \llbracket 1, d\rrbracket$.
 ]. 
@@ -54,12 +54,12 @@ Cette solution s'écrit alors :
 \widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 (\#eq:rkhssoltc2)
 \end{equation}
-On peut par ailleurs montrer que $K_{d+1}$ s'écrit en fonction $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
+On peut, par ailleurs, montrer que $K_{d+1}$ s'écrit en fonction $f_0$ et du noyau reproduisant $K(\cdot,\cdot)$ et que ce dernier peut s'écrire en fonction de polynômes $(P_i)_{i\in \llbracket 0, d-1 \rrbracket}$ qui forme une base orthonormée de $\mathbb L^2(f_0)$ (voir par exemple @berlinet1993) :
 $$
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 $$
 
-Par ailleurs, dans le cas discret, la solution \@ref(eq:rkhssoltc2) s'écrit comme une somme pondérée du voisinage de $y_t$ :
+De plus, dans le cas discret, la solution \@ref(eq:rkhssoltc2) s'écrit comme une somme pondérée au voisinage de $y_t$ :
 \begin{equation}
 \widehat{TC}_t=\sum_{j=-h}^h w_j y_{t+j}\quad
 \text{où} \quad
@@ -124,7 +124,7 @@ b_{q,s}=\underset{b_q\in[h; 3h]}{\min}
 \left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2} h(\omega)\ud \omega
 $$
 
-- la *timeliness* qui correspond à la part de la révision liée aux au déphasage
+- la *timeliness* qui correspond à la part de la révision liée au déphasage
 $$
 b_{q,\varphi}=\underset{b_q\in[h; 3h]}{\min}
 8\int_{0}^{\omega_1}
@@ -142,7 +142,7 @@ b_{q,G}=\underset{b_q}{\min}\sqrt{
 \left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}\ud \omega}
 $$
 
-- $b_{q,s}$ n'est pas considéré et $b{q,G}$ est défini par $\omega_1=\pi$ et :
+- $b_{q,s}$ n'est pas considéré et $b_{q,G}$ est défini par $\omega_1=\pi$ et :
 $$
 b_{q,G}=\underset{b_q\in[h; 3h]}{\min}
 \sqrt{2\int_{0}^{\pi}
@@ -155,7 +155,7 @@ b_{q,\varphi}=\underset{b_q}{\min}
 \sqrt{2\int_{\Omega_S}
 \rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)\ud \omega}
 $$
-où $\Omega_S=[0,2\pi/36]$ est l'intervalle de fréquences associé aux cycles d'au moins 16 mois.
+où $\Omega_S=[0,2\pi/36]$ est l'intervalle de fréquences associées aux cycles d'au moins 16 mois.
 
 - une formule différente est utilisée pour la fonction de réponse  ($\Gamma_\theta(\omega)=\sum_{k=-p}^{+f} \theta_k e^{2\pi i \omega k}$), ce qui conduit à des bornes d'intégrales légèrement différentes, sans effet sur le résultat.
 ::::
@@ -202,13 +202,13 @@ RKHS filters - @dagumbianconcini2008
 - Il peut y avoir des problèmes de minimisation (notamment en minimisant la *timeliness*).
 ::::
 
-Tous les critères utilisés la sélection optimale du paramètre $b$ pouvant s'écrire comme cas particuliers du critère $J$ défini dans l'équation \@ref(eq:theoriegen1) (voir section \@ref(sec-WildiMcLeroy)), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec-theoriegen) en imposant comme contrainte linéaire que les coefficients soient sous la forme $w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}$.
+Tous les critères utilisés de la sélection optimale du paramètre $b$ pouvant s'écrire comme cas particuliers du critère $J$ défini dans l'équation \@ref(eq:theoriegen1) (voir section \@ref(sec-WildiMcLeroy)), cette méthode s'inscrit dans le cadre de la théorie générale définie dans la section \@ref(subsec-theoriegen) en imposant comme contrainte linéaire que les coefficients soient sous la forme $w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}$.
 
 ## RKHS et polynômes locaux
 
 Comme montré dans la section précédente, la théorie des espaces de Hilbert à noyau reproduisant permet de reproduire les filtres symétriques par approximation polynomiale locale.
 Comme le montrent @LuatiProietti2011, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l'approximation polynomiale locale mais en utilisant une fenêtre d'estimation asymétrique.
-Cependant, ils ne peuvent pas être obtenues par la formalisation de  @dagumbianconcini2008 mais par une discrétisation différente de la formule \@ref(eq:rkhskernelfun) :
+Cependant, ils ne peuvent pas être obtenus par la formalisation de  @dagumbianconcini2008 mais par une discrétisation différente de la formule \@ref(eq:rkhskernelfun) :
 $$
 K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 $$

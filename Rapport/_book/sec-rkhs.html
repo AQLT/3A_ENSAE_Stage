@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-01" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="sec-lppfilters.html"/>
 <link rel="next" href="sec-comparison.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
 <li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
 </ul></li>
 </ul></li>
@@ -278,7 +278,7 @@ div.csl-indent {
 <div id="approche-de-dagum-et-bianconcini" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Approche de Dagum et Bianconcini</h2>
 <p>La théorie des <em>Reproducing Kernel Hilbert Space</em> (RKHS) — espaces de Hilbert à noyau reproduisant — est une théorie générale dans l’apprentissage statistique non-paramétrique qui permet d’englober un grand nombre de méthodes.
-C’est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d’Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que la moyenne mobile d’Henderson.
+C’est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d’Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que celle d’Henderson.
 Ainsi, <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> utilise la théorie des RKHS pour approcher le filtre d’Henderson et en dériver des filtres asymétriques associés.</p>
 <p>Un RKHS <span class="math inline">\(\mathbb{L}^{2}(f_{0})\)</span> est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
 Il est caractérisé par une fonction de densité <span class="math inline">\(f_0\)</span> et un produit scalaire <span class="math inline">\(\ps{\cdot}{\cdot}\)</span> définit par :
@@ -287,7 +287,7 @@ Il est caractérisé par une fonction de densité <span class="math inline">\(f_
 \forall U,V\in\mathbb{L}^{2}(f_{0}).
 \]</span>
 La fonction <span class="math inline">\(f_0\)</span> pondère donc chaque valeur en fonction de sa position temporelle : il s’agit de la version continue des noyaux définis dans la partie <a href="sec-lppfilters.html#sec-kernels">5.1.1.1</a>.</p>
-<p>Dans notre cas, on suppose que notre série initiale <span class="math inline">\(y_t\)</span> est désaisonnalisée et peut s’écrire comme la somme d’une tendance-cycle, <span class="math inline">\(TC_t\)</span> et d’une composante irrégulière, <span class="math inline">\(I_t\)</span> (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
+<p>Dans notre cas, on suppose que notre série initiale <span class="math inline">\(y_t\)</span> est désaisonnalisée et peut s’écrire comme la somme d’une tendance-cycle, <span class="math inline">\(TC_t\)</span>, et d’une composante irrégulière, <span class="math inline">\(I_t\)</span> (qui peut être un bruit blanc ou suivre un modèle ARIMA) :
 <span class="math display">\[
 y_t=TC_t+I_t.
 \]</span>
@@ -297,20 +297,20 @@ TC_{t+j}=TC_t(j)=a_0+a_1j+\dots+a_dj^d+\varepsilon_{t+j},\quad
 j\in\llbracket-h,h\rrbracket,
 \]</span>
 où <span class="math inline">\(\varepsilon_t\)</span> est un bruit blanc non corrélé à <span class="math inline">\(I_t\)</span>.</p>
-<p>Les coefficients <span class="math inline">\(a_0,\dots,a_d\)</span> peuvent être estimés par projection des observations du voisinage de <span class="math inline">\(y_t\)</span> sur le sous-espace <span class="math inline">\(\mathbb P_d\)</span> des polynômes de degré <span class="math inline">\(d\)</span>, ou, de manière équivalente, par minimisation de la distance entre <span class="math inline">\(y_t\)</span> et <span class="math inline">\(TC_t(j)\)</span> :
+<p>Les coefficients <span class="math inline">\(a_0,\dots,a_d\)</span> peuvent être estimés par projection des observations au voisinage de <span class="math inline">\(y_t\)</span> sur le sous-espace <span class="math inline">\(\mathbb P_d\)</span> des polynômes de degré <span class="math inline">\(d\)</span>, ou, de manière équivalente, par minimisation de la distance entre <span class="math inline">\(y_t\)</span> et <span class="math inline">\(TC_t(j)\)</span> :
 <span class="math display" id="eq:mintcrkhs">\[\begin{equation}
 \underset{TC\in\mathbb P_d}{\min}\lVert y -TC \rVert^2 = 
 \underset{TC\in\mathbb P_d}{\min}\int_\R (y(t+s)-TC_t(s))^2f_0(s)\ud s.
 \tag{6.1}
 \end{equation}\]</span>
-L’espace <span class="math inline">\(\mathbb P_d\)</span> étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir par exemple <span class="citation">Alain Berlinet et Thomas-Agnan (<a href="#ref-berlinet2004" role="doc-biblioref">2004</a>)</span>).
-C’est-à-dire qu’il existe une fonction <span class="math inline">\(R_d(\cdot,\cdot)\)</span> telle que :
+L’espace <span class="math inline">\(\mathbb P_d\)</span> étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir, par exemple, <span class="citation">Berlinet et Thomas-Agnan (<a href="#ref-berlinet2004" role="doc-biblioref">2004</a>)</span>).
+Il existe ainsi une fonction <span class="math inline">\(R_d(\cdot,\cdot)\)</span> telle que :
 <span class="math display">\[
 \forall P\in \mathbb P_d: \forall t:
 R_d(t,\cdot)\in\mathbb P_d\quad\text{et}\quad
 P(t)=\ps{R_d(t,\cdot)}{P(\cdot)}.
 \]</span></p>
-<p>Le problème <a href="sec-rkhs.html#eq:mintcrkhs">(6.1)</a> admet une solution unique qui dépend d’une fonction <span class="math inline">\(K_{d+1}\)</span> appelée <em>fonction de noyau</em> (<em>kernel function</em>).
+<p>Le problème <a href="sec-rkhs.html#eq:mintcrkhs">(6.1)</a> admet une solution unique qui dépend d’une fonction <span class="math inline">\(K_{d+1}\)</span>, appelée <em>fonction de noyau</em> (<em>kernel function</em>).
 Cette fonction est dite d’ordre <span class="math inline">\(d+1\)</span> car elle conserve les polynômes de degré <span class="math inline">\(d\)</span><a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>.
 Cette solution s’écrit :
 <span class="math display" id="eq:rkhssoltc">\[\begin{equation}
@@ -323,11 +323,11 @@ Cette solution s’écrit alors :
 \widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 \tag{6.3}
 \end{equation}\]</span>
-On peut par ailleurs montrer que <span class="math inline">\(K_{d+1}\)</span> s’écrit en fonction <span class="math inline">\(f_0\)</span> et du noyau reproduisant <span class="math inline">\(K(\cdot,\cdot)\)</span> et que ce dernier peut s’écrire en fonction de polynômes <span class="math inline">\((P_i)_{i\in \llbracket 0, d-1 \rrbracket}\)</span> qui forme une base orthonormée de <span class="math inline">\(\mathbb L^2(f_0)\)</span> (voir par exemple <span class="citation">A. Berlinet (<a href="#ref-berlinet1993" role="doc-biblioref">1993</a>)</span>) :
+On peut, par ailleurs, montrer que <span class="math inline">\(K_{d+1}\)</span> s’écrit en fonction <span class="math inline">\(f_0\)</span> et du noyau reproduisant <span class="math inline">\(K(\cdot,\cdot)\)</span> et que ce dernier peut s’écrire en fonction de polynômes <span class="math inline">\((P_i)_{i\in \llbracket 0, d-1 \rrbracket}\)</span> qui forme une base orthonormée de <span class="math inline">\(\mathbb L^2(f_0)\)</span> (voir par exemple <span class="citation">Berlinet (<a href="#ref-berlinet1993" role="doc-biblioref">1993</a>)</span>) :
 <span class="math display">\[
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 \]</span></p>
-<p>Par ailleurs, dans le cas discret, la solution <a href="sec-rkhs.html#eq:rkhssoltc2">(6.3)</a> s’écrit comme une somme pondérée du voisinage de <span class="math inline">\(y_t\)</span> :
+<p>De plus, dans le cas discret, la solution <a href="sec-rkhs.html#eq:rkhssoltc2">(6.3)</a> s’écrit comme une somme pondérée au voisinage de <span class="math inline">\(y_t\)</span> :
 <span class="math display" id="eq:rkhssym">\[\begin{equation}
 \widehat{TC}_t=\sum_{j=-h}^h w_j y_{t+j}\quad
 \text{où} \quad
@@ -384,7 +384,7 @@ b_{q,s}=\underset{b_q\in[h; 3h]}{\min}
 2\int_{\omega_1}^{\pi}
 \left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2} h(\omega)\ud \omega
 \]</span></p></li>
-<li><p>la <em>timeliness</em> qui correspond à la part de la révision liée aux au déphasage
+<li><p>la <em>timeliness</em> qui correspond à la part de la révision liée au déphasage
 <span class="math display">\[
 b_{q,\varphi}=\underset{b_q\in[h; 3h]}{\min}
 8\int_{0}^{\omega_1}
@@ -401,7 +401,7 @@ b_{q,G}=\underset{b_q}{\min}\sqrt{
 2\int_{0}^{\pi}
 \left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}\ud \omega}
 \]</span></p></li>
-<li><p><span class="math inline">\(b_{q,s}\)</span> n’est pas considéré et <span class="math inline">\(b{q,G}\)</span> est défini par <span class="math inline">\(\omega_1=\pi\)</span> et :
+<li><p><span class="math inline">\(b_{q,s}\)</span> n’est pas considéré et <span class="math inline">\(b_{q,G}\)</span> est défini par <span class="math inline">\(\omega_1=\pi\)</span> et :
 <span class="math display">\[
 b_{q,G}=\underset{b_q\in[h; 3h]}{\min}
 \sqrt{2\int_{0}^{\pi}
@@ -413,7 +413,7 @@ b_{q,\varphi}=\underset{b_q}{\min}
 \sqrt{2\int_{\Omega_S}
 \rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)\ud \omega}
 \]</span>
-où <span class="math inline">\(\Omega_S=[0,2\pi/36]\)</span> est l’intervalle de fréquences associé aux cycles d’au moins 16 mois.</p></li>
+où <span class="math inline">\(\Omega_S=[0,2\pi/36]\)</span> est l’intervalle de fréquences associées aux cycles d’au moins 16 mois.</p></li>
 <li><p>une formule différente est utilisée pour la fonction de réponse (<span class="math inline">\(\Gamma_\theta(\omega)=\sum_{k=-p}^{+f} \theta_k e^{2\pi i \omega k}\)</span>), ce qui conduit à des bornes d’intégrales légèrement différentes, sans effet sur le résultat.</p></li>
 </ul>
 </div>
@@ -452,13 +452,13 @@ C’est ce qui a été retenu dans la suite de ce rapport, c’est également co
 <li>Il peut y avoir des problèmes de minimisation (notamment en minimisant la <em>timeliness</em>).</li>
 </ul>
 </div>
-<p>Tous les critères utilisés la sélection optimale du paramètre <span class="math inline">\(b\)</span> pouvant s’écrire comme cas particuliers du critère <span class="math inline">\(J\)</span> défini dans l’équation <a href="sec-theoriegen.html#eq:theoriegen1">(3.1)</a> (voir section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>), cette méthode s’inscrit dans le cadre de la théorie générale définie dans la section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a> en imposant comme contrainte linéaire que les coefficients soient sous la forme <span class="math inline">\(w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}\)</span>.</p>
+<p>Tous les critères utilisés de la sélection optimale du paramètre <span class="math inline">\(b\)</span> pouvant s’écrire comme cas particuliers du critère <span class="math inline">\(J\)</span> défini dans l’équation <a href="sec-theoriegen.html#eq:theoriegen1">(3.1)</a> (voir section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>), cette méthode s’inscrit dans le cadre de la théorie générale définie dans la section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a> en imposant comme contrainte linéaire que les coefficients soient sous la forme <span class="math inline">\(w_j=\frac{K_{d+1}(j/b)}{\sum_{i=-h}^{^p}K_{d+1}(i/b)}\)</span>.</p>
 </div>
 <div id="rkhs-et-polynômes-locaux" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> RKHS et polynômes locaux</h2>
 <p>Comme montré dans la section précédente, la théorie des espaces de Hilbert à noyau reproduisant permet de reproduire les filtres symétriques par approximation polynomiale locale.
 Comme le montrent <span class="citation">Luati et Proietti (<a href="#ref-LuatiProietti2011" role="doc-biblioref">2011</a>)</span>, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l’approximation polynomiale locale mais en utilisant une fenêtre d’estimation asymétrique.
-Cependant, ils ne peuvent pas être obtenues par la formalisation de <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> mais par une discrétisation différente de la formule <a href="sec-rkhs.html#eq:rkhskernelfun">(6.6)</a> :
+Cependant, ils ne peuvent pas être obtenus par la formalisation de <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> mais par une discrétisation différente de la formule <a href="sec-rkhs.html#eq:rkhskernelfun">(6.6)</a> :
 <span class="math display">\[
 K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 \]</span>
@@ -491,7 +491,7 @@ Et enfin :
 <h3>Références</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-berlinet1993" class="csl-entry">
-Berlinet, A. 1993. <span>« Hierarchies of higher order kernels »</span>. <em>Probability Theory and Related Fields</em> 94: 489‑504.
+Berlinet, Alain. 1993. <span>« Hierarchies of higher order kernels »</span>. <em>Probability Theory and Related Fields</em> 94: 489‑504.
 </div>
 <div id="ref-berlinet2004" class="csl-entry">
 Berlinet, Alain, et Christine Thomas-Agnan. 2004. <em>Reproducing Kernel Hilbert Spaces in Probability and Statistics</em>. Springer.

@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-01" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="sec-WildiMcLeroy.html"/>
 <link rel="next" href="sec-rkhs.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
 <li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
 </ul></li>
 </ul></li>
@@ -286,7 +286,7 @@ D’après le théorème de Taylor, pour tout point <span class="math inline">\(
 où <span class="math inline">\(R_d\)</span> est un terme résiduel négligeable au voisinage de <span class="math inline">\(x_0\)</span>.
 Dans un voisinage <span class="math inline">\(\left[x_0-h(x_0),x_0-h(x_0)\right]\)</span> de <span class="math inline">\(x_0\)</span>, <span class="math inline">\(\mu\)</span> peut être approchée par un polynôme de degré <span class="math inline">\(d\)</span>.
 La quantité <span class="math inline">\(h(x_0)\)</span> est appelée <em>fenêtre</em> (<em>bandwidth</em>).
-Si <span class="math inline">\(\varepsilon_i\)</span> est un bruit blanc, on peut donc estimer par moindre carrés <span class="math inline">\(\mu(x_0)\)</span> en utilisant les observations qui sont dans <span class="math inline">\(\left[x_0-h(x_0),x_0-h(x_0)\right]\)</span>.</p>
+Si <span class="math inline">\(\varepsilon_i\)</span> est un bruit blanc, on peut donc estimer par les moindres carrés <span class="math inline">\(\mu(x_0)\)</span> en utilisant les observations qui sont dans <span class="math inline">\(\left[x_0-h(x_0),x_0-h(x_0)\right]\)</span>.</p>
 <div id="sec-proietti" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Approche de Proietti et Luati</h2>
 <div id="filtres-symétriques" class="section level3" number="5.1.1">
@@ -296,7 +296,7 @@ Si <span class="math inline">\(\varepsilon_i\)</span> est un bruit blanc, on peu
 y_t=\mu_t+\varepsilon_t,
 \]</span>
 où <span class="math inline">\(\mu_t\)</span> est la tendance et <span class="math inline">\(\varepsilon_{t}\overset{i.i.d}{\sim}\mathcal{N}(0,\sigma^{2})\)</span> est le bruit<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>.
-La tendance <span class="math inline">\(\mu_t\)</span> est localement approché par un polynôme de degré <span class="math inline">\(d\)</span>, de sorte que dans un voisinage <span class="math inline">\(h\)</span> de <span class="math inline">\(t\)</span> <span class="math inline">\(\mu_t\simeq m_{t}\)</span> avec :
+La tendance <span class="math inline">\(\mu_t\)</span> est localement approchée par un polynôme de degré <span class="math inline">\(d\)</span>, de sorte que dans un voisinage <span class="math inline">\(h\)</span> de <span class="math inline">\(t\)</span> <span class="math inline">\(\mu_t\simeq m_{t}\)</span> avec :
 <span class="math display">\[
 \forall j\in\left\llbracket -h,h\right\rrbracket :\:
 y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}.
@@ -334,7 +334,7 @@ y_{t+h}
 \varepsilon_{t+h}
 \end{pmatrix}}_{\varepsilon}
 \]</span></p>
-<p>Pour estimer <span class="math inline">\(\beta\)</span> il faut <span class="math inline">\(H\geq d+1\)</span> et l’estimation est faite par moindres carrés pondérés — <em>weighted least squares</em> (WLS) —, ce qui à minimiser la fonction objectif suivante :
+<p>Pour estimer <span class="math inline">\(\beta\)</span> il faut <span class="math inline">\(H\geq d+1\)</span> et l’estimation est faite par moindres carrés pondérés — <em>weighted least squares</em> (WLS) —, ce qui revient à minimiser la fonction objectif suivante :
 <span class="math display">\[
 S(\hat{\beta}_{0},\dots,\hat{\beta}_{d})=\sum_{j=-h}^{h}\kappa_{j}(y_{t+j}-\hat{\beta}_{0}-\hat{\beta}_{1}j-\dots-\hat{\beta}_{d}j^{d})^{2}
 \]</span>
@@ -357,7 +357,7 @@ Ainsi, la moyenne mobile <span class="math inline">\(\theta\)</span> préserve l
 </ul>
 <div id="sec-kernels" class="section level4" number="5.1.1.1">
 <h4><span class="header-section-number">5.1.1.1</span> Les différents noyaux</h4>
-<p>Dans les problèmes d’extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date <span class="math inline">\(t\)</span> : pour estimer la tendance-cycle à la date <span class="math inline">\(t\)</span>, les observations celles qui sont proches de <span class="math inline">\(t\)</span>.</p>
+<p>Dans les problèmes d’extraction du signal, les observations sont généralement pondérées par rapport à leur distance à la date <span class="math inline">\(t\)</span> : pour estimer la tendance-cycle à la date <span class="math inline">\(t\)</span>, on accorde généralement plus d’importance aux observations qui sont proches de <span class="math inline">\(t\)</span>.</p>
 <p>Dans le cas continu, un noyau <span class="math inline">\(K\)</span> est une fonction positive, paire et intégrable telle que <span class="math inline">\(\int_{-\infty}^{+\infty}\kappa(u) \ud u=1\)</span> et <span class="math inline">\(\kappa(u)=\kappa(-u)\)</span>.</p>
 <p>Dans le cas discret, un noyau est un ensemble de poids <span class="math inline">\(\kappa_j\)</span>, <span class="math inline">\(j=0,\pm1,\dots,\pm h\)</span> avec <span class="math inline">\(\kappa_j \geq0\)</span> et <span class="math inline">\(\kappa_j=\kappa_{-j}\)</span>.</p>
 <p>Une classe importante de noyaux est celle des noyaux Beta.
@@ -370,7 +370,7 @@ Dans le cas discret, à un factor multiplicatif près (de sorte que <span class=
   \right\lvert^r
 \right)^s,\quad\text{avec }r&gt;0,s\geq 0
 \]</span>
-Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l’exception du noyau d’Henderson, trapézoïdal et gaussien.
+Cette classe englobe la majorité des noyaux présentés dans ce rapport, à l’exception des noyaux d’Henderson, trapézoïdal et gaussien.
 Les principaux noyaux (qui sont également implémentés dans <code>rjdfilters</code>) sont :</p>
 <div class="multicols">
 <ul>
@@ -459,7 +459,7 @@ Il n’est pas adapté dans le cas de l’extraction de la tendance-cycle.</p></
 <p>Avec le noyau uniforme on obtient le filtre de <span class="citation">Macaulay et al. (<a href="#ref-macaulay1931smoothing" role="doc-biblioref">1931</a>)</span>.
 Lorsque <span class="math inline">\(p=0\)</span> ou <span class="math inline">\(p=1\)</span>, on retrouve la moyenne arithmétique : <span class="math inline">\(w_j=w=\frac{1}{2h+1}\)</span>.</p>
 <p>Le noyau d’<strong>Epanechnikov</strong> est souvent recommandé comme le noyau optimal car il minimise l’erreur quadratique moyenne de l’estimation par polynômes locaux.</p>
-<p>Le <strong>Loess</strong> est une régression locale pondérée qui utilise le noyau tricube.</p>
+<p>Le <strong>Loess</strong>, <em>locally estimated scatterplot smoothing</em> (utilisé dans la méthode STL), est une régression locale pondérée qui utilise le noyau tricube.</p>
 <p>Le <strong>filtre d’Henderson</strong> est un cas particulier de l’approximation locale cubique (<span class="math inline">\(p=3\)</span>), couramment utilisée pour l’extraction de la tendance-cycle (c’est par exemple le filtre utilisé dans le logiciel de désaisonnalisation X-13ARIMA).
 Pour une fenêtre fixée, Henderson a trouvé le noyau qui donnait l’estimation la plus lisse de la tendance.
 Il montre l’équivalence entre les trois problèmes suivants :</p>
@@ -483,7 +483,7 @@ Il montre l’équivalence entre les trois problèmes suivants :</p>
 <li><p>Construire des filtres asymétriques qui minimisent l’erreur quadratique moyenne de révision sous des contraintes de reproduction de tendances polynomiales.</p></li>
 </ol>
 <p><span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> montrent que les deux premières approches sont équivalentes lorsque les prévisions sont faites par extrapolation polynomiale de degré <span class="math inline">\(d\)</span> (prévisions générées en utilisant les mêmes contraintes polynomiales que les filtres symétriques).
-Elles sont également équivalentes à la troisième approche sous mêmes contraintes que le filtre symétrique.
+Elles sont également équivalentes à la troisième approche sous les mêmes contraintes que celles du filtre symétrique.
 Cette méthode est appelée <em>direct asymmetric filter</em> (DAF).</p>
 <p>Notons <span class="math inline">\(q\)</span> le nombre d’observations futures disponibles : <span class="math inline">\(q\)</span> varie entre 0 (filtre en temps réel) et <span class="math inline">\(h\)</span> (filtre symétrique).</p>
 <p>Réécrivons les matrices <span class="math inline">\(X\)</span>, <span class="math inline">\(K\)</span> et <span class="math inline">\(y\)</span> :
@@ -516,15 +516,15 @@ Ainsi, même si les estimations sont sans biais, c’est au coût d’une plus g
 </div>
 <div id="subsec-lppasymf" class="section level3" number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> Classe générale</h3>
-<p>Pour résoudre le problème de la variance des estimations des filtres temps réel, <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> propose une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
-Il s’agit d’une généralisation des filtres asymétriques <span class="citation">Musgrave (<a href="#ref-musgrave1964set" role="doc-biblioref">1964</a>)</span> (utilisés dans l’algorithme de désaisonnalisation X-13ARIMA).</p>
+<p>Pour résoudre le problème de la variance des estimations des filtres temps réel, <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> proposent une méthode générale pour construire les filtres asymétriques qui permet de faire un compromis biais-variance.
+Il s’agit d’une généralisation des filtres asymétriques de <span class="citation">Musgrave (<a href="#ref-musgrave1964set" role="doc-biblioref">1964</a>)</span> (utilisés dans l’algorithme de désaisonnalisation X-13ARIMA).</p>
 <p>On modélise ici la série en entrée par :
 <span class="math display" id="eq:lpgeneralmodel">\[\begin{equation}
 y=U\gamma+Z\delta+\varepsilon,\quad
 \varepsilon\sim\mathcal{N}(0,D)
 \tag{5.1}
 \end{equation}\]</span>
-où <span class="math inline">\([U,Z]\)</span> est de plein rang et forme un sous-ensemble des colonnes de <span class="math inline">\(X\)</span>.
+où <span class="math inline">\([U,Z]\)</span> est de rang plein et forme un sous-ensemble des colonnes de <span class="math inline">\(X\)</span>.
 L’objectif est de trouver un filtre <span class="math inline">\(v\)</span> qui minimisent l’erreur quadratique moyenne de révision (au filtre symétrique <span class="math inline">\(\theta\)</span>) sous certaines contraintes.
 Ces contraintes sont représentées par la matrice <span class="math inline">\(U=\begin{pmatrix}U_{p}&#39;&amp;U_{f}&#39;\end{pmatrix}&#39;\)</span> : <span class="math inline">\(U_p&#39;v=U&#39;\theta\)</span> (avec <span class="math inline">\(U_p\)</span> la matrice <span class="math inline">\((h+q+1)\times (d+1)\)</span> qui contient les observations de la matrice <span class="math inline">\(U\)</span> connues lors de l’estimation par le filtre asymétrique).
 Le problème est équivalent à trouver <span class="math inline">\(v\)</span> qui minimise :
@@ -539,9 +539,9 @@ Le problème est équivalent à trouver <span class="math inline">\(v\)</span> q
 \tag{5.2}
 \end{equation}\]</span>
 où <span class="math inline">\(l\)</span> est le vecteur des multiplicateurs de Lagrange.</p>
-<p>Lorsque <span class="math inline">\(U=X\)</span>, la contrainte équivaut à préserver les polynômes de degré <span class="math inline">\(d\)</span> : on retrouve les filtres directs asymétriques lorsque <span class="math inline">\(D=K^{-1}\)</span>.</p>
+<p>Lorsque <span class="math inline">\(U=X\)</span>, la contrainte équivaut à préserver les polynômes de degré <span class="math inline">\(d\)</span> : on retrouve les filtres directs asymétriques (DAF) lorsque <span class="math inline">\(D=K^{-1}\)</span>.</p>
 <p>Lorsque <span class="math inline">\(U=\begin{pmatrix}1&amp;\cdots&amp;1\end{pmatrix}&#39;\)</span>, <span class="math inline">\(Z=\begin{pmatrix}-h&amp;\cdots&amp;+h\end{pmatrix}&#39;\)</span>, <span class="math inline">\(\delta=\delta_1\)</span>, <span class="math inline">\(D=\sigma^2I\)</span> et lorsque le filtre symétrique est le filtre d’Henderson, on retrouve les filtres asymétriques de Musgrave.
-Ce filtre suppose, que pour l’estimation en temps-réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes (<span class="math inline">\(\sum v_i=\sum \theta_i=1\)</span>).
+Ce filtre suppose, que pour l’estimation en temps réel, les données sont générées par un processus linéaire et que les filtres asymétriques préservent les constantes (<span class="math inline">\(\sum v_i=\sum \theta_i=1\)</span>).
 Ces filtres asymétriques dépendent du rapport <span class="math inline">\(\delta_1/\sigma\)</span>, qui est lié à l’I-C ratio <span class="math inline">\(R=\frac{\bar{I}}{\bar{C}}=\frac{\sum\lvert I_t-I_{t-1}\rvert}{\sum\lvert C_t-C_{t-1}\rvert}\)</span> (<span class="math inline">\(\delta_1/\sigma=2/(R\sqrt{\pi})\)</span>).
 Dans l’algorithme X-13ARIMA, l’I-C ratio est utilisé pour déterminer la longueur du filtre d’Henderson<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>.
 Pour les séries mensuelles :</p>
@@ -559,7 +559,7 @@ On obtient le filtre de Musgrave avec le filtre d’Henderson comme filtre symé
 <li><p><em>Cubic-Quadratic</em> (CQ) : <span class="math inline">\(y_t\)</span> cubic (<span class="math inline">\(d=3\)</span>) et <span class="math inline">\(v\)</span> préserve les tendances quadratiques (<span class="math inline">\(d^*=2\)</span>).</p></li>
 </ol>
 <p>Le tableau <a href="sec-lppfilters.html#tab:criteriaLp">5.1</a> compare les critères de qualité des différentes méthodes en utilisant le filtre d’Henderson et <span class="math inline">\(h=6\)</span> (filtre symétrique de 13 termes).
-Pour les filtres en temps-réel (<span class="math inline">\(q=0\)</span>), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la <em>timeliness</em> est élevée et plus la <em>fidelity</em>/<em>smoothness</em> est grande : la réduction du déphasage se fait au détriment d’une augmentation de la variance.
+Pour les filtres en temps réel (<span class="math inline">\(q=0\)</span>), plus le filtre asymétrique est complexe (en termes de préservation polynomiale), moins la <em>timeliness</em> est élevée et plus la <em>fidelity</em>/<em>smoothness</em> est grande : la réduction du déphasage se fait au détriment d’une augmentation de la variance.
 Ce résultat varie lorsque <span class="math inline">\(q\)</span> augmente : pour <span class="math inline">\(q=2\)</span> le filtre QL a une plus grande <em>timeliness</em> que le filtre LC.
 Ce résultat étonnant souligne le fait que le déphasage n’est pas contrôlé par l’approche de <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span>.</p>
 <p>En termes de révision, (<span class="math inline">\(A_w+S_w+T_w+R_w\)</span>), les filtres LC et QL donnent toujours de meilleurs résultats que les filtres CQ et DAF.</p>
@@ -1131,7 +1131,7 @@ sous une contrainte linéaire.</p>
 <h2><span class="header-section-number">5.3</span> Gray et Thomson</h2>
 <div id="filtres-symétriques-1" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Filtres symétriques</h3>
-<p>L’approche de <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span> est proche de celles <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> et <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span>.
+<p>L’approche de <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span> est proche de celles de <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> et de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span>.
 De la même façon que pour les autres méthodes, ils considèrent que la série initiale <span class="math inline">\(y_t\)</span> peut se décomposer entre une somme entre la tendance-cycle <span class="math inline">\(g_t\)</span> et d’un bruit blanc <span class="math inline">\(\varepsilon_t\)</span> de variance <span class="math inline">\(\sigma^2\)</span> :
 <span class="math display">\[y_t = g_t+\varepsilon_t.\]</span>
 Toutefois, plutôt que de directement remplacer <span class="math inline">\(g_t\)</span> par un polynôme local de degré <span class="math inline">\(d\)</span>, ils prennent en compte l’erreur d’approximation de la tendance :
@@ -1168,7 +1168,7 @@ S_{GT}(\theta)&amp;=I(\theta,d+1,y_t,0).
 \end{align*}\]</span>
 La théorie générale définie dans la section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a> permet donc de retrouver les filtres de <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span>.</p>
 <p>En ne minimisant que la <em>smoothness</em> et avec <span class="math inline">\(\xi_t=0\)</span> on retrouve le filtre d’Henderson.
-En ne minimisant que la <em>fidelity</em>, cette méthode est équivalente à l’estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> avec <span class="math inline">\(\sigma^2=0\)</span> et <span class="math inline">\(\Omega =K^{-1}\)</span>, ainsi que le filtre de Macalauy.</p>
+En ne minimisant que la <em>fidelity</em>, cette méthode est équivalente à l’estimation de polynômes locaux par moindres carrés généralisés : on retrouve donc les filtres de <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> avec <span class="math inline">\(\sigma^2=0\)</span> et <span class="math inline">\(\Omega =K^{-1}\)</span>, ainsi que le filtre de Macaulay.</p>
 <p>L’avantage de la modélisation de Gray et Thomson est que le paramètre <span class="math inline">\(\xi_t\)</span> permet une spécification plus précise du modèle en prenant notamment en compte la corrélation entre les observations.
 Par exemple, <span class="citation">McLaren et Steel (<a href="#ref-mclaren2001rotation" role="doc-biblioref">2001</a>)</span> ont étudié le lien entre le plan de sondage et l’estimation de la composante tendance-cycle et de la composante saisonnière.
 Cette modélisation leur permet de prendre en compte, dans l’estimation de la tendance-cycle, la structure de corrélation induite par le plan de sondage de l’enquête emploi mensuelle de l’Australie (groupe de rotations avec une période de recouvrement).
@@ -1185,7 +1185,7 @@ Ce n’est généralement pas le cas en pratique, où cette structure doit être
 \]</span>
 Les auteurs étudient deux cas :</p>
 <ol style="list-style-type: decimal">
-<li><p>Dans le premier cas ils cherchent un estimateur sans biais : cela implique que <span class="math inline">\(v\)</span> conserve les mêmes tendances polynomiales que <span class="math inline">\(\theta^s\)</span>.
+<li><p>Dans le premier cas, ils cherchent un estimateur sans biais : cela implique que <span class="math inline">\(v\)</span> conserve les mêmes tendances polynomiales que <span class="math inline">\(\theta^s\)</span>.
 <span class="math inline">\(\hat Y\)</span> est alors le meilleur prédicteur linéaire sans biais — <em>best linear unbiased predictor</em> (BLUP) — de <span class="math inline">\(Y\)</span>.</p></li>
 <li><p>Dans le second cas, ils autorisent l’estimateur à être biaisé mais imposent que ce biais soit constant dans le temps : si l’on modélise localement la tendance par un polynôme de degré <span class="math inline">\(d\)</span>, cela implique que <span class="math inline">\(v\)</span> conserve les tendances polynomiales de degré <span class="math inline">\(d-1\)</span>.
 <span class="math inline">\(\hat Y\)</span> est alors le meilleur prédicteur linéaire à biais constant — <em>best linear time invariant predictor</em> (BLIP) — de <span class="math inline">\(Y\)</span>.
@@ -1221,15 +1221,15 @@ Toutefois, il dépend indirectement des données si le filtre est calibré sur l
 <p><strong>Inconvénients</strong> :</p>
 <ul>
 <li><p>La <em>timeliness</em> n’est pas contrôlée.</p></li>
-<li><p>La spécification du modèle (i.e. : du paramètre <span class="math inline">\(\xi_t\)</span>) peut être compliquée : si la structure d’autocorrélation est estimée à partir des données, cela rajoute de l’incertitude dans les estimations, ce qui peut avoir des effets indésirables.</p></li>
+<li><p>La spécification du modèle (i.e., du paramètre <span class="math inline">\(\xi_t\)</span>) peut être compliquée : si la structure d’autocorrélation est estimée à partir des données, cela rajoute de l’incertitude dans les estimations, ce qui peut avoir des effets indésirables.</p></li>
 </ul>
 </div>
 </div>
 </div>
 <div id="subsec-equivlpfst" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Équivalence avec l’approche FST</h2>
-<div id="liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii" class="section level3" number="5.4.1">
-<h3><span class="header-section-number">5.4.1</span> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></h3>
+<div id="liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></h3>
 <p>Les critères <span class="math inline">\(F_g\)</span> et <span class="math inline">\(S_g\)</span> peuvent se déduire de <span class="math inline">\(F_{GT}\)</span> et <span class="math inline">\(S_{GT}\)</span>.
 Les approches de <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span> et <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> sont donc équivalentes pour la construction de filtres symétriques.</p>
 <p>Notons <span class="math inline">\(x_{t}=\begin{pmatrix}1 &amp; t &amp; t^{2} &amp; \cdots &amp; t^{d}\end{pmatrix}\)</span>, <span class="math inline">\(\beta_{t}=\begin{pmatrix}\beta_{0} &amp; \cdots &amp; \beta^{d}\end{pmatrix}&#39;\)</span>.</p>
@@ -1257,22 +1257,22 @@ Avec <span class="math inline">\(\xi_t=0\)</span> on trouve donc que <span class
 <div id="équivalence-avec-les-moindres-carrés-pondérés" class="section level3" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> Équivalence avec les moindres carrés pondérés</h3>
 <p>Du fait de la forme des filtres obtenus par la méthode de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span>, lorsque les contraintes imposées sont la préservation des tendances de degré <span class="math inline">\(d\)</span>, celle-ci est équivalente à une estimation locale d’une tendance polynomiale de degré <span class="math inline">\(d\)</span> par moindres carrés généralisés.
-En effet, dans ce cas la solution est <span class="math inline">\(\hat \theta = \Sigma^{-1}X_p&#39;\left(X_p\Sigma^{-1}X_p&#39;\right)^{-1}e_1\)</span> avec <span class="math inline">\(\Sigma=\alpha F+\beta S+ \gamma T\)</span>, et c’est l’estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est <span class="math inline">\(\Sigma\)</span>.
+En effet, dans ce cas, la solution est <span class="math inline">\(\hat \theta = \Sigma^{-1}X_p&#39;\left(X_p\Sigma^{-1}X_p&#39;\right)^{-1}e_1\)</span> avec <span class="math inline">\(\Sigma=\alpha F+\beta S+ \gamma T\)</span>, et c’est l’estimation de la constante obtenue par moindres carrés généralisés lorsque la variance des résidus est <span class="math inline">\(\Sigma\)</span>.
 L’équivalence entre les deux méthodes peut donc se voir comme un cas particulier de l’équivalence entre les moindres carrés pondérés et les moindres carrés généralisés.
 C’est par exemple le cas des filtres symétriques d’Henderson qui peuvent s’obtenir par les deux méthodes.</p>
 <p>Dans ce sens, <span class="citation">Henderson (<a href="#ref-henderson1916note" role="doc-biblioref">1916</a>)</span> a montré que les poids <span class="math inline">\(w=(w_{-p},\dots w_{f})\)</span> associés à une moyenne mobile issue de la régression polynomiale locale par moindres carrés pondérés pouvaient s’écrire sous la forme :
 <span class="math display">\[
 w_i = \kappa_i P\left(\frac{i}{p+f+1}\right)\text{ où }P\text{ est un polynôme de degré }d.
 \]</span>
-Il a également montré l’inverse : toute moyenne mobile <span class="math inline">\(\theta=(\theta_{-p},\dots, \theta_{f})\)</span> qui préserve les tendances de degré <span class="math inline">\(d\)</span> et dont le diagramme des coefficients change au plus <span class="math inline">\(d\)</span> fois de signes peut être obtenu par une régression polynomiale locale de degré <span class="math inline">\(p\)</span> estimée par moindres carrés pondérés.
+Il a également montré l’inverse : toute moyenne mobile <span class="math inline">\(\theta=(\theta_{-p},\dots, \theta_{f})\)</span> qui préserve les tendances de degré <span class="math inline">\(d\)</span> et dont le diagramme des coefficients change au plus <span class="math inline">\(d\)</span> fois de signes peut être obtenue par une régression polynomiale locale de degré <span class="math inline">\(p\)</span> estimée par moindres carrés pondérés.
 Pour cela il suffit de trouver un polynôme <span class="math inline">\(P\left(\frac{X}{p+f+1}\right)\)</span> de degré inférieur ou égal à <span class="math inline">\(d\)</span> et dont les changements de signes coïncident avec les changements de signes de <span class="math inline">\(\theta\)</span>.
 Le noyau associé est alors <span class="math inline">\(\kappa_i=\frac{ \theta_i}{P\left(\frac{i}{p+f+1}\right)}\)</span>.
 C’est le cas de tous les filtres symétriques issues de l’approche FST et de la majorité des filtres asymétriques.
 L’annexe <a href="an-equivfstlp.html#an-equivfstlp">C</a> présente les quelques poids pour lesquels il n’y a pas équivalence.</p>
-<p>Plus récemment <span class="citation">Luati et Proietti (<a href="#ref-LuatiProietti2011" role="doc-biblioref">2011</a>)</span> se sont intéressés aux cas d’équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
-Ils montrent que le noyau d’Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, <span class="math inline">\(\varepsilon_t\)</span>, est un processus moyenne mobile (MA) non inversible d’ordre 1 (i.e. : <span class="math inline">\(\varepsilon_t=(1-B)\xi_t\)</span> avec <span class="math inline">\(\xi_t\)</span> un bruit blanc).
+<p>Plus récemment, <span class="citation">Luati et Proietti (<a href="#ref-LuatiProietti2011" role="doc-biblioref">2011</a>)</span> se sont intéressés aux cas d’équivalences entre les moindres carrés pondérés et les moindres carrés généralisés pour déterminer des noyaux optimaux (au sens de Gauss-Markov).
+Ils montrent que le noyau d’Epanechnikov est le noyau optimal associé à la régression polynomiale locale où le résidu, <span class="math inline">\(\varepsilon_t\)</span>, est un processus moyenne mobile (MA) non inversible d’ordre 1 (i.e., <span class="math inline">\(\varepsilon_t=(1-B)\xi_t\)</span>, avec <span class="math inline">\(\xi_t\)</span> un bruit blanc).
 Dans ce cas, la matrice <span class="math inline">\(\Sigma\)</span> de variance-covariance correspond à la matrice obtenue par le critère de <em>smoothness</em> avec le paramètre <span class="math inline">\(q=2\)</span> (<span class="math inline">\(\sum_{j}(\nabla^{2}\theta_{j})^{2} = \theta&#39;\Sigma\theta\)</span>) : il y a donc équivalence avec l’approche FST.
-De même, le noyau d’Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d’ordre 2 (i.e. : <span class="math inline">\(\varepsilon_t=(1-B)^2\xi_t\)</span> avec <span class="math inline">\(\xi_t\)</span> un bruit blanc).</p>
+De même, le noyau d’Henderson est le noyau optimal associé à la régression polynomiale locale où le résidu est un processus moyenne mobile (MA) non inversible d’ordre 2 (i.e., <span class="math inline">\(\varepsilon_t=(1-B)^2\xi_t\)</span>, avec <span class="math inline">\(\xi_t\)</span> un bruit blanc).</p>
 <!-- La modélisation de @GrayThomson1996, bien qu'antérieure étant proche de celle de @proietti2008, les moyennes mobiles symétriques et @ch15HBSA. -->
 <!-- ## Choix des différents paramètres -->
 <!-- Deux paramètres sont cruciaux dans la précision de l'approximation : -->
@@ -1288,7 +1288,7 @@ De même, le noyau d’Henderson est le noyau optimal associé à la régression
 <h3>Références</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-cleveland1996smoothing" class="csl-entry">
-Cleveland, William S, et Clive Loader. 1996. <span>« Smoothing by local regression: Principles and methods »</span>. In <em>Statistical theory and computational aspects of smoothing</em>, 10‑49. Springer.
+Cleveland, William S., et Clive Loader. 1996. <span>« Smoothing by local regression: Principles and methods »</span>. In <em>Statistical theory and computational aspects of smoothing</em>, 10‑49. Springer.
 </div>
 <div id="ref-GrayThomson1996" class="csl-entry">
 Gray, Alistair, et Peter Thomson. 1996. <span>« Design of Moving-Average Trend Filters using Fidelity and Smoothness Criteria »</span>. In <em>Athens Conference on Applied Probability and Time Series Analysis</em>, édité par P. M. Robinson et Murray Rosenblatt, 205‑19. New York, NY: Springer New York.
@@ -1326,12 +1326,12 @@ Proietti, Tommaso, et Alessandra Luati. 2008. <span>« Real time estimation in 
 <span class="math inline">\(\theta\)</span> est symétrique du fait de la symétrie des noyaux <span class="math inline">\(\kappa_j\)</span>.<a href="sec-lppfilters.html#fnref14" class="footnote-back">↩︎</a></p></li>
 <li id="fn15"><p>
 Voir par exemple <span class="citation">W. S. Cleveland et Loader (<a href="#ref-cleveland1996smoothing" role="doc-biblioref">1996</a>)</span> ou <span class="citation">Loader (<a href="#ref-Loader1999" role="doc-biblioref">1999</a>)</span>.
-Les seules contraintes souhaitées sur le noyau est qu’il accorde un poids plus important à la l’estimation centrale (<span class="math inline">\(\kappa_0\)</span>) et qu’il décroit vers 0 lorsque l’on s’éloigne de l’estimation centrale.<a href="sec-lppfilters.html#fnref15" class="footnote-back">↩︎</a></p></li>
+Les seules contraintes souhaitées sur le noyau est qu’il accorde un poids plus important à l’estimation centrale (<span class="math inline">\(\kappa_0\)</span>) et qu’il décroit vers 0 lorsque l’on s’éloigne de l’estimation centrale.<a href="sec-lppfilters.html#fnref15" class="footnote-back">↩︎</a></p></li>
 <li id="fn16"><p>
 Dans <code>rjdfilters</code> <span class="math inline">\(\sigma^2\)</span> est fixé arbitrairement à <span class="math inline">\(\sigma^2=0.25\)</span>.<a href="sec-lppfilters.html#fnref16" class="footnote-back">↩︎</a></p></li>
 <li id="fn17"><p>
 Pour calculer l’I-C ratio, une première décomposition de la série désaisonnalisée est faite en utilisant un filtre d’Henderson de 13 termes.<a href="sec-lppfilters.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p>Cela a été codé en Java par Jean Palate dans in <a href="https://github.com/palatej/jdemetra-core" class="uri">https://github.com/palatej/jdemetra-core</a>.<a href="sec-lppfilters.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>Cela a été codé en Java par Jean Palate dans <a href="https://github.com/palatej/jdemetra-core" class="uri">https://github.com/palatej/jdemetra-core</a>.<a href="sec-lppfilters.html#fnref18" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

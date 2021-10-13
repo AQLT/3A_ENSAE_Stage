@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-01" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="sec-SAtoTCE.html"/>
 <link rel="next" href="sec-theoriegen.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
 <li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
 </ul></li>
 </ul></li>
@@ -275,7 +275,7 @@ div.csl-indent {
             
 <div id="sec-propMM" class="section level1" number="2">
 <h1><span class="header-section-number">Chapitre 2</span> Quelques propriétés sur les moyennes mobiles</h1>
-<p>Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple <span class="citation">Dominique Ladiray (<a href="#ref-ch12HBSA" role="doc-biblioref">2018</a>)</span> pour plus de détails).</p>
+<p>Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple <span class="citation">Ladiray (<a href="#ref-ch12HBSA" role="doc-biblioref">2018</a>)</span> pour plus de détails).</p>
 <p>Soient deux entiers <span class="math inline">\(p\)</span> et <span class="math inline">\(f\)</span>.
 Une <em>moyenne mobile</em> <span class="math inline">\(M_\theta\)</span> ou <span class="math inline">\(M\)</span> est un opérateur linéaire définit par un ensemble de coefficients <span class="math inline">\(\theta=(\theta_{-p},\dots,\theta_{f})&#39;\)</span> qui transforme toute série temporelle <span class="math inline">\(X_t\)</span> en :
 <span class="math display">\[
@@ -290,7 +290,7 @@ Dans ce cas, la quantité <span class="math inline">\(h=p=f\)</span> est appelé
 </ul>
 <div id="gain-et-fonction-de-déphasage" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Gain et fonction de déphasage</h2>
-<p>Soit <span class="math inline">\(X_t=\e^{-i\omega t}\)</span>. La moyenne mobile <span class="math inline">\(M_\theta\)</span> transforme <span class="math inline">\(X_t\)</span> en :
+<p>Soit <span class="math inline">\(X_t=\e^{-i\omega t}\)</span> avec <span class="math inline">\(\omega\in[0,\pi]\)</span>. La moyenne mobile <span class="math inline">\(M_\theta\)</span> transforme <span class="math inline">\(X_t\)</span> en :
 <span class="math display">\[
 Y_t = M_{\theta}X_t = \sum_{k=-p}^{+f} \theta_k \e^{-i \omega (t+k)}
 = \left(\sum_{k=-p}^{+f} \theta_k \e^{-i \omega k}\right)\cdot X_t.
@@ -301,7 +301,7 @@ Elle peut être réécrite en :
 \Gamma_\theta(\omega) = G_\theta(\omega)\e^{-i\Phi_\theta(\omega)},
 \]</span>
 où <span class="math inline">\(G_\theta(\omega)=\lvert\Gamma_\theta(\omega)\rvert\)</span> est la fonction de <em>gain</em> ou <em>d’amplitude</em> et <span class="math inline">\(\Phi_\theta(\omega)\)</span> est le <em>déphasage</em> (<em>phase shift</em> ou <em>time shift</em>)<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.
-Pour tous les filtres symétriques on a <span class="math inline">\(\Phi_\theta(\omega)\equiv 0 \pmod{\pi}\)</span>.</p>
+Pour tous les filtres symétriques on a <span class="math inline">\(\Phi_\theta(\omega)\equiv 0 \;(modulo\;{\pi})\)</span>.</p>
 <p>En somme, appliquer une moyenne mobile à une série harmonique la modifie de deux façons :</p>
 <ul>
 <li><p>en la multipliant par un coefficient égal à <span class="math inline">\(G_{\theta}\left(\omega\right)\)</span> (gain) ;</p></li>
@@ -312,7 +312,7 @@ Pour tous les filtres symétriques on a <span class="math inline">\(\Phi_\theta(
 \Gamma_{\theta_0}(\omega)=\frac{1}{2}+\frac{1}{2}\e^{-i\omega}
 =\lvert\cos(\omega/2)\rvert\e^{-i\frac{\omega}{2}}.
 \]</span>
-La figure <a href="sec-propMM.html#fig:exgainPhase">2.1</a> montre l’impact gain et du déphasage pour <span class="math inline">\(\omega=\pi/2\)</span> and <span class="math inline">\(X_t=\sin(\omega t)\)</span>.</p>
+La figure <a href="sec-propMM.html#fig:exgainPhase">2.1</a> montre l’impact du gain et du déphasage pour <span class="math inline">\(\omega=\pi/2\)</span> and <span class="math inline">\(X_t=\sin(\omega t)\)</span>.</p>
 <!-- knitr::include_graphics("img/tikz-def-mm.png") -->
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:exgainPhase"></span>
 <img src="img/tikz-def-mm.png" alt="Lissage de la série $X_t=\sin(\omega t)$ par la moyenne mobile $M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}$ pour $\omega=\pi/2$." width="100%" />
@@ -431,7 +431,7 @@ En somme, matriciellement, cela revient donc à résoudre :
 \]</span>
 C’est ce qui implémenté dans la fonction <code>rjdfilters::implicit_forecast</code>.</p>
 <p>Comme notamment souligné par <span class="citation">Wildi et Schips (<a href="#ref-wildischis2004" role="doc-biblioref">2004</a>)</span>, étendre la série par prévision d’un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d’avance — <em>one-step ahead forecasting</em>.
-C’est-à-dire que l’on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
+Autrement dit, on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
 Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s’intéresser à la performance des prévisions avec plusieurs longueurs d’avance — <em>multi-step ahead forecasting</em>.
 Par ailleurs, le déphasage induit par les filtres asymétriques n’est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.
 C’est pourquoi il peut être nécessaire de définir des critères alternatifs pour juger la qualité des moyennes mobiles asymétriques.</p>

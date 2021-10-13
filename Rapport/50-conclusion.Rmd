@@ -10,8 +10,8 @@ Par ailleurs, dans les méthodes polynomiales, le choix du noyau ne semble pas �
 Deuxièmement, dans l'estimation en temps réel, les méthodes d'extraction de tendance-cycle ne peuvent s'étudier indépendamment du processus de désaisonnalisation.
 Dans le cas contraire, on néglige notamment l'effet des points atypiques sur l'estimation de la tendance-cycle, ce qui pourrait conduire à des estimations biaisées et à une détection de faux points de retournement.
 
-Enfin, sur les séries étudiées, la méthode utilisée dans X-13ARIMA semble satisfaisante avec des résultats proches en utilisant la méthode LC.
-Cependant, la moins bonne performance apparente de l'approche FST et de la méthode basée sur les RKHS semblent de provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique.
+Enfin, sur les séries étudiées, la méthode utilisée dans X-13ARIMA semble satisfaisante avec des résultats proches de ceux obtenus en utilisant la méthode LC.
+Cependant, la moins bonne performance apparente de l'approche FST et de la méthode basée sur les RKHS semblent provenir de l'utilisation de filtres sous-optimaux lorsque que l'on s'approche du cas d'utilisation du filtre symétrique.
 Plus d'études devraient être faites pour savoir si, pour la construction des filtres asymétriques minimisant le déphasage, on pourrait se concentrer uniquement sur les ceux utilisés lorsque peu d'observations futures sont disponibles.
 Cela impliquerait notamment de revoir la méthodologie et les indicateurs utilisés.
 

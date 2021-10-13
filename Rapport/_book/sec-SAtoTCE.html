@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-01" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="introduction.html"/>
 <link rel="next" href="sec-propMM.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
 <li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
 </ul></li>
 </ul></li>
@@ -276,12 +276,12 @@ div.csl-indent {
 <div id="sec-SAtoTCE" class="section level1" number="1">
 <h1><span class="header-section-number">Chapitre 1</span> De la désaisonnalisation à l’estimation tendance-cycle</h1>
 <p>La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l’analyse des évolutions infra-annuelles et les comparaisons spatiales.
-C’est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours de jours ouvrables, la <em>désaisonnalisation</em> étant le processus consistant à supprimer les effets des fluctuations saisonnières et des jours ouvrables.
+C’est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours ouvrables, la <em>désaisonnalisation</em> étant le processus consistant à supprimer leurs effets.
 Un effet saisonnier est un phénomène qui se répète chaque année autour de la période, avec une ampleur et une direction similaire d’une année à l’autre.
 Par exemple, la production automobile est généralement plus faible en été, en raison des vacances, et les ventes de chocolat sont généralement plus élevées en décembre, en raison de Noël.
 L’effet jours ouvrables apparaît lorsqu’une série temporelle est affectée par la composition journalière du mois.
 Par exemple, les ventes au détail sont généralement plus élevées le samedi que le dimanche, il est donc probable qu’elles soient plus élevées les mois contenant plus de samedis que de dimanches.</p>
-<p>Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique basée sur les modèles ARIMA (voir par exemple <span class="citation">Maravall et Caporello (<a href="#ref-maravall2004program" role="doc-biblioref">2004</a>)</span>), et X-13ARIMA-SEATS, une méthode non-paramétrique basée sur les moyennes mobiles (voir par exemple <span class="citation">D. Ladiray et Quenneville (<a href="#ref-ladiray2011seasonal" role="doc-biblioref">2011</a>)</span>).
+<p>Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique basée sur les modèles ARIMA (voir par exemple <span class="citation">Maravall et Caporello (<a href="#ref-maravall2004program" role="doc-biblioref">2004</a>)</span>), et X-13ARIMA-SEATS, une méthode non-paramétrique basée sur les moyennes mobiles (voir par exemple <span class="citation">Ladiray et Quenneville (<a href="#ref-ladiray2011seasonal" role="doc-biblioref">2011</a>)</span>).
 Ces méthodes supposent que toute série temporelle <span class="math inline">\(X_t\)</span> peut se décomposer en quatre composantes :</p>
 <ol style="list-style-type: decimal">
 <li><p>Une composante saisonnière <span class="math inline">\(S_t\)</span>.</p></li>
@@ -314,10 +314,10 @@ Dans ce rapport, nous cherchons à proposer une approche unificatrice générale
 Cela a un double intérêt.
 D’une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l’analyse conjoncturelle.
 D’autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.</p>
-<p>Pour cela nous utiliserons l’approche générale de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> (section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a>) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques qui permet de minimiser les effets de déphasage (section <a href="sec-theoriegen.html#subsec-GuggemosEtAl">3.2</a>).
+<p>Pour cela nous utiliserons l’approche générale de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> (section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a>) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section <a href="sec-theoriegen.html#subsec-GuggemosEtAl">3.2</a>).
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l’annexe <a href="an-diag.html#an-diag">A</a>.</p>
-<p>Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-12ARIMA.
-Pour maintenir la cohérence avec l’approche non paramétrique de X-12ARIMA, nous nous concentrons sur les méthodes d’extraction non paramétriques.
+<p>Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-13ARIMA.
+Pour maintenir la cohérence avec l’approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d’extraction non paramétriques.
 C’est pourquoi ni les filtres de l’approche de <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> (section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>), ni d’autres approches basées sur des modèles ne sont, pour l’instant, utilisées dans les simulations.
 L’ensemble des filtres utilisés sont résumés dans l’annexe <a href="an-graphs.html#an-graphs">B</a>.</p>
 
@@ -337,7 +337,7 @@ Grun-Rehomme, Michel, Fabien Guggemos, et Dominique Ladiray. 2018. <span>« Asy
 Henderson, Robert. 1916. <span>« Note on graduation by adjusted average »</span>. <em>Transactions of the actuarial society of America</em> 17: 43‑48.
 </div>
 <div id="ref-ladiray2011seasonal" class="csl-entry">
-Ladiray, D., et B. Quenneville. 2011. <em>Seasonal Adjustment with the X-11 Method</em>. Springer.
+———. 2011. <em>Seasonal Adjustment with the X-11 Method</em>. Springer.
 </div>
 <div id="ref-maravall2004program" class="csl-entry">
 Maravall, A, et G Caporello. 2004. <span>« Program TSW: Revised reference manual »</span>. <a href="http://www.bde.es/f/webbde/SES/servicio/Programas_estadisticos_y_econometricos/Programas/ficheros/tswrm.pdf">http://www.bde.es/f/webbde/SES/servicio/Programas_estadisticos_y_econometricos/Programas/ficheros/tswrm.pdf</a>.

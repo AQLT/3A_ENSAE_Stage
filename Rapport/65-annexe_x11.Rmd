@@ -88,7 +88,7 @@ Les moyennes mobiles étant très sensibles à la présence de points atypiques,
 
 - On affecte, à chaque valeur de $I_t$, un poids $p_t$ en fonction de son écart à l'écart-type associé (voir graphique \@ref(fig:correctionautox11)) :
 
-  - si $\lvert I_t\rvert\leq 1,5 \sigma$ un poids de 1 est affecté à la date $t$ (i.e. : le point n'est pas considéré comme atypique) ;
+  - si $\lvert I_t\rvert\leq 1,5 \sigma$ un poids de 1 est affecté à la date $t$ (i.e.; le point n'est pas considéré comme atypique) ;
 
   - si $\lvert I_t\rvert\geq 2,5 \sigma$, un poids de 0 est affecté à la date $t$ ;
 

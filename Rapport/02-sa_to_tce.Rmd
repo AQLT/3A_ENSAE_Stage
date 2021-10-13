@@ -1,7 +1,7 @@
 # De la désaisonnalisation à l'estimation tendance-cycle {#sec-SAtoTCE}
  
 La plupart des indicateurs macroéconomiques (PIB, production, consommation, etc.) sont affectés par des effets saisonniers et des effets jours ouvrables qui perturbent l'analyse des évolutions infra-annuelles et les comparaisons spatiales.
-C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours de jours ouvrables, la *désaisonnalisation* étant le processus consistant à supprimer les effets des fluctuations saisonnières et des jours ouvrables.
+C'est pourquoi les séries chronologiques sont généralement corrigées des variations saisonnières et des jours ouvrables, la *désaisonnalisation* étant le processus consistant à supprimer leurs effets.
 Un effet saisonnier est un phénomène qui se répète chaque année autour de la période, avec une ampleur et une direction similaire d'une année à l'autre.
 Par exemple, la production automobile est généralement plus faible en été, en raison des vacances, et les ventes de chocolat sont généralement plus élevées en décembre, en raison de Noël.
 L'effet jours ouvrables apparaît lorsqu'une série temporelle est affectée par la composition journalière du mois.
@@ -47,11 +47,11 @@ Cela a un double intérêt.
 D'une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l'analyse conjoncturelle.
 D'autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.
  
-Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques qui permet de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
+Pour cela nous utiliserons l'approche générale de @ch15HBSA (section \@ref(subsec-theoriegen)) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section \@ref(subsec-GuggemosEtAl)).
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l'annexe \@ref(an-diag).
  
-Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-12ARIMA.
-Pour maintenir la cohérence avec l'approche non paramétrique de X-12ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
+Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-13ARIMA.
+Pour maintenir la cohérence avec l'approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d'extraction non paramétriques.
 C'est pourquoi ni les filtres de l'approche de @trilemmaWMR2019 (section \@ref(sec-WildiMcLeroy)), ni d'autres approches basées sur des modèles ne sont, pour l'instant, utilisées dans les simulations.
 L'ensemble des filtres utilisés sont résumés dans l'annexe \@ref(an-graphs).
  

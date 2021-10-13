@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-01" />
+<meta name="date" content="2021-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="an-graphs.html"/>
 <link rel="next" href="an-minrkhs.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -140,7 +140,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#subsec-equivlpfst"><i class="fa fa-check"></i><b>5.4</b> Équivalence avec l’approche FST</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-guggemos-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Guggemos <em>et alii</em></a></li>
+<li class="chapter" data-level="5.4.1" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#liens-entre-les-critères-de-gray-et-thomson-et-ceux-de-grun-rehomme-et-alii"><i class="fa fa-check"></i><b>5.4.1</b> Liens entre les critères de Gray et Thomson et ceux de Grun-Rehomme <em>et alii</em></a></li>
 <li class="chapter" data-level="5.4.2" data-path="sec-lppfilters.html"><a href="sec-lppfilters.html#équivalence-avec-les-moindres-carrés-pondérés"><i class="fa fa-check"></i><b>5.4.2</b> Équivalence avec les moindres carrés pondérés</a></li>
 </ul></li>
 </ul></li>
@@ -278,7 +278,7 @@ div.csl-indent {
 <p>Dans cette annexe sont tracés les rares poids pour lesquels l’approche FST <strong>n’est pas</strong> équivalente à l’approche polynomiale locale, pour <span class="math inline">\(h=6\)</span> (filtre symétrique de 13 termes) et <span class="math inline">\(h=11\)</span> (filtre symétrique de 23 termes).
 Lorsqu’un graphique n’est pas affiché c’est que tous les filtres FST sont équivalents une approche polynomiale locale par moindre carrés pondérés.
 Par exemple pour les filtres associés au filtre symétrique de 13 termes (<span class="math inline">\(h=6\)</span>, figure <a href="an-equivfstlp.html#fig:thhendersonh6">C.1</a>) il n’y a des graphiques que pour les filtres utilisés en temps réel (<span class="math inline">\(q=0\)</span>) et lorsque ce filtre conserve les constantes (<span class="math inline">\(d=0\)</span>), les droites (<span class="math inline">\(d=1\)</span>) et les polynômes de degré 2 (<span class="math inline">\(d=2\)</span>).
-Dans tous les autres cas (i.e. : dès que l’on connait au moins un point dans le futur, <span class="math inline">\(q\geq 1\)</span>), il y a équivalence pour tous les poids testés<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>.</p>
+Dans tous les autres cas (i.e.; dès que l’on connait au moins un point dans le futur, <span class="math inline">\(q\geq 1\)</span>), il y a équivalence pour tous les poids testés<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>.</p>
 <p>La <em>smoothness</em> est calculée avec le paramètre <span class="math inline">\(q=3\)</span> (<span class="math inline">\(S_g(\theta) = \sum_{j}(\nabla^{3}\theta_{j})^{2}\)</span>), comme pour le filtre symétrique d’Henderson.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:thhendersonh6"></span>
 <img src="img/bookdown/html/thhendersonh6-1.jpg" alt="Ensemble des poids pour lesquels la méthode FST n'est pas équivalente aux moindres carrés pondérés pour $h=6$ (filtre symétrique de 13 termes), sous contrainte de préservation des polynômes de degré au plus 2 ($d=0,1,2$)." width="1050" />
