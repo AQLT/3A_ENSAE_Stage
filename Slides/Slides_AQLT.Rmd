@@ -50,9 +50,9 @@ library(rjdfilters)
 
 - **Objectifs** : 
 
-    * Étudier et comparer les approches récentes pour l'extraction de la tendance-cycle en temps réel
+    * Étudier et comparer les approches récentes pour l'extraction de la tendance-cycle en temps réel \pause
     
-    * Étudier les liens entre les méthodes avec une théorie générale (cf rapport)
+    * Étudier les liens entre les méthodes avec une théorie générale (cf rapport) \pause
     
     * Développer d'un package \faIcon{r-project} (`rjdfilters`, https://github.com/palatej/rjdfilters, version en développement https://github.com/AQLT/rjdfilters)
 
@@ -110,7 +110,7 @@ $$
 
 . . .
 
-\faArrowCircleRight{} X-11 : décomposition itérative de $X_T$ en $TC_t$, $S_t$ et $I_t$ avec une correction automatique des points atypiques
+\faArrowCircleRight{} X-13ARIMA : décomposition itérative de $X_T$ en $TC_t$, $S_t$ et $I_t$ avec une correction automatique des points atypiques
 
 \bigskip
 
@@ -270,15 +270,15 @@ knitr::include_graphics("img/lc6d0-1.jpg")
 
 . . .
 
-2. Désaisonnalisation en **fixant** la série linéarisée et tous les autres paramètres avec X-11 et un filtre spécifique pour la tendance-cycle (`rjdfilters::x11()`)
+2. Désaisonnalisation en **fixant** la série linéarisée et tous les autres paramètres et en utilisant un filtre spécifique pour la tendance-cycle (`rjdfilters::x11()`)
 
 . . .
 
 3. À chaque date, estimation des points de retournement :
 
-    - redressements : $y_{t-3}\geq\cdots\geq y_{t-1}<y_t\leq y_{t+1}$
+    - redressements : $y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}$
     
-    - ralentissements : $y_{t-3}\leq\cdots\leq y_{t-1}>y_t\geq y_{t+1}$
+    - ralentissements : $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}$
     
 . . .
 
@@ -436,7 +436,8 @@ mais peut provenir des définitions, indicateurs et méthodologie utilisés
 
 ### Merci pour votre attention
 
+Package \faIcon{r-project}{}:
 
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
-Rapport : https://aqlt-stage3a.netlify.app/
+\faIcon{desktop} Rapport en ligne : https://aqlt-stage3a.netlify.app/

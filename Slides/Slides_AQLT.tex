@@ -232,10 +232,10 @@ conjoncturelle}
   \begin{itemize}
   \item
     Étudier et comparer les approches récentes pour l'extraction de la
-    tendance-cycle en temps réel
+    tendance-cycle en temps réel \pause
   \item
     Étudier les liens entre les méthodes avec une théorie générale (cf
-    rapport)
+    rapport) \pause
   \item
     Développer d'un package \faIcon{r-project} (\texttt{rjdfilters},
     \url{https://github.com/palatej/rjdfilters}, version en
@@ -313,7 +313,7 @@ coefficients optimisés pour minimiser les erreurs
 
 \pause
 
-\faArrowCircleRight{} X-11 : décomposition itérative de \(X_T\) en
+\faArrowCircleRight{} X-13ARIMA : décomposition itérative de \(X_T\) en
 \(TC_t\), \(S_t\) et \(I_t\) avec une correction automatique des points
 atypiques
 
@@ -546,7 +546,7 @@ contraintes polynomiales
 \tightlist
 \item
   Désaisonnalisation en \textbf{fixant} la série linéarisée et tous les
-  autres paramètres avec X-11 et un filtre spécifique pour la
+  autres paramètres et en utilisant un filtre spécifique pour la
   tendance-cycle (\texttt{rjdfilters::x11()})
 \end{enumerate}
 
@@ -559,9 +559,10 @@ contraintes polynomiales
 
   \begin{itemize}
   \item
-    redressements : \(y_{t-3}\geq\cdots\geq y_{t-1}<y_t\leq y_{t+1}\)
+    redressements : \(y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}\)
   \item
-    ralentissements : \(y_{t-3}\leq\cdots\leq y_{t-1}>y_t\geq y_{t+1}\)
+    ralentissements :
+    \(y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}\)
   \end{itemize}
 \end{enumerate}
 
@@ -714,9 +715,12 @@ Mean & 4,5 & 4,7 & 5,1 & 5,4 & 5,5 & 6,6 & 7,0 & 6,5 & 6,6\\
 
 \begin{frame}{Merci pour votre attention}
 \protect\hypertarget{merci-pour-votre-attention}{}
+Package \faIcon{r-project}{}:
+
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
-Rapport : \url{https://aqlt-stage3a.netlify.app/}
+\faIcon{desktop} Rapport en ligne :
+\url{https://aqlt-stage3a.netlify.app/}
 \end{frame}
 
 \end{document}
