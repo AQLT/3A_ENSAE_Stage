@@ -39,7 +39,7 @@ L'erreur de l'équation \@ref(eq:msedef) peut être décomposée en 4 quantités
 \begin{align*}
 Accuracy =A_w(\theta)&= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
 Timeliness =T_w(\theta)&= 8\int_0^{\omega_1}\rho_s(\omega)\rho_\theta(\omega)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
-Smoothness =S_w(\theta)&= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)^{2}-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
+Smoothness =S_w(\theta)&= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
 Residual =R_w(\theta)&= 8\int_{\omega_1}^\pi\rho_s(\omega)\rho_\theta(\omega)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
 \end{align*}
 
