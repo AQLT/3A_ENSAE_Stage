@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-13" />
+<meta name="date" content="2021-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -281,7 +281,7 @@ Un effet saisonnier est un phénomène qui se répète chaque année autour de l
 Par exemple, la production automobile est généralement plus faible en été, en raison des vacances, et les ventes de chocolat sont généralement plus élevées en décembre, en raison de Noël.
 L’effet jours ouvrables apparaît lorsqu’une série temporelle est affectée par la composition journalière du mois.
 Par exemple, les ventes au détail sont généralement plus élevées le samedi que le dimanche, il est donc probable qu’elles soient plus élevées les mois contenant plus de samedis que de dimanches.</p>
-<p>Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique basée sur les modèles ARIMA (voir par exemple <span class="citation">Maravall et Caporello (<a href="#ref-maravall2004program" role="doc-biblioref">2004</a>)</span>), et X-13ARIMA-SEATS, une méthode non-paramétrique basée sur les moyennes mobiles (voir par exemple <span class="citation">Ladiray et Quenneville (<a href="#ref-ladiray2011seasonal" role="doc-biblioref">2011</a>)</span>).
+<p>Pour effectuer la désaisonnalisation, les méthodes de désaisonnalisation les plus populaires sont TRAMO-SEATS, une méthode paramétrique basée sur les modèles ARIMA (voir par exemple <span class="citation"><a href="#ref-maravall2004program" role="doc-biblioref">Maravall et Caporello</a> (<a href="#ref-maravall2004program" role="doc-biblioref">2004</a>)</span>), et X-13ARIMA-SEATS, une méthode non-paramétrique basée sur les moyennes mobiles (voir par exemple <span class="citation"><a href="#ref-ladiray2011seasonal" role="doc-biblioref">Ladiray et Quenneville</a> (<a href="#ref-ladiray2011seasonal" role="doc-biblioref">2011</a>)</span>).
 Ces méthodes supposent que toute série temporelle <span class="math inline">\(X_t\)</span> peut se décomposer en quatre composantes :</p>
 <ol style="list-style-type: decimal">
 <li><p>Une composante saisonnière <span class="math inline">\(S_t\)</span>.</p></li>
@@ -292,7 +292,7 @@ La tendance et le cycle n’étant pas observés et étant difficiles à sépare
 </ol>
 <p>Toutes ces composantes étant inobservées, l’estimation de l’une dépend de l’estimation des autres.
 Ainsi, même si dans ce rapport, nous nous intéresserons aux méthodes d’extraction de tendance-cycle, celles-ci ne peuvent s’étudier indépendamment du processus du désaisonnalisation.
-Ce lien explique également que toutes les méthodes utilisées dans ce rapport sont implémentées dans les bibliothèques de Java de JDemetra+ <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, le logiciel de désaisonnalisation recommandé par Eurostat.
+Ce lien explique également que toutes les méthodes utilisées dans ce rapport sont implémentées dans les bibliothèques de Java de JDemetra+,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> le logiciel de désaisonnalisation recommandé par Eurostat.
 Une interface <i class="fab fa-r-project"></i>, développée au cours de ce stage, est implémentée dans le package <code>rjdfilters</code><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
 <p>Les filtres linéaires (ou moyennes mobiles) sont omniprésents dans la désaisonnalisation et l’estimation des différentes composantes.
 Au centre de la série, des filtres dits symétriques sont appliqués (pour estimer une composante à la date <span class="math inline">\(t\)</span>, on utilise autant de points après <span class="math inline">\(t\)</span> qu’avant <span class="math inline">\(t\)</span>).
@@ -302,23 +302,23 @@ Les moyennes mobiles asymétriques classiques minimisent les erreurs de révisio
 Parmi les plus récentes, on peut citer :</p>
 <ul>
 <li><p>Les <em>Model-Based Approach</em> — approches basées sur les modèles — supposent la spécification d’un modèle stochastique pour la tendance (modèle ARIMA, modèle d’espace d’état, etc.) et les estimations sont obtenues en minimisant une fonction de pénalité, généralement l’erreur quadratique moyenne.
-C’est par exemple le cas du filtre de Kalman, du filtre de Wiener-Kolmogorov (utilisé dans TRAMO-SEATS) et de l’Approche par Filtre Direct de <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> (section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>).</p></li>
+C’est par exemple le cas du filtre de Kalman, du filtre de Wiener-Kolmogorov (utilisé dans TRAMO-SEATS) et de l’Approche par Filtre Direct de <span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> (section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>).</p></li>
 <li><p>Les méthodes d’extraction non paramétriques ne supposent pas que la structure d’un modèle est fixe et peuvent être facilement appliquées à n’importe quelle série temporelle.
-C’est par exemple le cas des filtres <span class="citation">Henderson (<a href="#ref-henderson1916note" role="doc-biblioref">1916</a>)</span> et <span class="citation">Musgrave (<a href="#ref-musgrave1964set" role="doc-biblioref">1964</a>)</span> (utilisés dans X-13ARIMA).
-Les méthodes classiques peuvent être vues comme des régressions polynomiales locales, approche généralisée par <span class="citation">Proietti et Luati (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> (section <a href="sec-lppfilters.html#sec-lppfilters">5</a>).
+C’est par exemple le cas des filtres <span class="citation"><a href="#ref-henderson1916note" role="doc-biblioref">Henderson</a> (<a href="#ref-henderson1916note" role="doc-biblioref">1916</a>)</span> et <span class="citation"><a href="#ref-musgrave1964set" role="doc-biblioref">Musgrave</a> (<a href="#ref-musgrave1964set" role="doc-biblioref">1964</a>)</span> (utilisés dans X-13ARIMA).
+Les méthodes classiques peuvent être vues comme des régressions polynomiales locales, approche généralisée par <span class="citation"><a href="#ref-proietti2008" role="doc-biblioref">Proietti et Luati</a> (<a href="#ref-proietti2008" role="doc-biblioref">2008</a>)</span> (section <a href="sec-lppfilters.html#sec-lppfilters">5</a>).
 Les estimateurs non paramétriques peuvent également être reproduits en exploitant la méthodologie de l’espace de Hilbert du noyau reproducteur (RKHS), comme cela est fait par
-<span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> (section <a href="sec-rkhs.html#sec-rkhs">6</a>).</p></li>
+<span class="citation"><a href="#ref-dagumbianconcini2008" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> (section <a href="sec-rkhs.html#sec-rkhs">6</a>).</p></li>
 </ul>
 <p>Bien que ces auteurs aient proposé des approches générales pour construire des filtres linéaires, ils ne font référence qu’aux méthodes les plus classiques (Henderson, Musgrave, Hodrick-Prescott, etc.) sans faire le lien avec les autres méthodes récentes.
 Dans ce rapport, nous cherchons à proposer une approche unificatrice générale qui permettrait de reproduire l’ensemble de ces méthodes.
 Cela a un double intérêt.
 D’une part, cela permet de faire une première revue de la littérature sur les méthodes de construction des filtres linéaires pour l’analyse conjoncturelle.
 D’autre part, cela permet de montrer les liens entre toutes ces approches et de les comparer en utilisant une même méthodologie.</p>
-<p>Pour cela nous utiliserons l’approche générale de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> (section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a>) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section <a href="sec-theoriegen.html#subsec-GuggemosEtAl">3.2</a>).
+<p>Pour cela nous utiliserons l’approche générale de <span class="citation"><a href="#ref-ch15HBSA" role="doc-biblioref">Grun-Rehomme, Guggemos, et Ladiray</a> (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> (section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a>) qui ont également proposé une procédure globale pour construire des moyennes mobiles asymétriques permettant de minimiser les effets de déphasage (section <a href="sec-theoriegen.html#subsec-GuggemosEtAl">3.2</a>).
 Des diagrammes synthétiques des liens entre les différentes méthodes étudiées sont présentés dans l’annexe <a href="an-diag.html#an-diag">A</a>.</p>
 <p>Dans ce rapport, nous nous concentrons sur les méthodes qui pourraient être implémentées dans X-13ARIMA.
 Pour maintenir la cohérence avec l’approche non paramétrique de X-13ARIMA, nous nous concentrons sur les méthodes d’extraction non paramétriques.
-C’est pourquoi ni les filtres de l’approche de <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> (section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>), ni d’autres approches basées sur des modèles ne sont, pour l’instant, utilisées dans les simulations.
+C’est pourquoi ni les filtres de l’approche de <span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> (section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a>), ni d’autres approches basées sur des modèles ne sont, pour l’instant, utilisées dans les simulations.
 L’ensemble des filtres utilisés sont résumés dans l’annexe <a href="an-graphs.html#an-graphs">B</a>.</p>
 
 </div>
@@ -357,7 +357,7 @@ Proietti, Tommaso, et Alessandra Luati. 2008. <span>« Real time estimation in 
 <ol start="3">
 <li id="fn3"><p>Voir <a href="https://github.com/jdemetra/jdemetra-core" class="uri">https://github.com/jdemetra/jdemetra-core</a>.<a href="sec-SAtoTCE.html#fnref3" class="footnote-back">↩︎</a></p></li>
 <li id="fn4"><p>Disponible sur <a href="https://github.com/palatej/rjdfilters" class="uri">https://github.com/palatej/rjdfilters</a>.<a href="sec-SAtoTCE.html#fnref4" class="footnote-back">↩︎</a></p></li>
-<li id="fn5"><p>Voir par exemple <span class="citation">Alexandrov et al. (<a href="#ref-alexandrov2012TEreview" role="doc-biblioref">2012</a>)</span> pour une revue de la littérature sur les méthodes d’extraction de tendance.<a href="sec-SAtoTCE.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Voir par exemple <span class="citation"><a href="#ref-alexandrov2012TEreview" role="doc-biblioref">Alexandrov et al.</a> (<a href="#ref-alexandrov2012TEreview" role="doc-biblioref">2012</a>)</span> pour une revue de la littérature sur les méthodes d’extraction de tendance.<a href="sec-SAtoTCE.html#fnref5" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

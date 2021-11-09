@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-13" />
+<meta name="date" content="2021-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -275,7 +275,7 @@ div.csl-indent {
             
 <div id="sec-WildiMcLeroy" class="section level1" number="4">
 <h1><span class="header-section-number">Chapitre 4</span> Filtres dépendant des données : trilemme ATS</h1>
-<p><span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> proposent une approche dépendante des données (<em>data-dependent</em>) pour calculer des filtres linéaires.
+<p><span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> proposent une approche dépendante des données (<em>data-dependent</em>) pour calculer des filtres linéaires.
 Ils décomposent l’erreur quadratique moyenne de révision en un trilemme de trois quantités appelées <em>accuracy</em> (précision), <em>timeliness</em> (temporalité) et <em>smoothness</em> (lissage), d’où son nom <em>ATS-trilemna</em>.</p>
 <p>Soient :</p>
 <ul>
@@ -293,7 +293,7 @@ Cette approche peut être approfondie en décomposant l’erreur de quadratique 
 \E{(TC_{t}-\widehat{TC}_{t})^{2}}=\frac{1}{2\pi}\int_{-\pi}^{\pi}\left|\Gamma_s(\omega)-{\Gamma_\theta}(\omega)\right|^{2}h(\omega)\ud\omega=\frac{1}{2\pi}\times2\times\int_{0}^{\pi}\left|\Gamma_s(\omega)-{\Gamma_\theta}(\omega)\right|^{2}h(\omega)\ud\omega
 \tag{4.1}
 \end{equation}\]</span>
-Cette égalité peut également se généraliser aux processus intégrés non-stationnaires (par exemple en imposant une cointégration entre les deux signaux et en utilisant le pseudo-spectre, voir <span class="citation">Wildi et McElroy (<a href="#ref-optimrtfWMR2013" role="doc-biblioref">2013</a>)</span>).</p>
+Cette égalité peut également se généraliser aux processus intégrés non-stationnaires (par exemple en imposant une cointégration entre les deux signaux et en utilisant le pseudo-spectre, voir <span class="citation"><a href="#ref-optimrtfWMR2013" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-optimrtfWMR2013" role="doc-biblioref">2013</a>)</span>).</p>
 <p>On a :
 <span class="math display" id="eq:msedecomp">\[\begin{align}
 \left|\Gamma_s(\omega)-\Gamma_\theta(\omega)\right|^{2} &amp; =\rho_s(\omega)^{2}+\rho_\theta(\omega)^{2}+2\rho_s(\omega)\rho_\theta(\omega)\left(1-\cos(\varphi_s(\omega)-\varphi_\theta(\omega)\right) \nonumber\\
@@ -305,11 +305,11 @@ Cette égalité peut également se généraliser aux processus intégrés non-st
 <span class="math display">\[\begin{align*}
 Accuracy =A_w(\theta)&amp;= 2\int_0^{\omega_1}\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
 Timeliness =T_w(\theta)&amp;= 8\int_0^{\omega_1}\rho_s(\omega)\rho_\theta(\omega)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
-Smoothness =S_w(\theta)&amp;= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)^{2}-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
+Smoothness =S_w(\theta)&amp;= 2\int_{\omega_1}^\pi\left(\rho_s(\omega)-\rho_\theta(\omega)\right)^{2}h(\omega)\ud\omega\\
 Residual =R_w(\theta)&amp;= 8\int_{\omega_1}^\pi\rho_s(\omega)\rho_\theta(\omega)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)h(\omega)\ud\omega\\
 \end{align*}\]</span></p>
 <div class="remarque">
-<p>Afin d’avoir des définitions cohérentes entre les différentes sections, les formules des quatre critères ont été légèrement modifiées par rapport à ceux définis par <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> :</p>
+<p>Afin d’avoir des définitions cohérentes entre les différentes sections, les formules des quatre critères ont été légèrement modifiées par rapport à ceux définis par <span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> :</p>
 <ul>
 <li><p>dans ce rapport l’intervalle d’intégration est <span class="math inline">\([0,\pi]\)</span> plutôt que <span class="math inline">\([-\pi,\pi]\)</span> (toutes les fonctions étant paires cela revient à multiplier par 2 toutes les intégrales) ;</p></li>
 <li><p>dans l’article originel, l’intervalle pass-band dépend de la fonction de gain du filtre symétrique (pass-band<span class="math inline">\(=\{\omega |\rho_s(\omega)\geq 0,5\}\)</span>) : cela correspond donc à l’intervalle contenant les fréquences conservées sans trop de distorsion par le filtre symétrique.
@@ -322,7 +322,7 @@ C’est pourquoi, pour la construction de filtres linéaires les auteurs suggèr
 <span class="math display">\[
 \mathcal{M}(\vartheta_{1},\vartheta_{2})=\vartheta_{1}T_w(\theta)+\vartheta_{2}S_w(\theta)+(1-\vartheta_{1}-\vartheta_{2})A_w(\theta)
 \]</span>
-Comme le montrent <span class="citation">McElroy et Wildi (<a href="#ref-tuckerwildi2020" role="doc-biblioref">2020</a>)</span>, cette méthode peut également être étendue au cas multivarié, ce qui permet de prendre en compte les corrélations entre les composantes de différentes séries.</p>
+Comme le montrent <span class="citation"><a href="#ref-tuckerwildi2020" role="doc-biblioref">McElroy et Wildi</a> (<a href="#ref-tuckerwildi2020" role="doc-biblioref">2020</a>)</span>, cette méthode peut également être étendue au cas multivarié, ce qui permet de prendre en compte les corrélations entre les composantes de différentes séries.</p>
 <p>Un des inconvénients de cette méthode est qu’il n’y a pas de garantie d’unicité de la solution.
 En revanche, son avantage par rapport à la méthode FST (section <a href="sec-theoriegen.html#subsec-GuggemosEtAl">3.2</a>) est que la décomposition de l’erreur quadratique moyenne permet de normaliser les différents indicateurs, et les coefficients <span class="math inline">\(\vartheta_{1}\)</span>, <span class="math inline">\(\vartheta_{2}\)</span> et <span class="math inline">\(1-\vartheta_{1}-\vartheta_{2}\)</span> peuvent être comparés entre eux.</p>
 <p>Les quatre critères <span class="math inline">\(A_w\)</span>, <span class="math inline">\(T_w\)</span>, <span class="math inline">\(S_w\)</span> et <span class="math inline">\(R_w\)</span> étant des cas particuliers du critère <span class="math inline">\(J\)</span> défini dans l’équation <a href="sec-theoriegen.html#eq:theoriegen1">(3.1)</a>, cette méthode s’inscrit dans le cadre de la théorie générale définie dans la section <a href="sec-theoriegen.html#subsec-theoriegen">3.1</a>.
@@ -342,7 +342,7 @@ R_w(\theta)&amp;= J(\theta,f_2,\omega_1,\pi).
 \end{align*}\]</span></p>
 <div class="summary_box">
 <div class="title">
-<p>ATS-trilemna - <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span></p>
+<p>ATS-trilemna - <span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span></p>
 </div>
 <p><strong>Avantages</strong> :</p>
 <ul>

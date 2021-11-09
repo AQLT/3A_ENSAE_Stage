@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-13" />
+<meta name="date" content="2021-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -275,7 +275,7 @@ div.csl-indent {
             
 <div id="sec-propMM" class="section level1" number="2">
 <h1><span class="header-section-number">Chapitre 2</span> Quelques propriétés sur les moyennes mobiles</h1>
-<p>Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple <span class="citation">Ladiray (<a href="#ref-ch12HBSA" role="doc-biblioref">2018</a>)</span> pour plus de détails).</p>
+<p>Cette section présente les définitions et les propriétés des moyennes mobiles (voir par exemple <span class="citation"><a href="#ref-ch12HBSA" role="doc-biblioref">Ladiray</a> (<a href="#ref-ch12HBSA" role="doc-biblioref">2018</a>)</span> pour plus de détails).</p>
 <p>Soient deux entiers <span class="math inline">\(p\)</span> et <span class="math inline">\(f\)</span>.
 Une <em>moyenne mobile</em> <span class="math inline">\(M_\theta\)</span> ou <span class="math inline">\(M\)</span> est un opérateur linéaire définit par un ensemble de coefficients <span class="math inline">\(\theta=(\theta_{-p},\dots,\theta_{f})&#39;\)</span> qui transforme toute série temporelle <span class="math inline">\(X_t\)</span> en :
 <span class="math display">\[
@@ -305,7 +305,7 @@ Pour tous les filtres symétriques on a <span class="math inline">\(\Phi_\theta(
 <p>En somme, appliquer une moyenne mobile à une série harmonique la modifie de deux façons :</p>
 <ul>
 <li><p>en la multipliant par un coefficient égal à <span class="math inline">\(G_{\theta}\left(\omega\right)\)</span> (gain) ;</p></li>
-<li><p>en la “décalant” dans le temps de <span class="math inline">\(\Phi_\theta(\omega)/\omega\)</span>, ce qui a un impact sur la détection des points de retournement (déphasage) <a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p></li>
+<li><p>en la “décalant” dans le temps de <span class="math inline">\(\Phi_\theta(\omega)/\omega\)</span>, ce qui a un impact sur la détection des points de retournement (déphasage).<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p></li>
 </ul>
 <p>Par exemple, avec <span class="math inline">\(M_{\theta_0}X_t=\frac{1}{2}X_{t-1}+\frac{1}{2}X_{t}\)</span> on a:
 <span class="math display">\[
@@ -365,7 +365,7 @@ Ce qui est équivalent à :
 <h3><span class="header-section-number">2.2.2</span> Élimination de la saisonnalité</h3>
 <p>Soit <span class="math inline">\(S_t\)</span> une série à saisonnalité fixe de périodicité <span class="math inline">\(P\)</span> (<span class="math inline">\(P=12\)</span> pour une série mensuelle, <span class="math inline">\(P=4\)</span> pour une série trimestrielle, etc.).
 On a donc <span class="math inline">\(S_t=S_{t+P}\)</span> et la somme de <span class="math inline">\(P\)</span> termes consécutifs est constante dans le temps<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. Ainsi, une moyenne mobile simple d’ordre <span class="math inline">\(P\)</span> (dont tous les coefficients sont égaux à <span class="math inline">\(1/P\)</span>) supprime les saisonnalités fixes.</p>
-<p>Il est également possible de constituer des moyennes mobiles plus complexes supprimant la saisonnalité qui évoluerait polynomialement dans le temps (voir par exemple <span class="citation">Grun-Rehomme et Ladiray (<a href="#ref-GrunRehommeLadiray1994" role="doc-biblioref">1994</a>)</span>).</p>
+<p>Il est également possible de constituer des moyennes mobiles plus complexes supprimant la saisonnalité qui évoluerait polynomialement dans le temps (voir par exemple <span class="citation"><a href="#ref-GrunRehommeLadiray1994" role="doc-biblioref">Grun-Rehomme et Ladiray</a> (<a href="#ref-GrunRehommeLadiray1994" role="doc-biblioref">1994</a>)</span>).</p>
 </div>
 <div id="réduction-du-bruit" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Réduction du bruit</h3>
@@ -390,7 +390,7 @@ Ils ne peuvent toutefois pas être utilisés au début et à la fin de la série
 <h3><span class="header-section-number">2.3.1</span> Moyennes mobiles asymétriques et prévision</h3>
 <p>En début et en fin de série, les moyennes mobiles asymétriques ne peuvent être utilisées du fait du manque de données disponibles.
 Une solution est de prolonger la série par prévision pour ensuite appliquer le filtre symétrique.
-Cette méthode semble remonter à <span class="citation">De Forest (<a href="#ref-deforest1877adjustment" role="doc-biblioref">1877</a>)</span> qui suggèrent également de modéliser en fin de période une tendance polynomiale de degré au plus 3 :</p>
+Cette méthode semble remonter à <span class="citation"><a href="#ref-deforest1877adjustment" role="doc-biblioref">De Forest</a> (<a href="#ref-deforest1877adjustment" role="doc-biblioref">1877</a>)</span> qui suggèrent également de modéliser en fin de période une tendance polynomiale de degré au plus 3 :</p>
 <div class="quote">
 <p>« <em>As the first <span class="math inline">\(m\)</span> and last <span class="math inline">\(m\)</span> terms of the series cannot be reached directly by the formula, the series should be graphically extended by m terms at both ends, first plotting the observations on paper as ordinates, and then extending the curve along what seems to be its probable course, and measuring the ordinates of the extended portions.</em>
 <em>It is not necessary that this extension should coincide with what would be the true course of the curve in those parts. </em>
@@ -430,7 +430,7 @@ En somme, matriciellement, cela revient donc à résoudre :
 \begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.
 \]</span>
 C’est ce qui implémenté dans la fonction <code>rjdfilters::implicit_forecast</code>.</p>
-<p>Comme notamment souligné par <span class="citation">Wildi et Schips (<a href="#ref-wildischis2004" role="doc-biblioref">2004</a>)</span>, étendre la série par prévision d’un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d’avance — <em>one-step ahead forecasting</em>.
+<p>Comme notamment souligné par <span class="citation"><a href="#ref-wildischis2004" role="doc-biblioref">Wildi et Schips</a> (<a href="#ref-wildischis2004" role="doc-biblioref">2004</a>)</span>, étendre la série par prévision d’un modèle ARIMA revient à calculer des filtres asymétriques dont les coefficients sont optimisés par rapport à la prévision avec une longueur d’avance — <em>one-step ahead forecasting</em>.
 Autrement dit, on cherche à minimiser les révisions entre la première et la dernière estimation (avec le filtre symétrique).
 Cependant, puisque les coefficients du filtre symétrique décroissent lentement, il faudrait également s’intéresser à la performance des prévisions avec plusieurs longueurs d’avance — <em>multi-step ahead forecasting</em>.
 Par ailleurs, le déphasage induit par les filtres asymétriques n’est pas contrôlé : on pourrait préférer avoir une détection plus rapide des points de retournement et une révision plus grande plutôt que de juste minimiser les révisions entre la première et la dernière estimation.
@@ -438,10 +438,10 @@ C’est pourquoi il peut être nécessaire de définir des critères alternatifs
 </div>
 <div id="indicateurs-de-qualité-des-moyennes-mobiles-asymétriques" class="section level3" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Indicateurs de qualité des moyennes mobiles asymétriques</h3>
-<p>Dans ce rapport, nous nous concentrons sur ceux définis par <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> et <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> pour construire les filtres asymétriques.</p>
-<p><span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> proposent une approche générale pour dériver des filtres linéaires, basée sur un problème d’optimisation de trois critères : <em>Fidelity</em> (<span class="math inline">\(F_g\)</span>, réduction de la variance), <em>Smoothness</em> (<span class="math inline">\(S_g\)</span>, lissage) et <em>Timeliness</em> (<span class="math inline">\(T_g\)</span>, déphasage).
+<p>Dans ce rapport, nous nous concentrons sur ceux définis par <span class="citation"><a href="#ref-ch15HBSA" role="doc-biblioref">Grun-Rehomme, Guggemos, et Ladiray</a> (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> et <span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> pour construire les filtres asymétriques.</p>
+<p><span class="citation"><a href="#ref-ch15HBSA" role="doc-biblioref">Grun-Rehomme, Guggemos, et Ladiray</a> (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> proposent une approche générale pour dériver des filtres linéaires, basée sur un problème d’optimisation de trois critères : <em>Fidelity</em> (<span class="math inline">\(F_g\)</span>, réduction de la variance), <em>Smoothness</em> (<span class="math inline">\(S_g\)</span>, lissage) et <em>Timeliness</em> (<span class="math inline">\(T_g\)</span>, déphasage).
 Voir section <a href="sec-theoriegen.html#subsec-GuggemosEtAl">3.2</a> pour plus de détails.</p>
-<p><span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> proposent une approche basée sur la décomposition de l’erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : <em>Accuracy</em> (<span class="math inline">\(A_w\)</span>, précision), <em>Timeliness</em> (<span class="math inline">\(T_w\)</span>, déphasage), <em>Smoothness</em> (<span class="math inline">\(S_w\)</span>, lissage) et <em>Residual</em> (<span class="math inline">\(R_w\)</span>, résidus).
+<p><span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span> proposent une approche basée sur la décomposition de l’erreur quadratique moyenne entre le filtre symétrique et le filtre asymétrique en quatre quantités : <em>Accuracy</em> (<span class="math inline">\(A_w\)</span>, précision), <em>Timeliness</em> (<span class="math inline">\(T_w\)</span>, déphasage), <em>Smoothness</em> (<span class="math inline">\(S_w\)</span>, lissage) et <em>Residual</em> (<span class="math inline">\(R_w\)</span>, résidus).
 Voir section <a href="sec-WildiMcLeroy.html#sec-WildiMcLeroy">4</a> pour plus de détails.</p>
 <p>Tous les indicateurs de qualité sont résumés dans le tableau <a href="sec-propMM.html#tab:QC">2.1</a> et sont calculables avec la fonction <code>rjdfilters::diagnostic_matrix</code>.</p>
 <table>
@@ -576,7 +576,7 @@ Residual (Wildi)
 </table>
 <div id="note" class="caption">
 <p id="note" class="title caption">
-<span class="math inline">\(X_g\)</span> critères provenant de <span class="citation">Grun-Rehomme, Guggemos, et Ladiray (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> et <span class="math inline">\(X_w\)</span> critères provenant de <span class="citation">Wildi et McElroy (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span>.
+<span class="math inline">\(X_g\)</span> critères provenant de <span class="citation"><a href="#ref-ch15HBSA" role="doc-biblioref">Grun-Rehomme, Guggemos, et Ladiray</a> (<a href="#ref-ch15HBSA" role="doc-biblioref">2018</a>)</span> et <span class="math inline">\(X_w\)</span> critères provenant de <span class="citation"><a href="#ref-trilemmaWMR2019" role="doc-biblioref">Wildi et McElroy</a> (<a href="#ref-trilemmaWMR2019" role="doc-biblioref">2019</a>)</span>.
 </p>
 <p class="caption">
 <span class="math inline">\(\rho_s\)</span> et <span class="math inline">\(\varphi_s\)</span> représentent le gain et la fonction de déphasage du filtre symétrique d’Henderson.

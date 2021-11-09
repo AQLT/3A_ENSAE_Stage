@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-13" />
+<meta name="date" content="2021-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -285,7 +285,7 @@ C’est le cas à la date <span class="math inline">\(t\)</span> lorsque <span c
 <li><p>les ralentissements (<em>downturn</em>) où l’on passe d’une phase d’expansion à une phase de récession.
 C’est le cas à la date <span class="math inline">\(t\)</span> lorsque <span class="math inline">\(y_{t-k}\leq\cdots\leq y_{t-1}&gt;y_t\geq y_{t+1}\geq\cdots y_{t+m}\)</span>.</p></li>
 </ul>
-<p>En suivant <span class="citation">Zellner, Hong, et Min (<a href="#ref-Zellner1991" role="doc-biblioref">1991</a>)</span>, du fait du caractère relativement lisse de la tendance-cycle, on retient les paramètres <span class="math inline">\(k=3\)</span> and <span class="math inline">\(m=1\)</span>.</p>
+<p>En suivant <span class="citation"><a href="#ref-Zellner1991" role="doc-biblioref">Zellner, Hong, et Min</a> (<a href="#ref-Zellner1991" role="doc-biblioref">1991</a>)</span>, du fait du caractère relativement lisse de la tendance-cycle, on retient les paramètres <span class="math inline">\(k=3\)</span> and <span class="math inline">\(m=1\)</span>.</p>
 <p>Les différents filtres sont comparés sur la base d’Eurostat des indices de production industriels déjà corrigés des jours ouvrables (<code>sts_inpr_m</code>, 2 404 séries connues jusqu’en mars 2021).
 Les points de retournement finaux sont ceux qui sont trouvés sur la composante tendance-cycle estimée avec la méthode X-13ARIMA sur l’ensemble de la période.
 Le déphasage est défini comme le nombre de mois nécessaires pour détecter le bon point de retournement sans aucune révision future (il est donc possible que ce déphasage ne soit pas calculable si pour une méthode donnée on ne détecte pas le bon point de retournement à la dernière date d’estimation).</p>
@@ -2574,14 +2574,14 @@ Les statistiques ne sont calculés que pour les séries dont le filtre tendance-
 <p>Comme nous l’avons vu dans les sections précédentes, la méthodologie et les indicateurs utilisés pour comparer les différentes méthodes sont perfectibles.
 Toutefois, les différents résultats montrent que, pour la construction des moyennes mobiles asymétriques, on peut se restreindre à celles qui conserve les constantes : chercher à imposer des contraintes polynomiales plus élevées augmente la variance des estimations et le délai pour détecter des points de retournement.
 Ainsi, dans les méthodes polynomiales locales, on peut restreindre les prochaines études à la méthode <em>Linear-Constant</em> (LC).
-Par ailleurs, l’estimation en temps réel des méthodes utilisant les filtres asymétriques direct (DAF) peut être facilement améliorée, comme c’est par exemple le cas de la méthode de désaisonnalisation STL (<em>Seasonal-Trend decomposition based on Loess</em>) proposée par <span class="citation">R. B. Cleveland et al. (<a href="#ref-cleveland90" role="doc-biblioref">1990</a>)</span>.</p>
+Par ailleurs, l’estimation en temps réel des méthodes utilisant les filtres asymétriques direct (DAF) peut être facilement améliorée, comme c’est par exemple le cas de la méthode de désaisonnalisation STL (<em>Seasonal-Trend decomposition based on Loess</em>) proposée par <span class="citation"><a href="#ref-cleveland90" role="doc-biblioref">R. B. Cleveland et al.</a> (<a href="#ref-cleveland90" role="doc-biblioref">1990</a>)</span>.</p>
 <p>Sur les méthodes ici étudiées, il serait intéressant de continuer l’exploration pour essayer de comprendre quand une méthode est plus performante qu’une autre, ce qui permettrait de donner des recommandations sur la méthode à utiliser.
 Il faudrait également veiller à comparer les méthodes sur d’autres types de bases de données pour vérifier si les résultats ne dépendent pas du type de série en entrée.</p>
 <p>Toutes les méthodes de construction des filtres asymétriques sont calibrées en utilisant des paramètres estimés sur l’ensemble de la période.
 Par exemple, on utilise autant de points dans le passé que le filtre symétrique alors que rien ne suggère que c’est la longueur optimale.
 Ainsi, le ratio <span class="math inline">\(I/C\)</span> utilisé pour choisir la longueur du filtre de la tendance-cycle et pour calibrer les méthodes locales polynomiales, est calculé sur l’ensemble de la série en excluant les 6 premiers et 6 derniers mois, qui sont justement ceux étudiés !
-Pour la construction des filtres utilisés pour l’estimation en temps réel, il pourrait donc être préférable d’utiliser d’autres paramètres, par exemple des estimations locales de <span class="math inline">\(I/C\)</span> (c’était d’ailleurs une des pistes de recherche suggérées par <span class="citation">Gray et Thomson (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span>).
-De manière alternative, <span class="citation">Vasyechko et Grun-Rehomme (<a href="#ref-vasyechko2014new" role="doc-biblioref">2014</a>)</span> proposent de toujours utiliser un filtre de 13 termes : pour l’estimation en temps réel (<span class="math inline">\(q=0\)</span>) le filtre utilise l’observation courante et les 12 observations précédentes, lorsqu’on connait un point dans le futur (<span class="math inline">\(q=1\)</span>) on utilise les 11 observations précédant la date courante, etc.</p>
+Pour la construction des filtres utilisés pour l’estimation en temps réel, il pourrait donc être préférable d’utiliser d’autres paramètres, par exemple des estimations locales de <span class="math inline">\(I/C\)</span> (c’était d’ailleurs une des pistes de recherche suggérées par <span class="citation"><a href="#ref-GrayThomson1996" role="doc-biblioref">Gray et Thomson</a> (<a href="#ref-GrayThomson1996" role="doc-biblioref">1996</a>)</span>).
+De manière alternative, <span class="citation"><a href="#ref-vasyechko2014new" role="doc-biblioref">Vasyechko et Grun-Rehomme</a> (<a href="#ref-vasyechko2014new" role="doc-biblioref">2014</a>)</span> proposent de toujours utiliser un filtre de 13 termes : pour l’estimation en temps réel (<span class="math inline">\(q=0\)</span>) le filtre utilise l’observation courante et les 12 observations précédentes, lorsqu’on connait un point dans le futur (<span class="math inline">\(q=1\)</span>) on utilise les 11 observations précédant la date courante, etc.</p>
 <p>Les indicateurs utilisés dans cette partie semblent avantager, par construction, la méthode actuelle X-13ARIMA.
 Cela pourrait également être le cas de la méthode d’estimation utilisée.
 En effet, dans les simulations, nous utilisons une série corrigée des points atypiques par un modèle Reg-ARIMA estimée sur l’ensemble de la période.
@@ -2596,7 +2596,7 @@ Cette méthode, beaucoup plus simple que celle utilisée dans ce rapport, peut n
 Les exemples devraient toutefois être approfondis pour comprendre si les points en question correspondent à de vrais points de retournement.</p></li>
 <li><p>D’autre part, les moyennes mobiles étant des opérateurs linéaires, ils sont sensibles à la présence de points atypiques.
 L’application directe des méthodes peut donc conduire donc à des estimations biaisées du fait la présence de points atypiques, alors que la méthode X-13ARIMA a un module de correction des points atypiques.
-Par ailleurs, comme notamment montré par <span class="citation">Dagum (<a href="#ref-dagum1996new" role="doc-biblioref">1996</a>)</span>, le filtre symétrique final utilisé par X-13ARIMA pour extraire la tendance-cycle (et donc celui indirectement utilisé lorsque l’on applique les méthodes sur les séries désaisonnalisées) laisse passer environ 72 % des cycles de 9 ou 10 mois.
+Par ailleurs, comme notamment montré par <span class="citation"><a href="#ref-dagum1996new" role="doc-biblioref">Dagum</a> (<a href="#ref-dagum1996new" role="doc-biblioref">1996</a>)</span>, le filtre symétrique final utilisé par X-13ARIMA pour extraire la tendance-cycle (et donc celui indirectement utilisé lorsque l’on applique les méthodes sur les séries désaisonnalisées) laisse passer environ 72 % des cycles de 9 ou 10 mois.
 Les filtres asymétriques finaux amplifient même les cycles de 9 ou 10 mois.
 Cela peut avoir pour conséquence l’introduction d’ondulations indésirables, c’est-à-dire la détection de faux points de retournement.
 Ce problème est réduit par la correction des points atypiques (ces cycles étant considérés comme de l’irrégulier).

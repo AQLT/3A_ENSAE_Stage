@@ -24,7 +24,7 @@
 <meta name="author" content="Alain Quartier-la-Tente" />
 
 
-<meta name="date" content="2021-10-13" />
+<meta name="date" content="2021-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -279,7 +279,7 @@ div.csl-indent {
 <h2><span class="header-section-number">6.1</span> Approche de Dagum et Bianconcini</h2>
 <p>La théorie des <em>Reproducing Kernel Hilbert Space</em> (RKHS) — espaces de Hilbert à noyau reproduisant — est une théorie générale dans l’apprentissage statistique non-paramétrique qui permet d’englober un grand nombre de méthodes.
 C’est par exemple le cas des méthodes de régression par moindres carrés pénalisés, des Support Vector Machine (SVM), du filtre d’Hodrick-Prescott (utilisé pour décomposer tendance et cycle) ou encore des moyennes mobiles telles que celle d’Henderson.
-Ainsi, <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> utilise la théorie des RKHS pour approcher le filtre d’Henderson et en dériver des filtres asymétriques associés.</p>
+Ainsi, <span class="citation"><a href="#ref-dagumbianconcini2008" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> utilise la théorie des RKHS pour approcher le filtre d’Henderson et en dériver des filtres asymétriques associés.</p>
 <p>Un RKHS <span class="math inline">\(\mathbb{L}^{2}(f_{0})\)</span> est un espace de Hilbert caractérisé par un noyau qui permet de reproduire toutes les fonctions de cet espace.
 Il est caractérisé par une fonction de densité <span class="math inline">\(f_0\)</span> et un produit scalaire <span class="math inline">\(\ps{\cdot}{\cdot}\)</span> définit par :
 <span class="math display">\[
@@ -303,7 +303,7 @@ où <span class="math inline">\(\varepsilon_t\)</span> est un bruit blanc non co
 \underset{TC\in\mathbb P_d}{\min}\int_\R (y(t+s)-TC_t(s))^2f_0(s)\ud s.
 \tag{6.1}
 \end{equation}\]</span>
-L’espace <span class="math inline">\(\mathbb P_d\)</span> étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir, par exemple, <span class="citation">Berlinet et Thomas-Agnan (<a href="#ref-berlinet2004" role="doc-biblioref">2004</a>)</span>).
+L’espace <span class="math inline">\(\mathbb P_d\)</span> étant un espace de Hilbert à dimension finie, il admet un noyau reproduisant (voir, par exemple, <span class="citation"><a href="#ref-berlinet2004" role="doc-biblioref">Berlinet et Thomas-Agnan</a> (<a href="#ref-berlinet2004" role="doc-biblioref">2004</a>)</span>).
 Il existe ainsi une fonction <span class="math inline">\(R_d(\cdot,\cdot)\)</span> telle que :
 <span class="math display">\[
 \forall P\in \mathbb P_d: \forall t:
@@ -323,7 +323,7 @@ Cette solution s’écrit alors :
 \widehat{TC}(t)=\int_{[-1,1]} y(t-s)K_{d+1}(s) \ud s.
 \tag{6.3}
 \end{equation}\]</span>
-On peut, par ailleurs, montrer que <span class="math inline">\(K_{d+1}\)</span> s’écrit en fonction <span class="math inline">\(f_0\)</span> et du noyau reproduisant <span class="math inline">\(K(\cdot,\cdot)\)</span> et que ce dernier peut s’écrire en fonction de polynômes <span class="math inline">\((P_i)_{i\in \llbracket 0, d-1 \rrbracket}\)</span> qui forme une base orthonormée de <span class="math inline">\(\mathbb L^2(f_0)\)</span> (voir par exemple <span class="citation">Berlinet (<a href="#ref-berlinet1993" role="doc-biblioref">1993</a>)</span>) :
+On peut, par ailleurs, montrer que <span class="math inline">\(K_{d+1}\)</span> s’écrit en fonction <span class="math inline">\(f_0\)</span> et du noyau reproduisant <span class="math inline">\(K(\cdot,\cdot)\)</span> et que ce dernier peut s’écrire en fonction de polynômes <span class="math inline">\((P_i)_{i\in \llbracket 0, d-1 \rrbracket}\)</span> qui forme une base orthonormée de <span class="math inline">\(\mathbb L^2(f_0)\)</span> (voir par exemple <span class="citation"><a href="#ref-berlinet1993" role="doc-biblioref">Berlinet</a> (<a href="#ref-berlinet1993" role="doc-biblioref">1993</a>)</span>) :
 <span class="math display">\[
 K_{d+1}(t) = R_d(t,0)f_0(t) = \sum_{i=0}^dP_i(t)P_i(0)f_0(t).
 \]</span></p>
@@ -341,7 +341,7 @@ Le paramètre <span class="math inline">\(b\)</span> est choisi de sorte que les
 \tag{6.5}
 \end{equation}\]</span>
 En utilisant <span class="math inline">\(b=h+1\)</span> on retrouve les filtres symétriques obtenues par polynômes locaux.</p>
-<p>Comme notamment montré par <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2016seasonal" role="doc-biblioref">2016</a>)</span>, <span class="math inline">\(K_{d+1}\)</span> peut s’exprimer simplement à partir des moments de <span class="math inline">\(f_0\)</span><a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>.
+<p>Comme notamment montré par <span class="citation"><a href="#ref-dagumbianconcini2016seasonal" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2016seasonal" role="doc-biblioref">2016</a>)</span>, <span class="math inline">\(K_{d+1}\)</span> peut s’exprimer simplement à partir des moments de <span class="math inline">\(f_0\)</span><a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>.
 Ainsi, notons <span class="math inline">\(H_{d+1}\)</span> la matrice de Hankel associée aux moments de <span class="math inline">\(f_0\)</span> :
 <span class="math display">\[
 \forall i,j\in \llbracket 0, d\rrbracket:
@@ -356,8 +356,8 @@ K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 C’est cette formule qui est utilisée dans le package <code>rjdfilters</code> pour calculer les différentes moyennes mobiles.</p>
 <p>Comme discuté dans la partie <a href="sec-lppfilters.html#sec-proietti">5.1</a>, le noyau d’Henderson dépend de la fenêtre utilisée.
 Ainsi, tous les moments de l’équation <a href="sec-rkhs.html#eq:rkhskernelfun">(6.6)</a> doivent être recalculés pour chaque valeur de <span class="math inline">\(h\)</span>.
-Pour éviter cela, <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> suggèrent d’utiliser le noyau quadratique (<em>biweight</em>) pour approcher le noyau d’Henderson lorsque <span class="math inline">\(h\)</span> est petit (<span class="math inline">\(h&lt; 24\)</span>) et le noyau cubique (<em>triweight</em>) lorsque <span class="math inline">\(h\)</span> est grand <span class="math inline">\(h\geq 24\)</span>.</p>
-<p>Dans <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2015new" role="doc-biblioref">2015</a>)</span>, les auteures suggèrent de faire une sélection optimale du paramètre <span class="math inline">\(b\)</span>, par exemple en minimisant l’erreur quadratique moyenne (option <code>"frequencyresponse"</code> dans <code>rjdfilters::rkhs_filter</code>) :
+Pour éviter cela, <span class="citation"><a href="#ref-dagumbianconcini2008" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> suggèrent d’utiliser le noyau quadratique (<em>biweight</em>) pour approcher le noyau d’Henderson lorsque <span class="math inline">\(h\)</span> est petit (<span class="math inline">\(h&lt; 24\)</span>) et le noyau cubique (<em>triweight</em>) lorsque <span class="math inline">\(h\)</span> est grand <span class="math inline">\(h\geq 24\)</span>.</p>
+<p>Dans <span class="citation"><a href="#ref-dagumbianconcini2015new" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2015new" role="doc-biblioref">2015</a>)</span>, les auteures suggèrent de faire une sélection optimale du paramètre <span class="math inline">\(b\)</span>, par exemple en minimisant l’erreur quadratique moyenne (option <code>"frequencyresponse"</code> dans <code>rjdfilters::rkhs_filter</code>) :
 <span class="math display">\[
 b_{q,\gamma}=\underset{b_q\in[h; 3h]}{\min}
 2\int_{0}^{\pi}
@@ -393,7 +393,7 @@ b_{q,\varphi}=\underset{b_q\in[h; 3h]}{\min}
 Dans <code>rjdfilters</code> <span class="math inline">\(h\)</span> peut être fixée à la densité spectrale d’un bruit blanc (<span class="math inline">\(h_{WN}(x)=1\)</span>) ou d’une marche aléatoire (<span class="math inline">\(h_{RW}(x)=\frac{1}{2(1-\cos(x))}\)</span>).</p></li>
 </ul>
 <div class="remarque">
-<p>Pour assurer une cohérence dans les définitions entre les différentes sections, les définitions de <span class="math inline">\(b_{q,G}\)</span>, <span class="math inline">\(b_{q,\gamma}\)</span> et <span class="math inline">\(b_{q,\varphi}\)</span> ont été légèrement modifiées par rapport à celles définies dans <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2015new" role="doc-biblioref">2015</a>)</span> où :</p>
+<p>Pour assurer une cohérence dans les définitions entre les différentes sections, les définitions de <span class="math inline">\(b_{q,G}\)</span>, <span class="math inline">\(b_{q,\gamma}\)</span> et <span class="math inline">\(b_{q,\varphi}\)</span> ont été légèrement modifiées par rapport à celles définies dans <span class="citation"><a href="#ref-dagumbianconcini2015new" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2015new" role="doc-biblioref">2015</a>)</span> où :</p>
 <ul>
 <li><p>dans <span class="math inline">\(b_{q,G}\)</span> le terme à minimiser est sous une racine carrée (sans impact sur le minimum) :
 <span class="math display">\[
@@ -419,8 +419,8 @@ où <span class="math inline">\(\Omega_S=[0,2\pi/36]\)</span> est l’intervalle
 </div>
 <p>Un des inconvénients de cette méthode est qu’il n’y a pas unicité de la solution et donc qu’il y a parfois plusieurs extremum (voir annexe <a href="an-minrkhs.html#an-minrkhs">D</a>, graphiques <a href="an-minrkhs.html#fig:rkhstimeliness4wn">D.2</a>, <a href="an-minrkhs.html#fig:rkhstimeliness6wn">D.6</a> et <a href="an-minrkhs.html#fig:rkhstimeliness11wn">D.10</a> sur la <em>timeliness</em>).
 Cela affecte uniquement les filtres qui minimisent la timeliness et uniquement pour certaines valeurs de <span class="math inline">\(q\)</span> (par exemple <span class="math inline">\(q=5\)</span> pour un filtre symétrique de 13 termes).
-Comme notamment montré dans <span class="citation">Quartier-la-Tente et Ladiray (<a href="#ref-JSM2021AQLTLQ" role="doc-biblioref">2021</a>)</span>, la valeur optimal retenue par défaut par <code>rjdfilters</code> produit des discontinuités dans l’estimation de la tendance-cycle : dans les cas où il y a plusieurs extremum, il serait donc préférable de retenir celui pour lequel <span class="math inline">\(b\)</span> est maximal.
-C’est ce qui a été retenu dans la suite de ce rapport, c’est également cohérent avec les valeurs optimales présentés dans <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2015new" role="doc-biblioref">2015</a>)</span>.</p>
+Comme notamment montré dans <span class="citation"><a href="#ref-JSM2021AQLTLQ" role="doc-biblioref">Quartier-la-Tente et Ladiray</a> (<a href="#ref-JSM2021AQLTLQ" role="doc-biblioref">2021</a>)</span>, la valeur optimal retenue par défaut par <code>rjdfilters</code> produit des discontinuités dans l’estimation de la tendance-cycle : dans les cas où il y a plusieurs extremum, il serait donc préférable de retenir celui pour lequel <span class="math inline">\(b\)</span> est maximal.
+C’est ce qui a été retenu dans la suite de ce rapport, c’est également cohérent avec les valeurs optimales présentés dans <span class="citation"><a href="#ref-dagumbianconcini2015new" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2015new" role="doc-biblioref">2015</a>)</span>.</p>
 <!-- The table \@ref(tab:criteriarkhs) shows the quality criteria of the RKHS filters. -->
 <!-- Even if the symmetric filter preserves quadratic trends, this is not the case of the asymmetric filters: they only preserve constant trends. -->
 <!-- The more data is available (i.e.: $q$ increases), the less the asymmetric filters distort polynomial trends (for example, for $q=2$, $b_l\simeq0$ for $b_{q,G}$). -->
@@ -440,7 +440,7 @@ C’est ce qui a été retenu dans la suite de ce rapport, c’est également co
 <!-- ``` -->
 <div class="summary_box">
 <div id="testrkhs" class="title">
-<p>RKHS filters - <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span></p>
+<p>RKHS filters - <span class="citation"><a href="#ref-dagumbianconcini2008" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span></p>
 </div>
 <p><strong>Avantages</strong> :</p>
 <ul>
@@ -457,8 +457,8 @@ C’est ce qui a été retenu dans la suite de ce rapport, c’est également co
 <div id="rkhs-et-polynômes-locaux" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> RKHS et polynômes locaux</h2>
 <p>Comme montré dans la section précédente, la théorie des espaces de Hilbert à noyau reproduisant permet de reproduire les filtres symétriques par approximation polynomiale locale.
-Comme le montrent <span class="citation">Luati et Proietti (<a href="#ref-LuatiProietti2011" role="doc-biblioref">2011</a>)</span>, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l’approximation polynomiale locale mais en utilisant une fenêtre d’estimation asymétrique.
-Cependant, ils ne peuvent pas être obtenus par la formalisation de <span class="citation">Dagum et Bianconcini (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> mais par une discrétisation différente de la formule <a href="sec-rkhs.html#eq:rkhskernelfun">(6.6)</a> :
+Comme le montrent <span class="citation"><a href="#ref-LuatiProietti2011" role="doc-biblioref">Luati et Proietti</a> (<a href="#ref-LuatiProietti2011" role="doc-biblioref">2011</a>)</span>, cette théorie permet donc également de reproduire les filtres directs asymétriques (DAF), qui sont équivalents à l’approximation polynomiale locale mais en utilisant une fenêtre d’estimation asymétrique.
+Cependant, ils ne peuvent pas être obtenus par la formalisation de <span class="citation"><a href="#ref-dagumbianconcini2008" role="doc-biblioref">Dagum et Bianconcini</a> (<a href="#ref-dagumbianconcini2008" role="doc-biblioref">2008</a>)</span> mais par une discrétisation différente de la formule <a href="sec-rkhs.html#eq:rkhskernelfun">(6.6)</a> :
 <span class="math display">\[
 K_{d+1}(t)=\frac{\det{H_{d+1}[1,t]}}{\det{H_{d+1}}}f_0(t).
 \]</span>
