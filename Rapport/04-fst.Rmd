@@ -103,7 +103,7 @@ T_g(\theta) & = J(f\colon(\rho,\varphi)\mapsto\rho^2\sin(\varphi)^2,\,\omega_1, 
 :::: {.summary_box data-latex="{Filtres FST --- Grun-Rehomme et alii (2018)}"}
 `r if (is_html) '
 :::{.title}
-Filtres FST - ch15HBSA
+Filtres FST - @ch15HBSA
 :::
 '`
 **Avantages** :

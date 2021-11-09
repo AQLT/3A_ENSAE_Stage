@@ -44,7 +44,7 @@ pre code {
     border-radius: 10px;
 }
 .summary_box .title:before {
-    content: "Summary " counter(summary) "— ";
+    content: "Encadré " counter(summary) "— ";
     counter-increment: summary;
 }
 .summary_box .title p {
